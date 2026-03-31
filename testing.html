@@ -1,5 +1,7 @@
 <!-- GitNexus Testing -->
 
+<!-- GitNexus Testing -->
+
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -616,19 +618,19 @@
                             
                             <!-- Features Grid -->
                             <div class="grid grid-cols-2 gap-4 mb-8">
-                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift">
+                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift" style="cursor: pointer;">
                                     <div class="text-blue-400 font-bold mb-1"><i class="fas fa-eye mr-2"></i>Viewer</div>
                                     <div class="text-[10px] text-gray-400">Read code, view images, and explore dependencies.</div>
                                 </div>
-                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift">
+                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift" style="cursor: pointer;">
                                     <div class="text-purple-400 font-bold mb-1"><i class="fas fa-edit mr-2"></i>Editor</div>
                                     <div class="text-[10px] text-gray-400">Edit, commit, and upload directly to your repos.</div>
                                 </div>
-                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift">
+                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift" style="cursor: pointer;">
                                     <div class="text-green-400 font-bold mb-1"><i class="fas fa-download mr-2"></i>Releases</div>
                                     <div class="text-[10px] text-gray-400">Download and explore project releases.</div>
                                 </div>
-                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift">
+                                <div class="p-4 border sidebar-border rounded-lg bg-[var(--bg-secondary)] hover-lift" onclick="showMusicPlayer()" style="cursor: pointer;">
                                     <div class="text-yellow-400 font-bold mb-1"><i class="fas fa-music mr-2"></i>Music</div>
                                     <div class="text-[10px] text-gray-400">Play music while you code.</div>
                                 </div>
@@ -1754,9 +1756,11 @@
             menu.className = 'dropdown-content menu p-2 shadow bg-[var(--bg-secondary)] rounded-box w-52 border sidebar-border';
             
             menu.innerHTML = themes.map(t => `
-                <button><a onclick="setTheme('${t}'); updateAuthStatus()">
+            <ul class="menu menu-sm bg-[var(--bg-secondary)] animate-fade-in">
+                <li><a onclick="setTheme('${t}'); updateAuthStatus()">
                     <i class="fas fa-paint-brush mr-2"></i>${t.charAt(0).toUpperCase() + t.slice(1)}
-                </a></button></br>
+                </a></li>
+            </ul>
             `).join('');
 
             // Show menu near avatar
@@ -1768,7 +1772,9 @@
             dropdown.style.right = '20px';
             
             document.body.appendChild(dropdown);
-            setTimeout(() => dropdown.remove(), 5000);
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.remove()
+            });
         }
 
         // ===========================
@@ -2053,7 +2059,7 @@
         // ===========================
         function showNotification(message) {
             const notification = document.createElement('div');
-            notification.className = 'fixed bottom-20 right-8 bg-green-500 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100]';
+            notification.className = 'fixed bottom-20 right-8 bg-blue-600 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100]';
             notification.innerText = message;
             document.body.appendChild(notification);
             setTimeout(() => notification.remove(), 3000);
