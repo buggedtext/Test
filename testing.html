@@ -606,6 +606,7 @@
 			</main>
 		</div>
 		<!-- Floating Copilot Panel -->
+        <!--
 		<div id="copilot-panel" class="absolute bottom-6 right-6 w-96 glass rounded-xl shadow-2xl border sidebar-border overflow-hidden translate-y-[120%] transition-transform duration-500 z-[60] animate-slide-up">
 			<div class="p-4 github-gradient flex justify-between items-center">
 				<div class="flex items-center gap-2"> <i class="fas fa-robot text-white"></i> <span class="text-white font-bold text-sm">Advanced AI Assistant</span> </div>
@@ -616,11 +617,11 @@
 					<div class="w-8 h-8 rounded bg-purple-600 flex items-center justify-center flex-shrink-0"> <i class="fas fa-robot text-xs text-white"></i> </div>
 					<div class="bg-[var(--bg-secondary)] p-3 rounded-lg text-xs leading-relaxed border sidebar-border"> <strong>Welcome!</strong> I'm your AI assistant powered by advanced code analysis. Ask me about:
 						<ul class="mt-2 text-left space-y-1">
-							<li>🔍 Code analysis and optimization</li>
-							<li>🐛 Bug detection and fixes</li>
-							<li>📚 Documentation suggestions</li>
-							<li>⚡ Performance improvements</li>
-							<li>🎨 Best practices and patterns</li>
+							<li>Code analysis and optimization</li>
+							<li>Bug detection and fixes</li>
+							<li>Documentation suggestions</li>
+							<li>Performance improvements</li>
+							<li>Best practices and patterns</li>
 						</ul>
 					</div>
 				</div>
@@ -632,8 +633,9 @@
 				</div>
 			</div>
 		</div>
+            -->
 		<!-- Copilot Trigger -->
-		<button onclick="toggleCopilot()" class="absolute bottom-8 right-8 w-14 h-14 rounded-full github-gradient shadow-lg flex items-center justify-center hover:scale-110 transition-transform z-50 action-button pulse-glow"> <i class="fas fa-comment-dots text-white text-xl"></i> </button>
+		<!-- <button onclick="toggleCopilot()" class="absolute bottom-8 right-8 w-14 h-14 rounded-full github-gradient shadow-lg flex items-center justify-center hover:scale-110 transition-transform z-50 action-button pulse-glow"> <i class="fas fa-comment-dots text-white text-xl"></i> </button> -->
 		<!-- Footer / Status Bar -->
 		<footer class="h-8 border-t sidebar-border bg-[var(--bg-secondary)] flex items-center justify-between px-4 text-[10px] uppercase font-medium tracking-widest text-gray-500">
 			<div class="flex items-center gap-4"> <span class="flex items-center gap-1"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span> <span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-500"></i> Engine Online</span> </div>
@@ -1138,7 +1140,7 @@
                         <div class="file-actions flex gap-2">
                             ${state.isOwner ? ` < i onclick = "deleteFile('${file.path}', '${file.sha}', event)"
 					class = "fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" > < /i>` : ''} < i onclick = "window.open('${file.html_url}', '_blank')"
-					class = "fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" > < /i> < /div> < /div>
+					class = "fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" > < /i> < /div > < /div>
 					`;
             }).join('');
 
@@ -1289,8 +1291,7 @@
                     <p class="text-xs text-gray-400 mb-3 line-clamp-2">${release.body || 'No description'}</p>
                     <div class="flex gap-2">
                         ${release.assets.map(asset => ` < a href = "${asset.browser_download_url}"
-						download class = "btn btn-xs btn-outline gap-1" > < i class = "fas fa-download text-xs" > < /i> ${asset.name} < /a>
-						`).join('')}
+						download class = "btn btn-xs btn-outline gap-1" > < i class = "fas fa-download text-xs" > < /i> ${asset.name} < /a > `).join('')}
                     </div>
                 </div>
             `).join('');
@@ -1520,7 +1521,7 @@
 						monaco.editor.setTheme(themeMap[theme] || 'vs-dark');
 					}
 					localStorage.setItem('gitnexus-theme', theme);
-					showNotification(`🎨 Theme changed to ${theme}`);
+					showNotification(`<i class="fa-solid fa-check"></i> 🎨 Theme changed to ${theme}`);
 				}
 
 				function showThemeMenu() {
@@ -1542,9 +1543,9 @@
 					dropdown.style.top = avatarBtn.getBoundingClientRect().bottom + 'px';
 					dropdown.style.right = '20px';
 					document.body.appendChild(dropdown);
-					dropdown.addEventListener('mouseleave', () => {
-						dropdown.remove()
-					});
+						setTimeout(() => {
+							dropdown.remove();
+						}, 2000);
 				}
 				// ===========================
 				// PROFILE & CUSTOMIZATION
@@ -1748,17 +1749,18 @@
 						return;
 					}
 					// Mock playback toggle
-					showNotification('▶️ Music playback toggled');
+					showNotification('Music playback toggled');
 				}
 
 				function stopMusic() {
 					state.currentlyPlaying = null;
 					document.getElementById('now-playing').classList.add('hidden');
-					showNotification('⏹️ Music stopped');
+					showNotification('Music stopped');
 				}
 				// ===========================
 				// AI ASSISTANT
 				// ===========================
+        /*
 				function toggleCopilot() {
 					const panel = document.getElementById('copilot-panel');
 					panel.classList.toggle('translate-y-[120%]');
@@ -1802,22 +1804,22 @@
 				function getAIResponse(prompt) {
 					const lower = prompt.toLowerCase();
 					const responses = {
-						'error': '🔴 Detected potential issues: Check null/undefined values, add error handling, and validate inputs.',
-						'bug': '🐛 Common bugs to watch: Off-by-one errors, race conditions, null pointers, and type mismatches.',
-						'optimize': '⚡ Optimization tips: Use memoization, lazy loading, caching, and reduce time complexity.',
-						'refactor': '🔄 Refactoring suggestions: Extract functions, reduce nesting, improve naming, follow DRY principle.',
-						'best practices': '✨ Best practices: Write tests, document code, use proper naming, handle errors gracefully.',
-						'performance': '📊 Performance: Profile code, minimize re-renders, use efficient algorithms, optimize database queries.',
-						'security': '🔒 Security: Validate input, use parameterized queries, avoid eval, sanitize output.',
-						'testing': '🧪 Testing: Write unit tests, integration tests, use mocks, achieve good coverage.',
-						'documentation': '📚 Documentation: Add JSDoc comments, write READMEs, keep docs updated with code.',
-						'default': '💡 I can help with code analysis, optimization, bug detection, best practices, and more! Ask about specific issues.'
+						'error': 'Detected potential issues: Check null/undefined values, add error handling, and validate inputs.',
+						'bug': 'Common bugs to watch: Off-by-one errors, race conditions, null pointers, and type mismatches.',
+						'optimize': 'Optimization tips: Use memoization, lazy loading, caching, and reduce time complexity.',
+						'refactor': 'Refactoring suggestions: Extract functions, reduce nesting, improve naming, follow DRY principle.',
+						'best practices': 'Best practices: Write tests, document code, use proper naming, handle errors gracefully.',
+						'performance': 'Performance: Profile code, minimize re-renders, use efficient algorithms, optimize database queries.',
+						'security': 'Security: Validate input, use parameterized queries, avoid eval, sanitize output.',
+						'testing': 'Testing: Write unit tests, integration tests, use mocks, achieve good coverage.',
+						'documentation': 'Documentation: Add JSDoc comments, write READMEs, keep docs updated with code.',
+						'default': 'I can help with code analysis, optimization, bug detection, best practices, and more! Ask about specific issues.'
 					};
 					for(const [key, response] of Object.entries(responses)) {
 						if(lower.includes(key)) return response;
 					}
 					return responses.default;
-				}
+				} */
 				// ===========================
 				// UTILITIES
 				// ===========================
@@ -1831,7 +1833,7 @@
 
 				function toggleMainMenu() {
 					// Add menu functionality
-					showNotification('🍔 Main menu opened');
+					showNotification('Main menu opened');
 				}
 
 				function openDescriptionModal(repoName, description) {
@@ -1855,7 +1857,7 @@
 								description: newDescription
 							})
 						});
-						showNotification('✅ Description updated!');
+						showNotification('Description updated!');
 						window.description_modal.close();
 					} catch(err) {
 						alert(`Failed: ${err.message}`);
@@ -1888,6 +1890,19 @@
 						}
 					});
 				});
+				import {
+					library, icon
+				}
+				from '@fortawesome/fontawesome-svg-core';
+				import {
+					faCat
+				}
+				from '@fortawesome/free-solid-svg-icons'; library.add(faCat);
+				const catIcon = icon({
+					prefix: 'fas',
+					iconName: 'cat'
+				}).html;
+				const container = document.getElementById('icon-container'); container.innerHTML = catIcon;
 	</script>
 </body>
 
