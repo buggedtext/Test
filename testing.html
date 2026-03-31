@@ -605,37 +605,8 @@
 				</div>
 			</main>
 		</div>
-		<!-- Floating Copilot Panel -->
-        <!--
-		<div id="copilot-panel" class="absolute bottom-6 right-6 w-96 glass rounded-xl shadow-2xl border sidebar-border overflow-hidden translate-y-[120%] transition-transform duration-500 z-[60] animate-slide-up">
-			<div class="p-4 github-gradient flex justify-between items-center">
-				<div class="flex items-center gap-2"> <i class="fas fa-robot text-white"></i> <span class="text-white font-bold text-sm">Advanced AI Assistant</span> </div>
-				<button onclick="toggleCopilot()" class="text-white/70 hover:text-white action-button"><i class="fas fa-times"></i></button>
-			</div>
-			<div id="chat-history" class="h-80 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[var(--bg-primary)]">
-				<div class="flex gap-3 animate-slide-up">
-					<div class="w-8 h-8 rounded bg-purple-600 flex items-center justify-center flex-shrink-0"> <i class="fas fa-robot text-xs text-white"></i> </div>
-					<div class="bg-[var(--bg-secondary)] p-3 rounded-lg text-xs leading-relaxed border sidebar-border"> <strong>Welcome!</strong> I'm your AI assistant powered by advanced code analysis. Ask me about:
-						<ul class="mt-2 text-left space-y-1">
-							<li>Code analysis and optimization</li>
-							<li>Bug detection and fixes</li>
-							<li>Documentation suggestions</li>
-							<li>Performance improvements</li>
-							<li>Best practices and patterns</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="p-4 bg-[var(--bg-secondary)] border-t sidebar-border">
-				<div class="relative">
-					<input id="copilot-input" type="text" placeholder="Ask anything..." class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded-lg pl-4 pr-10 py-2 text-xs focus:outline-none search-input" onkeypress="handleCopilotInput(event)">
-					<button onclick="askCopilot()" class="absolute right-2 top-1/2 -translate-y-1/2 text-purple-500 action-button hover:text-purple-400"> <i class="fas fa-paper-plane"></i> </button>
-				</div>
-			</div>
-		</div>
-            -->
-		<!-- Copilot Trigger -->
-		<!-- <button onclick="toggleCopilot()" class="absolute bottom-8 right-8 w-14 h-14 rounded-full github-gradient shadow-lg flex items-center justify-center hover:scale-110 transition-transform z-50 action-button pulse-glow"> <i class="fas fa-comment-dots text-white text-xl"></i> </button> -->
+		<!-- Copilot Panel [SCRAPPED] -->
+
 		<!-- Footer / Status Bar -->
 		<footer class="h-8 border-t sidebar-border bg-[var(--bg-secondary)] flex items-center justify-between px-4 text-[10px] uppercase font-medium tracking-widest text-gray-500">
 			<div class="flex items-center gap-4"> <span class="flex items-center gap-1"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span> <span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-500"></i> Engine Online</span> </div>
@@ -1547,9 +1518,9 @@
 							dropdown.remove();
 						}, 2000);
 				}
-				// ===========================
-				// PROFILE & CUSTOMIZATION
-				// ===========================
+				// ================================== //
+				//     --PROFILE & CUSTOMIZATION--    //
+				// ================================== //
 				async function showProfileModal() {
 					if(!state.token) {
 						alert('Please enter your PAT token first');
@@ -1684,9 +1655,9 @@
 				function showSortingMenu() {
 					window.sorting_modal.showModal();
 				}
-				// ===========================
-				// MUSIC PLAYER
-				// ===========================
+				// =========================== //
+				//       --MUSIC PLAYER--      //
+				// =========================== //
 				function showMusicPlayer() {
 					window.music_modal.showModal();
 					document.getElementById('music-results').innerHTML = '';
@@ -1757,72 +1728,14 @@
 					document.getElementById('now-playing').classList.add('hidden');
 					showNotification('Music stopped');
 				}
-				// ===========================
-				// AI ASSISTANT
-				// ===========================
-        /*
-				function toggleCopilot() {
-					const panel = document.getElementById('copilot-panel');
-					panel.classList.toggle('translate-y-[120%]');
-				}
+				// =========================== //
+				// --AI ASSISTANT [SCRAPPED]-- //
+				// =========================== //
 
-				function handleCopilotInput(event) {
-					if(event.key === 'Enter') {
-						askCopilot();
-					}
-				}
 
-				function askCopilot() {
-					const input = document.getElementById('copilot-input');
-					const history = document.getElementById('chat-history');
-					if(!input.value.trim()) return;
-					const userMessage = input.value;
-					// Add user message
-					history.innerHTML += `
-                <div class="flex justify-end animate-slide-right">
-                    <div class="bg-blue-600 p-3 rounded-lg text-xs max-w-[80%]">${userMessage}</div>
-                </div>
-            `;
-					input.value = '';
-					// Generate AI response based on keywords
-					setTimeout(() => {
-						let response = getAIResponse(userMessage);
-						history.innerHTML += `
-                    <div class="flex gap-3 animate-slide-up">
-                        <div class="w-8 h-8 rounded bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-robot text-xs text-white"></i>
-                        </div>
-                        <div class="bg-[var(--bg-secondary)] p-3 rounded-lg text-xs leading-relaxed border sidebar-border max-w-[80%]">
-                            ${response}
-                        </div>
-                    </div>
-                `;
-						history.scrollTop = history.scrollHeight;
-					}, 800);
-				}
-
-				function getAIResponse(prompt) {
-					const lower = prompt.toLowerCase();
-					const responses = {
-						'error': 'Detected potential issues: Check null/undefined values, add error handling, and validate inputs.',
-						'bug': 'Common bugs to watch: Off-by-one errors, race conditions, null pointers, and type mismatches.',
-						'optimize': 'Optimization tips: Use memoization, lazy loading, caching, and reduce time complexity.',
-						'refactor': 'Refactoring suggestions: Extract functions, reduce nesting, improve naming, follow DRY principle.',
-						'best practices': 'Best practices: Write tests, document code, use proper naming, handle errors gracefully.',
-						'performance': 'Performance: Profile code, minimize re-renders, use efficient algorithms, optimize database queries.',
-						'security': 'Security: Validate input, use parameterized queries, avoid eval, sanitize output.',
-						'testing': 'Testing: Write unit tests, integration tests, use mocks, achieve good coverage.',
-						'documentation': 'Documentation: Add JSDoc comments, write READMEs, keep docs updated with code.',
-						'default': 'I can help with code analysis, optimization, bug detection, best practices, and more! Ask about specific issues.'
-					};
-					for(const [key, response] of Object.entries(responses)) {
-						if(lower.includes(key)) return response;
-					}
-					return responses.default;
-				} */
-				// ===========================
-				// UTILITIES
-				// ===========================
+				// =========================== //
+				//        --UTILITIES--        //
+				// =========================== //
 				function showNotification(message) {
 					const notification = document.createElement('div');
 					notification.className = 'fixed bottom-20 right-8 bg-blue-600 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100]';
@@ -1832,7 +1745,6 @@
 				}
 
 				function toggleMainMenu() {
-					// Add menu functionality
 					showNotification('Main menu opened');
 				}
 
@@ -1863,13 +1775,13 @@
 						alert(`Failed: ${err.message}`);
 					}
 				}
-				// ===========================
-				// INITIALIZATION
-				// ===========================
+				// =========================== //
+				//     --INITIALIZATION--      //
+				// =========================== //
 				window.addEventListener('load', () => {
 					const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
 					setTheme(savedTheme);
-					// Load search history
+					// Load history
 					const saved = localStorage.getItem('gitnexus-search-history');
 					if(saved) searchHistor = JSON.parse(saved);
 					// Keyboard shortcuts
@@ -1885,24 +1797,10 @@
 							}
 							if(e.key === '/') {
 								e.preventDefault();
-								toggleCopilot();
 							}
 						}
 					});
 				});
-				import {
-					library, icon
-				}
-				from '@fortawesome/fontawesome-svg-core';
-				import {
-					faCat
-				}
-				from '@fortawesome/free-solid-svg-icons'; library.add(faCat);
-				const catIcon = icon({
-					prefix: 'fas',
-					iconName: 'cat'
-				}).html;
-				const container = document.getElementById('icon-container'); container.innerHTML = catIcon;
 	</script>
 </body>
 
