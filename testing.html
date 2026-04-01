@@ -1898,24 +1898,24 @@
             const musicMockTxt = "Duration: ";
 			const mockResults = [
 				{
-					title: musicMockTxt + 'Focus Mode',
+					title: 'Focus Mode',
 					artist: 'Lo-Fi Hip Hop',
-					duration: 'infinite'
+					duration: musicMockTxt + 'infinite'
 				},
 				{
-					title: musicMockTxt + 'Coding Vibes',
+					title: 'Coding Vibes',
 					artist: 'Electronic',
-					duration: '2:45'
+					duration: musicMockTxt + '2:45'
 				},
 				{
-					title: musicMockTxt + 'Deep Focus',
+					title: 'Deep Focus',
 					artist: 'Ambient',
-					duration: '3:12'
+					duration: musicMockTxt + '3:12'
 				},
 				{
-					title: musicMockTxt + 'Night Coding',
+					title: 'Night Coding',
 					artist: 'Synthwave',
-					duration: '4:00'
+					duration: musicMockTxt + '4:00'
 				}
 			];
 			resultsContainer.innerHTML = mockResults.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()) || song.artist.toLowerCase().includes(searchTerm.toLowerCase())).map((song) => `
