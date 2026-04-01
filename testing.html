@@ -1187,7 +1187,6 @@ function deleteSuggestion(username, event) {
 	showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 }
 
-// ===== FIXED: loadRepositories - instant loading, no delays =====
 async function loadRepositories() {
 	setLoadingState(true);
 	try {
@@ -1544,7 +1543,6 @@ async function createNewRepository() {
 	}
 }
 
-// ===== FIXED: loadFiles - instant load, no delays =====
 async function loadFiles(path) {
 	setLoadingState(true);
 	try {
