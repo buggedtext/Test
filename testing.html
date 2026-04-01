@@ -1173,10 +1173,7 @@ function handlePATInput(event) {
 	}
 }
 
-// ============================================================================
-// USER SEARCH & PROFILE
-// ============================================================================
-
+// User seachr & Prof
 async function searchUser() {
 	const username = document.getElementById('user-search').value.trim();
 	if(!username) {
@@ -1277,10 +1274,7 @@ function deleteSuggestion(username, event) {
 	showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 }
 
-// ============================================================================
-// REPOSITORY MANAGEMENT
-// ============================================================================
-
+// Repo Management
 async function loadRepositories() {
 	setLoadingState(true);
 	try {
