@@ -2228,10 +2228,7 @@ async function createNewFolder() {
 	}
 }
 
-// ============================================================================
-// FILE UPLOAD
-// ============================================================================
-
+// File Upload
 function openUploadModal() {
 	const pathLabel = document.getElementById('upload-path-label');
 	if(pathLabel) {
@@ -2318,10 +2315,7 @@ async function uploadFile(file) {
 	});
 }
 
-// ============================================================================
-// NAVIGATION & UTILITIES
-// ============================================================================
-
+// Nav & Utils
 function updateBreadcrumbs(path) {
 	const container = document.getElementById('breadcrumb-container');
 	if(!container) return;
@@ -2352,10 +2346,7 @@ function navigateUp() {
 	loadFiles(parts.join('/'));
 }
 
-// ============================================================================
-// RELEASES
-// ============================================================================
-
+// Releases
 async function loadReleases() {
 	try {
 		const releases = await fetchGH(
