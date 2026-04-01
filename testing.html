@@ -1056,7 +1056,6 @@ require(['vs/editor/editor.main'], function() {
 	});
 });
 
-// ===== FIXED: fetchGH function - proper headers and error handling =====
 async function fetchGH(endpoint, options = {}) {
 	const headers = new Headers({
 		'Accept': 'application/vnd.github.v3+json',
@@ -1092,7 +1091,6 @@ async function fetchGH(endpoint, options = {}) {
 	}
 }
 
-// ===== FIXED: searchUser - immediate response, no delays =====
 async function searchUser() {
 	const username = document.getElementById('user-search').value.trim();
 	if(!username) {
@@ -1293,7 +1291,6 @@ function renderRepoList() {
 	container.innerHTML = html;
 }
 
-// ===== FIXED: Description Modal with proper escape handling =====
 function openDescriptionModal(repoName, description, ownerLogin) {
 	const isOwner = state.currentUser.toLowerCase() === ownerLogin.toLowerCase() && state.isOwner && state.token;
 	const modal = document.createElement('dialog');
