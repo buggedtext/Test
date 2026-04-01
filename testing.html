@@ -1880,47 +1880,57 @@
 		}
 
 		// Music Player
-		// --- NEW: Audio Setup ---
-// We create one audio object to handle playing/stopping
-const audioPlayer = new Audio();
-// State management to track the current song
-let currentSongSrc = null;
+		function showMusicPlayer() {
+			window.music_modal.showModal();
+			document.getElementById('music-results').innerHTML = '';
+		}
 
-// Mock Data updated with src
-const musicDatabase = [
-    { title: 'Focus Mode', artist: 'Lo-Fi Hip Hop', duration: '∞', src: 'https://google.com' },
-    { title: 'Coding Vibes', artist: 'Electronic', duration: '2:45', src: 'https://google.com' },
-    { title: 'Deep Focus', artist: 'Ambient', duration: '3:12', src: 'https://google.com' },
-    { title: 'Night Coding', artist: 'Synthwave', duration: '4:00', src: 'https://google.com' }
-];
+		function setMusicSource(source) {
+			state.musicSource = source;
+			document.getElementById('spotify-btn').className = source === 'spotify' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+			document.getElementById('youtube-btn').className = source === 'youtube' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+		}
 
-function searchMusic() {
-    const searchTerm = document.getElementById('music-search').value;
-    // Removed !searchTerm return so empty search shows all
-    const resultsContainer = document.getElementById('music-results');
-    
-    // Filter mock data
-    const filtered = musicDatabase.filter(song => 
-        song.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+		function searchMusic() {
+			const searchTerm = document.getElementById('music-search').value;
+			if(!searchTerm) return;
+			const resultsContainer = document.getElementById('music-results');
+			const mockResults = [
+				{
+					title: 'Focus Mode',
+					artist: 'Lo-Fi Hip Hop',
+					duration: '∞'
+				},
+				{
+					title: 'Coding Vibes',
+					artist: 'Electronic',
+					duration: '2:45'
+				},
+				{
+					title: 'Deep Focus',
+					artist: 'Ambient',
+					duration: '3:12'
+				},
+				{
+					title: 'Night Coding',
+					artist: 'Synthwave',
+					duration: '4:00'
+				}
+			];
+			resultsContainer.innerHTML = mockResults.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()) || song.artist.toLowerCase().includes(searchTerm.toLowerCase())).map((song) => `
+				<div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" onclick="selectSong('${song.title}', '${song.artist}')">
+					<div class="flex justify-between items-center">
+						<div>
+							<div class="font-bold text-sm">${song.title}</div>
+							<div class="text-xs text-gray-500">${song.artist}</div>
+						</div>
+						<div class="text-xs text-gray-400">${song.duration}</div>
+					</div>
+				</div>
+			`).join('');
+		}
 
-    resultsContainer.innerHTML = filtered.map((song) => `
-        <div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" 
-             onclick="selectSong('${song.title}', '${song.artist}', '${song.src}')">
-            <div class="flex justify-between items-center">
-                <div>
-                    <div class="font-bold text-sm">${song.title}</div>
-                    <div class="text-xs text-gray-500">${song.artist}</div>
-                </div>
-                <div class="text-xs text-gray-400">${song.duration}</div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Updated selectSong to accept the audio source
-function selectSong(title, artist, src) {
+		function selectSong(title, artist, src) {
     // If clicking the same song, toggle it
     if(currentSongSrc === src) {
         toggleMusicPlayback();
@@ -1940,34 +1950,19 @@ function selectSong(title, artist, src) {
     showNotification(`🎵 Now playing: ${title}`);
 }
 
-function toggleMusicPlayback() {
-    if(!currentSongSrc) return;
-    
-    if(audioPlayer.paused) {
-        audioPlayer.play();
-        showNotification('Playing');
-    } else {
-        audioPlayer.pause();
-        showNotification('Paused');
-    }
-}
+		function toggleMusicPlayback() {
+			if(!state.currentlyPlaying) {
+				alert('Select a song first');
+				return;
+			}
+			showNotification('Music playback toggled');
+		}
 
-function stopMusic() {
-    audioPlayer.pause();
-    audioPlayer.currentTime = 0; // Reset
-    currentSongSrc = null;
-    document.getElementById('now-playing').classList.add('hidden');
-    showNotification('Music stopped');
-}
-
-// Helper to show notification
-function showNotification(message) {
-    console.log(message); // Replace with your actual notification logic
-}
-
-// Initial display of songs
-searchMusic();
-
+		function stopMusic() {
+			state.currentlyPlaying = null;
+			document.getElementById('now-playing').classList.add('hidden');
+			showNotification('Music stopped');
+		}
 
 		// Utils
 		function showNotification(message) {
