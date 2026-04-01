@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,477 +11,470 @@
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css" rel="stylesheet" type="text/css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/loader.min.js"></script>
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
-		
-		:root {
-			--editor-height: calc(100vh - 160px);
-			--sidebar-width: 320px;
-			--primary-color: #1f6feb;
-			--secondary-color: #8957e5;
-			--accent-color: #58a6ff;
-		}
-		
-		* {
-			transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		}
-		
-		html.dark {
-			color-scheme: dark;
-			--bg-primary: #0d1117;
-			--bg-secondary: #161b22;
-			--bg-tertiary: #010409;
-			--text-primary: #c9d1d9;
-			--text-secondary: #8b949e;
-			--border-color: #30363d;
-		}
-		
-		html.light {
-			color-scheme: light;
-			--bg-primary: #f6f8fa;
-			--bg-secondary: #ffffff;
-			--bg-tertiary: #f3f4f6;
-			--text-primary: #24292f;
-			--text-secondary: #57606a;
-			--border-color: #d0d7de;
-		}
-		
-		html.high-contrast {
-			color-scheme: dark;
-			--bg-primary: #000000;
-			--bg-secondary: #1a1a1a;
-			--bg-tertiary: #000000;
-			--text-primary: #ffffff;
-			--text-secondary: #cccccc;
-			--border-color: #ffffff;
-		}
-		
-		html.nord {
-			color-scheme: dark;
-			--bg-primary: #2e3440;
-			--bg-secondary: #3b4252;
-			--bg-tertiary: #2e3440;
-			--text-primary: #eceff4;
-			--text-secondary: #d4d8de;
-			--border-color: #434c5e;
-		}
-		
-		html.dracula {
-			color-scheme: dark;
-			--bg-primary: #282a36;
-			--bg-secondary: #44475a;
-			--bg-tertiary: #1e1f29;
-			--text-primary: #f8f8f2;
-			--text-secondary: #bfbfbf;
-			--border-color: #44475a;
-		}
-		
-		html.gruvbox {
-			color-scheme: dark;
-			--bg-primary: #282828;
-			--bg-secondary: #3c3836;
-			--bg-tertiary: #1d2021;
-			--text-primary: #ebdbb2;
-			--text-secondary: #bdae93;
-			--border-color: #504945;
-		}
-		
-		html.monokai {
-			color-scheme: dark;
-			--bg-primary: #272822;
-			--bg-secondary: #3e3d32;
-			--bg-tertiary: #1d1d1d;
-			--text-primary: #f8f8f2;
-			--text-secondary: #bfbfbf;
-			--border-color: #49483e;
-		}
-		
-		html.solarized-dark {
-			color-scheme: dark;
-			--bg-primary: #002b36;
-			--bg-secondary: #073642;
-			--bg-tertiary: #001b22;
-			--text-primary: #839496;
-			--text-secondary: #657b83;
-			--border-color: #073642;
-		}
-		
-		body {
-			font-family: 'Inter', sans-serif;
-			background-color: var(--bg-primary);
-			color: var(--text-primary);
-			overflow: hidden;
-		}
-		
-		.monaco-editor-container {
-			height: var(--editor-height);
-			border: 1px solid var(--border-color);
-			border-radius: 8px;
-			overflow: hidden;
-		}
-		
-		.github-gradient {
-			background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-		}
-		
-		.glass {
-			background: rgba(var(--bg-primary), 0.7);
-			backdrop-filter: blur(12px);
-			-webkit-backdrop-filter: blur(12px);
-			border: 1px solid rgba(255, 255, 255, 0.1);
-		}
-		
-		html.light .glass {
-			background: rgba(255, 255, 255, 0.8);
-			border: 1px solid rgba(0, 0, 0, 0.1);
-		}
-		
-		html.high-contrast .glass {
-			background: rgba(0, 0, 0, 0.9);
-			border: 2px solid #ffffff;
-		}
-		
-		.custom-scrollbar::-webkit-scrollbar {
-			width: 8px;
-			height: 8px;
-		}
-		
-		.custom-scrollbar::-webkit-scrollbar-track {
-			background: transparent;
-		}
-		
-		.custom-scrollbar::-webkit-scrollbar-thumb {
-			background: var(--border-color);
-			border-radius: 10px;
-			cursor: pointer;
-		}
-		
-		.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-			background: var(--text-secondary);
-		}
-		
-		@keyframes slideIn {
-			from {
-				transform: translateY(100%);
-				opacity: 0;
-			}
-			to {
-				transform: translateY(0);
-				opacity: 1;
-			}
-		}
-		
-		@keyframes slideInRight {
-			from {
-				transform: translateX(100%);
-				opacity: 0;
-			}
-			to {
-				transform: translateX(0);
-				opacity: 1;
-			}
-		}
-		
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-			}
-			to {
-				opacity: 1;
-			}
-		}
-		
-		@keyframes slideInLeft {
-			from {
-				transform: translateX(-30px);
-				opacity: 0;
-			}
-			to {
-				transform: translateX(0);
-				opacity: 1;
-			}
-		}
-		
-		@keyframes pulse {
-			50% {
-				opacity: 0.5;
-			}
-		}
-		
-		@keyframes bounce {
-			0%, 100% {
-				transform: translateY(0);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
-		}
-		
-		@keyframes shimmer {
-			0% {
-				background-position: -1000px 0;
-			}
-			100% {
-				background-position: 1000px 0;
-			}
-		}
-		
-		@keyframes glow {
-			0%, 100% {
-				box-shadow: 0 0 5px rgba(31, 111, 235, 0.5);
-			}
-			50% {
-				box-shadow: 0 0 20px rgba(31, 111, 235, 0.8);
-			}
-		}
-		
-		.animate-slide-up {
-			animation: slideIn 0.4s ease-out cubic-bezier(0.34, 1.56, 0.64, 1);
-		}
-		
-		.animate-fade-in {
-			animation: fadeIn 0.5s ease-out;
-		}
-		
-		.animate-slide-left {
-			animation: slideInLeft 0.4s ease-out;
-		}
-		
-		.animate-slide-right {
-			animation: slideInRight 0.4s ease-out;
-		}
-		
-		.animate-bounce-smooth {
-			animation: bounce 2s infinite;
-		}
-		
-		.hover-lift:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-		}
-		
-		.pulse-glow {
-			animation: glow 2s ease-in-out infinite;
-		}
-		
-		.repo-card {
-			transition: all 0.3s ease;
-			cursor: pointer;
-		}
-		
-		.repo-card:hover {
-			transform: translateX(4px);
-			border-color: var(--accent-color);
-		}
-		
-		.file-item {
-			transition: all 0.2s ease;
-		}
-		
-		.file-item:hover {
-			background-color: rgba(31, 111, 235, 0.15);
-			transform: translateX(2px);
-		}
-		
-		.code-link {
-			cursor: pointer;
-			text-decoration: underline;
-			transition: all 0.2s ease;
-			color: var(--accent-color);
-		}
-		
-		.code-link:hover {
-			color: #79c0ff;
-			transform: scale(1.05);
-		}
-		
-		.modal-box {
-			animation: slideIn 0.3s ease-out;
-			background-color: var(--bg-secondary);
-			color: var(--text-primary);
-			border: 1px solid var(--border-color);
-		}
-		
-		.search-input {
-			transition: all 0.3s ease;
-			background-color: var(--bg-tertiary);
-			color: var(--text-primary);
-			border-color: var(--border-color);
-		}
-		
-		.search-input:focus {
-			box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
-			border-color: var(--accent-color);
-		}
-		
-		.tooltip {
-			position: relative;
-		}
-		
-		.tooltip::after {
-			content: attr(data-tooltip);
-			position: absolute;
-			bottom: 100%;
-			left: 50%;
-			transform: translateX(-50%);
-			padding: 0.5rem 0.75rem;
-			background-color: var(--bg-secondary);
-			color: var(--text-primary);
-			border-radius: 6px;
-			font-size: 0.75rem;
-			white-space: nowrap;
+	@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+	:root {
+		--editor-height: calc(100vh - 160px);
+		--sidebar-width: 320px;
+		--primary-color: #1f6feb;
+		--secondary-color: #8957e5;
+		--accent-color: #58a6ff;
+	}
+	
+	* {
+		transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	
+	html.dark {
+		color-scheme: dark;
+		--bg-primary: #0d1117;
+		--bg-secondary: #161b22;
+		--bg-tertiary: #010409;
+		--text-primary: #c9d1d9;
+		--text-secondary: #8b949e;
+		--border-color: #30363d;
+	}
+	
+	html.light {
+		color-scheme: light;
+		--bg-primary: #f6f8fa;
+		--bg-secondary: #ffffff;
+		--bg-tertiary: #f3f4f6;
+		--text-primary: #24292f;
+		--text-secondary: #57606a;
+		--border-color: #d0d7de;
+	}
+	
+	html.high-contrast {
+		color-scheme: dark;
+		--bg-primary: #000000;
+		--bg-secondary: #1a1a1a;
+		--bg-tertiary: #000000;
+		--text-primary: #ffffff;
+		--text-secondary: #cccccc;
+		--border-color: #ffffff;
+	}
+	
+	html.nord {
+		color-scheme: dark;
+		--bg-primary: #2e3440;
+		--bg-secondary: #3b4252;
+		--bg-tertiary: #2e3440;
+		--text-primary: #eceff4;
+		--text-secondary: #d4d8de;
+		--border-color: #434c5e;
+	}
+	
+	html.dracula {
+		color-scheme: dark;
+		--bg-primary: #282a36;
+		--bg-secondary: #44475a;
+		--bg-tertiary: #1e1f29;
+		--text-primary: #f8f8f2;
+		--text-secondary: #bfbfbf;
+		--border-color: #44475a;
+	}
+	
+	html.gruvbox {
+		color-scheme: dark;
+		--bg-primary: #282828;
+		--bg-secondary: #3c3836;
+		--bg-tertiary: #1d2021;
+		--text-primary: #ebdbb2;
+		--text-secondary: #bdae93;
+		--border-color: #504945;
+	}
+	
+	html.monokai {
+		color-scheme: dark;
+		--bg-primary: #272822;
+		--bg-secondary: #3e3d32;
+		--bg-tertiary: #1d1d1d;
+		--text-primary: #f8f8f2;
+		--text-secondary: #bfbfbf;
+		--border-color: #49483e;
+	}
+	
+	html.solarized-dark {
+		color-scheme: dark;
+		--bg-primary: #002b36;
+		--bg-secondary: #073642;
+		--bg-tertiary: #001b22;
+		--text-primary: #839496;
+		--text-secondary: #657b83;
+		--border-color: #073642;
+	}
+	
+	body {
+		font-family: 'Inter', sans-serif;
+		background-color: var(--bg-primary);
+		color: var(--text-primary);
+		overflow: hidden;
+	}
+	
+	.monaco-editor-container {
+		height: var(--editor-height);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	
+	.github-gradient {
+		background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+	}
+	
+	.glass {
+		background: rgba(var(--bg-primary), 0.7);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	
+	html.light .glass {
+		background: rgba(255, 255, 255, 0.8);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	
+	html.high-contrast .glass {
+		background: rgba(0, 0, 0, 0.9);
+		border: 2px solid #ffffff;
+	}
+	
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: var(--border-color);
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: var(--text-secondary);
+	}
+	
+	@keyframes slideIn {
+		from {
+			transform: translateY(100%);
 			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.2s ease;
-			margin-bottom: 0.5rem;
-			border: 1px solid var(--border-color);
 		}
-		
-		.tooltip:hover::after {
+		to {
+			transform: translateY(0);
 			opacity: 1;
 		}
-		
-		.code-block {
-			background-color: var(--bg-tertiary);
-			border-radius: 6px;
-			padding: 12px;
-			font-family: 'JetBrains Mono', monospace;
-			font-size: 12px;
-			overflow-x: auto;
-			color: var(--text-primary);
-			border: 1px solid var(--border-color);
-		}
-		
-		.action-button {
-			transition: all 0.2s ease;
-		}
-		
-		.action-button:hover {
-			transform: scale(1.05);
-		}
-		
-		.action-button:active {
-			transform: scale(0.95);
-		}
-		
-		.header-glow {
-			box-shadow: 0 4px 12px rgba(31, 111, 235, 0.1);
-		}
-		
-		html.high-contrast .header-glow {
-			box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-		}
-		
-		.sidebar-border {
-			border-color: var(--border-color);
-		}
-		
-		.suggestion-item {
-			padding: 0.75rem;
-			cursor: pointer;
-			transition: all 0.2s ease;
-			border-radius: 4px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
-		
-		.suggestion-item:hover {
-			background-color: rgba(31, 111, 235, 0.2);
-		}
-		
-		.suggestion-delete-btn {
+	}
+	
+	@keyframes slideInRight {
+		from {
+			transform: translateX(100%);
 			opacity: 0;
-			transition: opacity 0.2s ease;
 		}
-		
-		.suggestion-item:hover .suggestion-delete-btn {
+		to {
+			transform: translateX(0);
 			opacity: 1;
 		}
-		
-		.release-item {
-			border: 1px solid var(--border-color);
-			border-radius: 8px;
-			padding: 1rem;
-			margin: 0.5rem 0;
-			transition: all 0.3s ease;
-			cursor: pointer;
+	}
+	
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
 		}
-		
-		.release-item:hover {
-			border-color: var(--accent-color);
-			box-shadow: 0 8px 16px rgba(31, 111, 235, 0.1);
-			transform: translateY(-2px);
+		to {
+			opacity: 1;
 		}
-		
-		.breadcrumb-item {
-			transition: all 0.2s ease;
-			padding: 0.25rem 0.5rem;
-			border-radius: 4px;
+	}
+	
+	@keyframes slideInLeft {
+		from {
+			transform: translateX(-30px);
+			opacity: 0;
 		}
-		
-		.breadcrumb-item:hover {
-			background-color: rgba(31, 111, 235, 0.1);
-			transform: translateY(-2px);
+		to {
+			transform: translateX(0);
+			opacity: 1;
 		}
-
-		.repo-creation-card {
-			border: 2px dashed var(--border-color);
-			border-radius: 8px;
-			padding: 2rem;
-			text-align: center;
-			cursor: pointer;
-			transition: all 0.3s ease;
+	}
+	
+	@keyframes pulse {
+		50% {
+			opacity: 0.5;
 		}
-
-		.repo-creation-card:hover {
-			border-color: var(--accent-color);
-			background-color: rgba(31, 111, 235, 0.05);
+	}
+	
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: translateY(0);
 		}
-
-		.file-creation-card {
-			border: 2px dashed var(--border-color);
-			border-radius: 8px;
-			padding: 1rem;
-			text-align: center;
-			cursor: pointer;
-			transition: all 0.3s ease;
+		50% {
+			transform: translateY(-10px);
 		}
-
-		.file-creation-card:hover {
-			border-color: var(--accent-color);
-			background-color: rgba(31, 111, 235, 0.05);
+	}
+	
+	@keyframes shimmer {
+		0% {
+			background-position: -1000px 0;
 		}
+		100% {
+			background-position: 1000px 0;
+		}
+	}
+	
+	@keyframes glow {
+		0%,
+		100% {
+			box-shadow: 0 0 5px rgba(31, 111, 235, 0.5);
+		}
+		50% {
+			box-shadow: 0 0 20px rgba(31, 111, 235, 0.8);
+		}
+	}
+	
+	.animate-slide-up {
+		animation: slideIn 0.4s ease-out cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+	
+	.animate-fade-in {
+		animation: fadeIn 0.5s ease-out;
+	}
+	
+	.animate-slide-left {
+		animation: slideInLeft 0.4s ease-out;
+	}
+	
+	.animate-slide-right {
+		animation: slideInRight 0.4s ease-out;
+	}
+	
+	.animate-bounce-smooth {
+		animation: bounce 2s infinite;
+	}
+	
+	.hover-lift:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+	}
+	
+	.pulse-glow {
+		animation: glow 2s ease-in-out infinite;
+	}
+	
+	.repo-card {
+		transition: all 0.3s ease;
+		cursor: pointer;
+	}
+	
+	.repo-card:hover {
+		transform: translateX(4px);
+		border-color: var(--accent-color);
+	}
+	
+	.file-item {
+		transition: all 0.2s ease;
+	}
+	
+	.file-item:hover {
+		background-color: rgba(31, 111, 235, 0.15);
+		transform: translateX(2px);
+	}
+	
+	.code-link {
+		cursor: pointer;
+		text-decoration: underline;
+		transition: all 0.2s ease;
+		color: var(--accent-color);
+	}
+	
+	.code-link:hover {
+		color: #79c0ff;
+		transform: scale(1.05);
+	}
+	
+	.modal-box {
+		animation: slideIn 0.3s ease-out;
+		background-color: var(--bg-secondary);
+		color: var(--text-primary);
+		border: 1px solid var(--border-color);
+	}
+	
+	.search-input {
+		transition: all 0.3s ease;
+		background-color: var(--bg-tertiary);
+		color: var(--text-primary);
+		border-color: var(--border-color);
+	}
+	
+	.search-input:focus {
+		box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+		border-color: var(--accent-color);
+	}
+	
+	.tooltip {
+		position: relative;
+	}
+	
+	.tooltip::after {
+		content: attr(data-tooltip);
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 0.5rem 0.75rem;
+		background-color: var(--bg-secondary);
+		color: var(--text-primary);
+		border-radius: 6px;
+		font-size: 0.75rem;
+		white-space: nowrap;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease;
+		margin-bottom: 0.5rem;
+		border: 1px solid var(--border-color);
+	}
+	
+	.tooltip:hover::after {
+		opacity: 1;
+	}
+	
+	.code-block {
+		background-color: var(--bg-tertiary);
+		border-radius: 6px;
+		padding: 12px;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 12px;
+		overflow-x: auto;
+		color: var(--text-primary);
+		border: 1px solid var(--border-color);
+	}
+	
+	.action-button {
+		transition: all 0.2s ease;
+	}
+	
+	.action-button:hover {
+		transform: scale(1.05);
+	}
+	
+	.action-button:active {
+		transform: scale(0.95);
+	}
+	
+	.header-glow {
+		box-shadow: 0 4px 12px rgba(31, 111, 235, 0.1);
+	}
+	
+	html.high-contrast .header-glow {
+		box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+	}
+	
+	.sidebar-border {
+		border-color: var(--border-color);
+	}
+	
+	.suggestion-item {
+		padding: 0.75rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		border-radius: 4px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.suggestion-item:hover {
+		background-color: rgba(31, 111, 235, 0.2);
+	}
+	
+	.suggestion-delete-btn {
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+	
+	.suggestion-item:hover .suggestion-delete-btn {
+		opacity: 1;
+	}
+	
+	.release-item {
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		padding: 1rem;
+		margin: 0.5rem 0;
+		transition: all 0.3s ease;
+		cursor: pointer;
+	}
+	
+	.release-item:hover {
+		border-color: var(--accent-color);
+		box-shadow: 0 8px 16px rgba(31, 111, 235, 0.1);
+		transform: translateY(-2px);
+	}
+	
+	.breadcrumb-item {
+		transition: all 0.2s ease;
+		padding: 0.25rem 0.5rem;
+		border-radius: 4px;
+	}
+	
+	.breadcrumb-item:hover {
+		background-color: rgba(31, 111, 235, 0.1);
+		transform: translateY(-2px);
+	}
+	
+	.repo-creation-card {
+		border: 2px dashed var(--border-color);
+		border-radius: 8px;
+		padding: 2rem;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+	
+	.repo-creation-card:hover {
+		border-color: var(--accent-color);
+		background-color: rgba(31, 111, 235, 0.05);
+	}
+	
+	.file-creation-card {
+		border: 2px dashed var(--border-color);
+		border-radius: 8px;
+		padding: 1rem;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+	
+	.file-creation-card:hover {
+		border-color: var(--accent-color);
+		background-color: rgba(31, 111, 235, 0.05);
+	}
 	</style>
 </head>
+
 <body class="text-gray-300 dark">
 	<div id="app" class="flex flex-col h-screen overflow-hidden">
 		<!-- Top Navigation Bar -->
 		<header class="h-16 border-b sidebar-border glass flex items-center justify-between px-6 z-50 header-glow animate-fade-in">
 			<div class="flex items-center gap-4">
-				<div class="github-gradient p-2 rounded-lg hover-lift cursor-pointer" onclick="toggleMainMenu()">
-					<i class="fab fa-github text-white text-xl"></i>
-				</div>
+				<div class="github-gradient p-2 rounded-lg hover-lift cursor-pointer" onclick="toggleMainMenu()"> <i class="fab fa-github text-white text-xl"></i> </div>
 				<h1 class="text-lg font-bold tracking-tight hidden md:block">GitNexus <span class="text-xs font-normal text-gray-500">v4.8 beta | Testers Edition</span></h1>
-				<div class="relative ml-4 hidden sm:block group">
-					<i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+				<div class="relative ml-4 hidden sm:block group"> <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
 					<input id="user-search" type="text" placeholder="Search GitHub User..." class="bg-[var(--bg-tertiary)] border sidebar-border rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:outline-none search-input" onkeyup="handleSearchInput(event)" oninput="showSearchSuggestions()">
 					<button onclick="searchUser()" class="ml-2 btn btn-xs btn-primary action-button">Go</button>
 					<div id="search-suggestions" class="absolute top-full left-0 w-full mt-2 bg-[var(--bg-secondary)] border sidebar-border rounded-lg hidden max-h-64 overflow-y-auto custom-scrollbar z-50 shadow-xl"></div>
 				</div>
 			</div>
 			<div class="flex items-center gap-3">
-				<div class="flex items-center bg-[var(--bg-secondary)] border sidebar-border rounded-md px-3 py-1 hidden lg:flex">
-					<i class="fas fa-key text-xs mr-2"></i>
-					<input id="pat-token" type="password" placeholder="Enter PAT for Edit Access" class="bg-transparent text-xs w-48 outline-none" onchange="updateAuthStatus()" onkeyup="handlePATInput(event)">
-				</div>
-				<div id="auth-badge" class="badge badge-error gap-2 text-[10px] uppercase font-bold animate-slide-left">
-					<i class="fas fa-lock"></i> Read Only
-				</div>
+				<div class="flex items-center bg-[var(--bg-secondary)] border sidebar-border rounded-md px-3 py-1 hidden lg:flex"> <i class="fas fa-key text-xs mr-2"></i>
+					<input id="pat-token" type="password" placeholder="Enter PAT for Edit Access" class="bg-transparent text-xs w-48 outline-none" onchange="updateAuthStatus()" onkeyup="handlePATInput(event)"> </div>
+				<div id="auth-badge" class="badge badge-error gap-2 text-[10px] uppercase font-bold animate-slide-left"> <i class="fas fa-lock"></i> Read Only </div>
 				<div class="dropdown dropdown-end">
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar hover-lift">
-						<div class="w-10 rounded-full border sidebar-border" id="user-avatar-container">
-							<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" id="user-avatar" alt="avatar" />
-						</div>
+						<div class="w-10 rounded-full border sidebar-border" id="user-avatar-container"> <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" id="user-avatar" alt="avatar" /> </div>
 					</label>
 					<ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-[var(--bg-secondary)] border sidebar-border rounded-box w-52 animate-fade-in">
 						<li><a onclick="showThemeMenu()"><i class="fas fa-palette mr-2"></i>Themes</a></li>
@@ -497,8 +491,7 @@
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left Sidebar: Repository & File Explorer -->
 			<aside class="w-[320px] border-r sidebar-border glass flex flex-col animate-slide-left transition-all duration-300">
-				<div class="p-4 border-b sidebar-border flex justify-between items-center bg-[var(--bg-secondary)]">
-					<span class="text-xs font-bold uppercase text-gray-500">Explorer</span>
+				<div class="p-4 border-b sidebar-border flex justify-between items-center bg-[var(--bg-secondary)]"> <span class="text-xs font-bold uppercase text-gray-500">Explorer</span>
 					<div class="flex gap-2">
 						<button onclick="refreshCurrent()" class="hover:text-white tooltip" data-tooltip="Refresh"><i class="fas fa-sync-alt text-xs action-button"></i></button>
 						<button onclick="toggleSidebarSize()" class="hover:text-white tooltip" data-tooltip="Toggle Size"><i class="fas fa-columns text-xs action-button"></i></button>
@@ -512,12 +505,10 @@
 				</div>
 				<!-- Search Input -->
 				<div class="p-2 border-b sidebar-border">
-					<input id="sidebar-search" type="text" placeholder="Search..." class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-1.5 text-xs focus:outline-none search-input" onkeyup="filterSidebarContent()" onkeypress="handleSidebarSearch(event)">
-				</div>
+					<input id="sidebar-search" type="text" placeholder="Search..." class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-1.5 text-xs focus:outline-none search-input" onkeyup="filterSidebarContent()" onkeypress="handleSidebarSearch(event)"> </div>
 				<!-- Sidebar Content -->
 				<div class="flex-1 overflow-y-auto custom-scrollbar p-2" id="sidebar-content">
-					<div class="flex flex-col items-center justify-center h-full text-gray-600 text-center p-4 animate-fade-in">
-						<i class="fab fa-github text-4xl mb-4 opacity-20"></i>
+					<div class="flex flex-col items-center justify-center h-full text-gray-600 text-center p-4 animate-fade-in"> <i class="fab fa-github text-4xl mb-4 opacity-20"></i>
 						<p class="text-sm italic">Search a user to explore their digital universe</p>
 					</div>
 				</div>
@@ -526,15 +517,11 @@
 			<main class="flex-1 flex flex-col bg-[var(--bg-primary)] relative">
 				<!-- Breadcrumbs -->
 				<nav class="h-10 border-b sidebar-border flex items-center px-4 gap-2 text-xs font-mono overflow-x-auto whitespace-nowrap bg-[var(--bg-secondary)]/50 custom-scrollbar">
-					<div id="breadcrumb-container" class="flex items-center gap-2 animate-fade-in">
-						<span class="text-gray-600 italic">No resource selected</span>
-					</div>
+					<div id="breadcrumb-container" class="flex items-center gap-2 animate-fade-in"> <span class="text-gray-600 italic">No resource selected</span> </div>
 				</nav>
 				<!-- Action Bar -->
 				<div class="h-12 flex items-center justify-between px-4 bg-[var(--bg-primary)] border-b sidebar-border flex-wrap">
-					<div id="active-file-label" class="text-sm font-medium flex items-center gap-2 animate-slide-left">
-						<i class="fas fa-code text-blue-400"></i> <span>welcome.md</span>
-					</div>
+					<div id="active-file-label" class="text-sm font-medium flex items-center gap-2 animate-slide-left"> <i class="fas fa-code text-blue-400"></i> <span>welcome.md</span> </div>
 					<div class="flex items-center gap-2 flex-wrap justify-end">
 						<button onclick="copyRawUrl()" class="btn btn-xs btn-outline action-button tooltip" data-tooltip="Copy Raw URL"><i class="fas fa-copy"></i></button>
 						<button onclick="copyCode()" class="btn btn-xs btn-outline action-button tooltip hidden" id="copy-code-btn" data-tooltip="Copy Code"><i class="fas fa-code"></i></button>
@@ -552,17 +539,13 @@
 					<div id="editor-viewport" class="w-full h-full"></div>
 					<!-- Image Preview -->
 					<div id="image-viewport" class="hidden absolute inset-0 bg-[var(--bg-primary)] z-10 flex items-center justify-center p-10">
-						<div class="relative group">
-							<img id="preview-img" src="" class="max-w-full max-h-[70vh] rounded shadow-2xl border sidebar-border hover-lift" alt="preview">
-							<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded">
-								<a id="img-download-link" href="#" download class="btn btn-primary action-button">Download Image</a>
-							</div>
+						<div class="relative group"> <img id="preview-img" src="" class="max-w-full max-h-[70vh] rounded shadow-2xl border sidebar-border hover-lift" alt="preview">
+							<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded"> <a id="img-download-link" href="#" download class="btn btn-primary action-button">Download Image</a> </div>
 						</div>
 					</div>
 					<!-- Welcome View -->
 					<div id="welcome-viewport" class="absolute inset-0 z-20 bg-[var(--bg-primary)] flex flex-col items-center justify-center text-center animate-fade-in overflow-y-auto">
-						<div class="max-w-2xl p-4">
-							<i class="fas fa-terminal text-6xl text-blue-500 mb-6 animate-pulse"></i>
+						<div class="max-w-2xl p-4"> <i class="fas fa-terminal text-6xl text-blue-500 mb-6 animate-pulse"></i>
 							<h2 class="text-3xl font-bold mb-3">Ready to Build?</h2>
 							<p class="text-gray-500 mb-8 text-sm">Select a repository and file from the sidebar to begin viewing or editing code. Input your PAT for write access.</p>
 							<!-- Features Grid -->
@@ -584,9 +567,7 @@
 									<div class="text-[10px] text-gray-400">Play music while you code.</div>
 								</div>
 							</div>
-							<button onclick="document.getElementById('user-search').focus()" class="btn btn-primary action-button gap-2">
-								<i class="fas fa-search"></i> Start Exploring
-							</button>
+							<button onclick="document.getElementById('user-search').focus()" class="btn btn-primary action-button gap-2"> <i class="fas fa-search"></i> Start Exploring </button>
 						</div>
 					</div>
 				</div>
@@ -594,18 +575,10 @@
 		</div>
 		<!-- Footer / Status Bar -->
 		<footer class="h-8 border-t sidebar-border bg-[var(--bg-secondary)] flex items-center justify-between px-4 text-[10px] uppercase font-medium tracking-widest text-gray-500">
-			<div class="flex items-center gap-4">
-				<span class="flex items-center gap-1"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span>
-				<span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-500"></i> Engine Online</span>
-			</div>
-			<div class="flex items-center gap-4">
-				<span id="cursor-pos">Ln 1, Col 1</span>
-				<span>UTF-8</span>
-				<span class="bg-blue-600 text-white px-2 py-0.5 rounded cursor-pointer action-button hover:bg-blue-700" onclick="updateAuthStatus()">API ACTIVE</span>
-			</div>
+			<div class="flex items-center gap-4"> <span class="flex items-center gap-1"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span> <span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-500"></i> Engine Online</span> </div>
+			<div class="flex items-center gap-4"> <span id="cursor-pos">Ln 1, Col 1</span> <span>UTF-8</span> <span class="bg-blue-600 text-white px-2 py-0.5 rounded cursor-pointer action-button hover:bg-blue-700" onclick="updateAuthStatus()">API ACTIVE</span> </div>
 		</footer>
 	</div>
-
 	<!-- Create Repository Modal -->
 	<dialog id="create_repo_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
@@ -615,8 +588,7 @@
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">Repository Name</label>
-					<input id="repo-name-input" type="text" placeholder="my-awesome-project" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required>
-				</div>
+					<input id="repo-name-input" type="text" placeholder="my-awesome-project" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required> </div>
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">Description</label>
 					<textarea id="repo-desc-input" placeholder="Brief description of your project..." class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-16 mt-1"></textarea>
@@ -654,7 +626,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Create File Modal -->
 	<dialog id="create_file_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
@@ -664,20 +635,17 @@
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">File Name</label>
-					<input id="file-name-input" type="text" placeholder="index.js" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required>
-				</div>
+					<input id="file-name-input" type="text" placeholder="index.js" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required> </div>
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">File Path (optional)</label>
-					<input id="file-path-input" type="text" placeholder="src/components/" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-				</div>
+					<input id="file-path-input" type="text" placeholder="src/components/" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">Initial Content</label>
 					<textarea id="file-content-input" placeholder="// Your code here..." class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32 mt-1 font-mono"></textarea>
 				</div>
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">Commit Message</label>
-					<input id="file-commit-msg" type="text" placeholder="Create new file" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-				</div>
+					<input id="file-commit-msg" type="text" placeholder="Create new file" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 			</div>
 			<div class="modal-action">
 				<button class="btn btn-sm">Cancel</button>
@@ -685,7 +653,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Profile Modal -->
 	<dialog id="profile_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-3xl">
@@ -693,11 +660,8 @@
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<!-- Avatar & Basic Info -->
 				<div class="flex items-center gap-4 pb-4 border-b sidebar-border">
-					<div class="relative">
-						<img id="modal-avatar" src="" class="w-24 h-24 rounded-full border sidebar-border border-4 hover-lift cursor-pointer" onclick="openAvatarUpload()" title="Click to change avatar">
-						<button type="button" onclick="openAvatarUpload()" class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">
-							<i class="fas fa-camera text-xs"></i>
-						</button>
+					<div class="relative"> <img id="modal-avatar" src="" class="w-24 h-24 rounded-full border sidebar-border border-4 hover-lift cursor-pointer" onclick="openAvatarUpload()" title="Click to change avatar">
+						<button type="button" onclick="openAvatarUpload()" class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600"> <i class="fas fa-camera text-xs"></i> </button>
 					</div>
 					<div class="flex-1">
 						<h4 id="modal-name" class="font-bold text-lg"></h4>
@@ -710,20 +674,16 @@
 					<div class="grid grid-cols-2 gap-4">
 						<div>
 							<label class="text-xs font-bold uppercase text-gray-500">Name</label>
-							<input id="edit-name" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-						</div>
+							<input id="edit-name" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 						<div>
 							<label class="text-xs font-bold uppercase text-gray-500">Company</label>
-							<input id="edit-company" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-						</div>
+							<input id="edit-company" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 						<div>
 							<label class="text-xs font-bold uppercase text-gray-500">Location</label>
-							<input id="edit-location" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-						</div>
+							<input id="edit-location" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 						<div>
 							<label class="text-xs font-bold uppercase text-gray-500">Blog</label>
-							<input id="edit-blog" type="url" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-						</div>
+							<input id="edit-blog" type="url" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 					</div>
 					<div>
 						<label class="text-xs font-bold uppercase text-gray-500">Bio</label>
@@ -731,8 +691,7 @@
 					</div>
 					<div>
 						<label class="text-xs font-bold uppercase text-gray-500">Twitter</label>
-						<input id="edit-twitter" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
-					</div>
+						<input id="edit-twitter" type="text" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input mt-1"> </div>
 				</div>
 				<!-- Stats Grid -->
 				<div class="grid grid-cols-4 gap-4 pt-4 border-t sidebar-border">
@@ -762,7 +721,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Upload Modal -->
 	<dialog id="upload_modal" class="modal">
 		<form method="dialog" class="modal-box">
@@ -776,7 +734,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Releases Modal -->
 	<dialog id="releases_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
@@ -787,7 +744,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Music Player Modal -->
 	<dialog id="music_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
@@ -804,12 +760,8 @@
 				</div>
 				<!-- Music Source Selection -->
 				<div class="flex gap-2">
-					<button type="button" onclick="setMusicSource('spotify')" class="flex-1 btn btn-sm btn-outline" id="spotify-btn">
-						<i class="fab fa-spotify mr-2"></i>Spotify
-					</button>
-					<button type="button" onclick="setMusicSource('youtube')" class="flex-1 btn btn-sm btn-outline" id="youtube-btn">
-						<i class="fab fa-youtube mr-2"></i>YouTube Music
-					</button>
+					<button type="button" onclick="setMusicSource('spotify')" class="flex-1 btn btn-sm btn-outline" id="spotify-btn"> <i class="fab fa-spotify mr-2"></i>Spotify </button>
+					<button type="button" onclick="setMusicSource('youtube')" class="flex-1 btn btn-sm btn-outline" id="youtube-btn"> <i class="fab fa-youtube mr-2"></i>YouTube Music </button>
 				</div>
 				<!-- Music Results -->
 				<div id="music-results" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar"></div>
@@ -823,12 +775,8 @@
 						<div class="text-2xl" id="music-icon"><i class="fas fa-music"></i></div>
 					</div>
 					<div class="flex gap-2">
-						<button type="button" class="flex-1 btn btn-sm btn-primary" onclick="toggleMusicPlayback()">
-							<i class="fas fa-play"></i>
-						</button>
-						<button type="button" class="flex-1 btn btn-sm btn-warning" onclick="stopMusic()">
-							<i class="fas fa-stop"></i>
-						</button>
+						<button type="button" class="flex-1 btn btn-sm btn-primary" onclick="toggleMusicPlayback()"> <i class="fas fa-play"></i> </button>
+						<button type="button" class="flex-1 btn btn-sm btn-warning" onclick="stopMusic()"> <i class="fas fa-stop"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -837,7 +785,6 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Customization Modal -->
 	<dialog id="customization_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-3xl">
@@ -847,9 +794,7 @@
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500">Editor Font Size</label>
 					<div class="flex items-center gap-4 mt-2">
-						<input id="editor-font-size" type="range" min="10" max="20" value="14" class="range range-sm flex-1" onchange="updateEditorSettings()">
-						<span id="font-size-display" class="text-sm font-bold">14px</span>
-					</div>
+						<input id="editor-font-size" type="range" min="10" max="20" value="14" class="range range-sm flex-1" onchange="updateEditorSettings()"> <span id="font-size-display" class="text-sm font-bold">14px</span> </div>
 				</div>
 				<!-- Tab Size -->
 				<div>
@@ -863,13 +808,11 @@
 				<!-- Word Wrap -->
 				<div class="flex items-center justify-between">
 					<label class="text-xs font-bold uppercase text-gray-500">Word Wrap</label>
-					<input type="checkbox" id="word-wrap" class="checkbox" onchange="toggleWordWrap()" checked>
-				</div>
+					<input type="checkbox" id="word-wrap" class="checkbox" onchange="toggleWordWrap()" checked> </div>
 				<!-- VS Minimap -->
 				<div class="flex items-center justify-between">
 					<label class="text-xs font-bold uppercase text-gray-500">Show Minimap</label>
-					<input type="checkbox" id="show-minimap" class="checkbox" onchange="toggleMinimap()" checked>
-				</div>
+					<input type="checkbox" id="show-minimap" class="checkbox" onchange="toggleMinimap()" checked> </div>
 				<!-- Keyboard Shortcuts Info -->
 				<div class="bg-[var(--bg-secondary)] p-3 rounded-lg border sidebar-border">
 					<label class="text-xs font-bold uppercase text-gray-500 block mb-2">Keyboard Shortcuts</label>
@@ -886,164 +829,150 @@
 			</div>
 		</form>
 	</dialog>
-
 	<!-- Sorting Menu Modal -->
 	<dialog id="sorting_modal" class="modal">
 		<form method="dialog" class="modal-box">
 			<h3 class="font-bold text-lg mb-4">Sort By</h3>
 			<div class="space-y-2">
-				<button type="button" onclick="setSortBy('name')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition">
-					<i class="fas fa-arrow-a-z mr-2"></i> Name (A-Z)
-				</button>
-				<button type="button" onclick="setSortBy('updated')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition">
-					<i class="fas fa-history mr-2"></i> Recently Updated
-				</button>
-				<button type="button" onclick="setSortBy('stars')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition">
-					<i class="fas fa-star mr-2"></i> Most Stars
-				</button>
-				<button type="button" onclick="setSortBy('forks')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition">
-					<i class="fas fa-code-branch mr-2"></i> Most Forked
-				</button>
-				<button type="button" onclick="setSortBy('size')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition">
-					<i class="fas fa-database mr-2"></i> Size
-				</button>
+				<button type="button" onclick="setSortBy('name')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition"> <i class="fas fa-arrow-a-z mr-2"></i> Name (A-Z) </button>
+				<button type="button" onclick="setSortBy('updated')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition"> <i class="fas fa-history mr-2"></i> Recently Updated </button>
+				<button type="button" onclick="setSortBy('stars')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition"> <i class="fas fa-star mr-2"></i> Most Stars </button>
+				<button type="button" onclick="setSortBy('forks')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition"> <i class="fas fa-code-branch mr-2"></i> Most Forked </button>
+				<button type="button" onclick="setSortBy('size')" class="w-full text-left p-3 rounded hover:bg-[var(--bg-secondary)] transition"> <i class="fas fa-database mr-2"></i> Size </button>
 			</div>
 			<div class="modal-action">
 				<button class="btn btn-sm">Close</button>
 			</div>
 		</form>
 	</dialog>
-
 	<script>
-		// Global State & Config
-		const state = {
-			token: '',
-			currentUser: 'octocat',
-			currentRepo: '',
-			currentBranch: 'main',
-			currentPath: '',
-			currentSHA: '',
-			isOwner: false,
-			theme: 'dark',
-			activeTab: 'repos',
-			repos: [],
-			files: [],
-			monacoEditor: null,
-			filteredRepos: [],
-			filteredFiles: [],
-			userProfile: null,
-			sortBy: 'updated',
-			musicSource: 'spotify',
-			currentlyPlaying: null,
-			editorSettings: {
-				fontSize: 14,
-				tabSize: 4,
-				wordWrap: true,
-				minimap: true
-			}
-		};
-		const GITHUB_API = "https://api.github.com";
-		let sidebarSearchTerm = '';
-		let searchHistory = [];
-
-		// MONACO EDITOR SETUP
-		require.config({
-			paths: {
-				vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
-			}
-		});
-		require(['vs/editor/editor.main'], function() {
-			state.monacoEditor = monaco.editor.create(document.getElementById('editor-viewport'), {
-				value: '',
-				language: 'javascript',
-				theme: 'vs-dark',
-				fontSize: state.editorSettings.fontSize,
-				fontFamily: 'JetBrains Mono',
-				automaticLayout: true,
-				minimap: {
-					enabled: state.editorSettings.minimap
-				},
-				wordWrap: state.editorSettings.wordWrap ? 'on' : 'off',
-				padding: {
-					top: 20
-				},
-				tabSize: state.editorSettings.tabSize
-			});
-			state.monacoEditor.onDidChangeCursorPosition(e => {
-				document.getElementById('cursor-pos').innerText = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
-			});
-		});
-
-		// Git API Stuf
-		async function fetchGH(endpoint, options = {}) {
-			const headers = {
-				'Accept': 'application/vnd.github.v3+json',
-				...options.headers
-			};
-			if(state.token) headers['Authorization'] = `token ${state.token}`;
-			const response = await fetch(`${GITHUB_API}${endpoint}`, {...options, headers});
-			if(!response.ok) {
-				if(response.status === 404) throw new Error('Not found');
-				if(response.status === 403) throw new Error('Rate limited');
-				throw new Error(`Error: ${response.status}`);
-			}
-			return response.json();
+	// Global State & Config
+	const state = {
+		token: '',
+		currentUser: 'octocat',
+		currentRepo: '',
+		currentBranch: 'main',
+		currentPath: '',
+		currentSHA: '',
+		isOwner: false,
+		theme: 'dark',
+		activeTab: 'repos',
+		repos: [],
+		files: [],
+		monacoEditor: null,
+		filteredRepos: [],
+		filteredFiles: [],
+		userProfile: null,
+		sortBy: 'updated',
+		musicSource: 'spotify',
+		currentlyPlaying: null,
+		editorSettings: {
+			fontSize: 14,
+			tabSize: 4,
+			wordWrap: true,
+			minimap: true
 		}
-
-		// Search and Suggestions
-		async function searchUser() {
-			const username = document.getElementById('user-search').value.trim();
-			if(!username) return;
-			document.getElementById('search-suggestions').classList.add('hidden');
-			try {
-				const user = await fetchGH(`/users/${username}`);
-				state.currentUser = user.login;
-				state.userProfile = user;
-				document.getElementById('user-avatar').src = user.avatar_url;
-				if(state.token) {
-					try {
-						const me = await fetchGH('/user');
-						state.isOwner = me.login.toLowerCase() === user.login.toLowerCase();
-					} catch {
-						state.isOwner = false;
-					}
-				} else {
+	};
+	const GITHUB_API = "https://api.github.com";
+	let sidebarSearchTerm = '';
+	let searchHistory = [];
+	// MONACO EDITOR SETUP
+	require.config({
+		paths: {
+			vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
+		}
+	});
+	require(['vs/editor/editor.main'], function() {
+		state.monacoEditor = monaco.editor.create(document.getElementById('editor-viewport'), {
+			value: '',
+			language: 'javascript',
+			theme: 'vs-dark',
+			fontSize: state.editorSettings.fontSize,
+			fontFamily: 'JetBrains Mono',
+			automaticLayout: true,
+			minimap: {
+				enabled: state.editorSettings.minimap
+			},
+			wordWrap: state.editorSettings.wordWrap ? 'on' : 'off',
+			padding: {
+				top: 20
+			},
+			tabSize: state.editorSettings.tabSize
+		});
+		state.monacoEditor.onDidChangeCursorPosition(e => {
+			document.getElementById('cursor-pos').innerText = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
+		});
+	});
+	// Git API Stuf
+	async function fetchGH(endpoint, options = {}) {
+		const headers = {
+			'Accept': 'application/vnd.github.v3+json',
+			...options.headers
+		};
+		if(state.token) headers['Authorization'] = `token ${state.token}`;
+		const response = await fetch(`${GITHUB_API}${endpoint}`, {...options, headers
+		});
+		if(!response.ok) {
+			if(response.status === 404) throw new Error('Not found');
+			if(response.status === 403) throw new Error('Rate limited');
+			throw new Error(`Error: ${response.status}`);
+		}
+		return response.json();
+	}
+	// Search and Suggestions
+	async function searchUser() {
+		const username = document.getElementById('user-search').value.trim();
+		if(!username) return;
+		document.getElementById('search-suggestions').classList.add('hidden');
+		try {
+			const user = await fetchGH(`/users/${username}`);
+			state.currentUser = user.login;
+			state.userProfile = user;
+			document.getElementById('user-avatar').src = user.avatar_url;
+			if(state.token) {
+				try {
+					const me = await fetchGH('/user');
+					state.isOwner = me.login.toLowerCase() === user.login.toLowerCase();
+				} catch {
 					state.isOwner = false;
 				}
-				loadRepositories();
-				addToSearchHistory(username);
-			} catch(err) {
-				alert(`User not found: ${err.message}`);
+			} else {
+				state.isOwner = false;
 			}
+			loadRepositories();
+			addToSearchHistory(username);
+		} catch(err) {
+			alert(`User not found: ${err.message}`);
 		}
+	}
 
-		function handleSearchInput(event) {
-			if(event.key === 'Enter') {
-				searchUser();
-			}
+	function handleSearchInput(event) {
+		if(event.key === 'Enter') {
+			searchUser();
 		}
+	}
 
-		function addToSearchHistory(username) {
-			if(!searchHistory.includes(username)) {
-				searchHistory.unshift(username);
-				if(searchHistory.length > 10) searchHistory.pop();
-				localStorage.setItem('gitnexus-search-history', JSON.stringify(searchHistory));
-			}
+	function addToSearchHistory(username) {
+		if(!searchHistory.includes(username)) {
+			searchHistory.unshift(username);
+			if(searchHistory.length > 10) searchHistory.pop();
+			localStorage.setItem('gitnexus-search-history', JSON.stringify(searchHistory));
 		}
+	}
 
-		function showSearchSuggestions() {
-			const searchTerm = document.getElementById('user-search').value.toLowerCase();
-			const suggestionsContainer = document.getElementById('search-suggestions');
-			if(!searchTerm) {
-				suggestionsContainer.classList.add('hidden');
-				return;
-			}
-			const suggestions = searchHistory.filter(h => h.toLowerCase().includes(searchTerm)).slice(0, 5);
-			if(suggestions.length === 0) {
-				suggestionsContainer.classList.add('hidden');
-				return;
-			}
-			suggestionsContainer.innerHTML = suggestions.map(suggestion => `
+	function showSearchSuggestions() {
+		const searchTerm = document.getElementById('user-search').value.toLowerCase();
+		const suggestionsContainer = document.getElementById('search-suggestions');
+		if(!searchTerm) {
+			suggestionsContainer.classList.add('hidden');
+			return;
+		}
+		const suggestions = searchHistory.filter(h => h.toLowerCase().includes(searchTerm)).slice(0, 5);
+		if(suggestions.length === 0) {
+			suggestionsContainer.classList.add('hidden');
+			return;
+		}
+		suggestionsContainer.innerHTML = suggestions.map(suggestion => `
 				<div class="suggestion-item">
 					<div onclick="selectSuggestion('${suggestion}')" class="flex items-center gap-2 flex-1">
 						<i class="fas fa-history mr-2 text-xs"></i>
@@ -1054,86 +983,82 @@
 					</button>
 				</div>
 			`).join('');
-			suggestionsContainer.classList.remove('hidden');
-		}
+		suggestionsContainer.classList.remove('hidden');
+	}
 
-		function selectSuggestion(username) {
-			document.getElementById('user-search').value = username;
-			searchUser();
-		}
+	function selectSuggestion(username) {
+		document.getElementById('user-search').value = username;
+		searchUser();
+	}
 
-		function deleteSuggestion(username, event) {
-			event.preventDefault();
-			event.stopPropagation();
-			searchHistory = searchHistory.filter(h => h !== username);
-			localStorage.setItem('gitnexus-search-history', JSON.stringify(searchHistory));
-			showSearchSuggestions();
-			showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
+	function deleteSuggestion(username, event) {
+		event.preventDefault();
+		event.stopPropagation();
+		searchHistory = searchHistory.filter(h => h !== username);
+		localStorage.setItem('gitnexus-search-history', JSON.stringify(searchHistory));
+		showSearchSuggestions();
+		showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
+	}
+	// Repo Stuf
+	async function loadRepositories() {
+		try {
+			const repos = await fetchGH(`/users/${state.currentUser}/repos?sort=${state.sortBy}&per_page=100`);
+			state.repos = sortRepositories(repos, state.sortBy);
+			state.filteredRepos = state.repos;
+			sidebarSearchTerm = '';
+			document.getElementById('sidebar-search').value = '';
+			showTab('repos');
+			renderRepoList();
+		} catch(err) {
+			console.error('Failed to load repos:', err);
+			alert('Failed to load repositories');
 		}
+	}
 
-		// Repo Stuf
-		async function loadRepositories() {
-			try {
-				const repos = await fetchGH(`/users/${state.currentUser}/repos?sort=${state.sortBy}&per_page=100`);
-				state.repos = sortRepositories(repos, state.sortBy);
-				state.filteredRepos = state.repos;
-				sidebarSearchTerm = '';
-				document.getElementById('sidebar-search').value = '';
-				showTab('repos');
-				renderRepoList();
-			} catch(err) {
-				console.error('Failed to load repos:', err);
-				alert('Failed to load repositories');
-			}
+	function sortRepositories(repos, sortBy) {
+		const sorted = [...repos];
+		switch(sortBy) {
+			case 'name':
+				return sorted.sort((a, b) => a.name.localeCompare(b.name));
+			case 'updated':
+				return sorted.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+			case 'stars':
+				return sorted.sort((a, b) => b.stargazers_count - a.stargazers_count);
+			case 'forks':
+				return sorted.sort((a, b) => b.forks_count - a.forks_count);
+			case 'size':
+				return sorted.sort((a, b) => b.size - a.size);
+			default:
+				return sorted;
 		}
+	}
 
-		function sortRepositories(repos, sortBy) {
-			const sorted = [...repos];
-			switch(sortBy) {
-				case 'name':
-					return sorted.sort((a, b) => a.name.localeCompare(b.name));
-				case 'updated':
-					return sorted.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-				case 'stars':
-					return sorted.sort((a, b) => b.stargazers_count - a.stargazers_count);
-				case 'forks':
-					return sorted.sort((a, b) => b.forks_count - a.forks_count);
-				case 'size':
-					return sorted.sort((a, b) => b.size - a.size);
-				default:
-					return sorted;
-			}
-		}
+	function setSortBy(sortOption) {
+		state.sortBy = sortOption;
+		window.sorting_modal.close();
+		loadRepositories();
+	}
 
-		function setSortBy(sortOption) {
-			state.sortBy = sortOption;
-			window.sorting_modal.close();
-			loadRepositories();
-		}
-
-		function renderRepoList() {
-			const container = document.getElementById('sidebar-content');
-			const repos = sidebarSearchTerm ? state.filteredRepos : state.repos;
-			
-			let html = '';
-			
-			// Add create repo button if owner
-			if(state.isOwner && state.token) {
-				html += `
+	function renderRepoList() {
+		const container = document.getElementById('sidebar-content');
+		const repos = sidebarSearchTerm ? state.filteredRepos : state.repos;
+		let html = '';
+		// Add create repo button if owner
+		if(state.isOwner && state.token) {
+			html += `
 					<div class="repo-creation-card mb-2" onclick="showCreateRepoModal()">
 						<i class="fas fa-plus text-2xl text-green-400 mb-2"></i>
 						<div class="text-xs font-bold">Create Repository</div>
 						<div class="text-[10px] text-gray-500">New project</div>
 					</div>
 				`;
-			}
-			
-			if(repos.length === 0) {
-				container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories found</p></div>';
-				return;
-			}
-			html += repos.map(repo => {
-				return `
+		}
+		if(repos.length === 0) {
+			container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories found</p></div>';
+			return;
+		}
+		html += repos.map(repo => {
+			return `
 					<div onclick="selectRepo('${repo.name}')" class="p-3 mb-2 rounded-lg border sidebar-border hover:border-blue-500 cursor-pointer bg-[var(--bg-secondary)] transition-all group repo-card">
 						<div class="flex justify-between items-start mb-1">
 							<i class="fas fa-external-link-alt text-[10px] opacity-0 group-hover:opacity-100"></i>
@@ -1147,335 +1072,310 @@
 						</div>
 					</div>
 				`;
-			}).join('');
-			container.innerHTML = html;
+		}).join('');
+		container.innerHTML = html;
+	}
+	async function selectRepo(repoName) {
+		state.currentRepo = repoName;
+		state.currentPath = '';
+		showTab('files');
+		try {
+			await loadFiles('');
+			updateBreadcrumbs('');
+			document.getElementById('welcome-viewport').classList.add('hidden');
+			loadReleases();
+		} catch(err) {
+			alert('Failed to load repository');
 		}
-
-		async function selectRepo(repoName) {
-			state.currentRepo = repoName;
-			state.currentPath = '';
-			showTab('files');
-			try {
-				await loadFiles('');
-				updateBreadcrumbs('');
-				document.getElementById('welcome-viewport').classList.add('hidden');
-				loadReleases();
-			} catch(err) {
-				alert('Failed to load repository');
-			}
+	}
+	// Repo Creation
+	function showCreateRepoModal() {
+		if(!state.token) {
+			alert('PAT token required to create repositories');
+			return;
 		}
-
-		// Repo Creation
-		function showCreateRepoModal() {
-			if(!state.token) {
-				alert('PAT token required to create repositories');
-				return;
-			}
-			window.create_repo_modal.showModal();
+		window.create_repo_modal.showModal();
+	}
+	async function createNewRepository() {
+		const name = document.getElementById('repo-name-input').value.trim();
+		const description = document.getElementById('repo-desc-input').value;
+		const isPrivate = document.getElementById('repo-visibility').value === 'private';
+		const includeReadme = document.getElementById('repo-readme').checked;
+		const includeGitignore = document.getElementById('repo-gitignore').checked;
+		if(!name) {
+			alert('Please enter a repository name');
+			return;
 		}
-
-		async function createNewRepository() {
-			const name = document.getElementById('repo-name-input').value.trim();
-			const description = document.getElementById('repo-desc-input').value;
-			const isPrivate = document.getElementById('repo-visibility').value === 'private';
-			const includeReadme = document.getElementById('repo-readme').checked;
-			const includeGitignore = document.getElementById('repo-gitignore').checked;
-
-			if(!name) {
-				alert('Please enter a repository name');
-				return;
-			}
-
-			try {
-				const repoData = {
-					name,
-					description,
-					private: isPrivate,
+		try {
+			const repoData = {
+				name,
+				description,
+				private: isPrivate,
 					auto_init: includeReadme
-				};
-
-				const repo = await fetchGH('/user/repos', {
-					method: 'POST',
-					body: JSON.stringify(repoData)
+			};
+			const repo = await fetchGH('/user/repos', {
+				method: 'POST',
+				body: JSON.stringify(repoData)
+			});
+			// Add .gitignore if selected
+			if(includeGitignore) {
+				const gitignoreContent = btoa('node_modules/\n.DS_Store\n.env\n.env.local\n*.log\n');
+				await fetchGH(`/repos/${state.currentUser}/${name}/contents/.gitignore`, {
+					method: 'PUT',
+					body: JSON.stringify({
+						message: 'Add .gitignore',
+						content: gitignoreContent
+					})
 				});
-
-				// Add .gitignore if selected
-				if(includeGitignore) {
-					const gitignoreContent = btoa('node_modules/\n.DS_Store\n.env\n.env.local\n*.log\n');
-					await fetchGH(`/repos/${state.currentUser}/${name}/contents/.gitignore`, {
-						method: 'PUT',
-						body: JSON.stringify({
-							message: 'Add .gitignore',
-							content: gitignoreContent
-						})
-					});
-				}
-
-				window.create_repo_modal.close();
-				document.getElementById('repo-name-input').value = '';
-				document.getElementById('repo-desc-input').value = '';
-				document.getElementById('repo-readme').checked = true;
-				document.getElementById('repo-gitignore').checked = true;
-
-				showNotification(`<i class="fas fa-check-circle text-green-400"></i> Repository "${name}" created successfully!`);
-				loadRepositories();
-			} catch(err) {
-				alert(`Failed to create repository: ${err.message}`);
 			}
+			window.create_repo_modal.close();
+			document.getElementById('repo-name-input').value = '';
+			document.getElementById('repo-desc-input').value = '';
+			document.getElementById('repo-readme').checked = true;
+			document.getElementById('repo-gitignore').checked = true;
+			showNotification(`<i class="fas fa-check-circle text-green-400"></i> Repository "${name}" created successfully!`);
+			loadRepositories();
+		} catch(err) {
+			alert(`Failed to create repository: ${err.message}`);
 		}
-
-		// File Stuf
-		async function loadFiles(path) {
-			try {
-				const contents = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${path}`);
-				state.files = Array.isArray(contents) ? contents : [contents];
-				state.filteredFiles = state.files;
-				state.currentPath = path;
-				sidebarSearchTerm = '';
-				document.getElementById('sidebar-search').value = '';
-				renderFileList();
-				updateBreadcrumbs(path);
-			} catch(err) {
-				console.error('Failed to load directory:', err);
-				alert('Failed to load directory');
-			}
+	}
+	// File Stuf
+	async function loadFiles(path) {
+		try {
+			const contents = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${path}`);
+			state.files = Array.isArray(contents) ? contents : [contents];
+			state.filteredFiles = state.files;
+			state.currentPath = path;
+			sidebarSearchTerm = '';
+			document.getElementById('sidebar-search').value = '';
+			renderFileList();
+			updateBreadcrumbs(path);
+		} catch(err) {
+			console.error('Failed to load directory:', err);
+			alert('Failed to load directory');
 		}
+	}
 
-		function renderFileList() {
-			const container = document.getElementById('sidebar-content');
-			const files = sidebarSearchTerm ? state.filteredFiles : state.files;
-			
-			let html = `<div class="flex flex-col gap-1">`;
-			
-			// Add create file button if owner of Git acc
-			if(state.isOwner && state.token && state.currentRepo) {
-				html += `
+	function renderFileList() {
+		const container = document.getElementById('sidebar-content');
+		const files = sidebarSearchTerm ? state.filteredFiles : state.files;
+		let html = `<div class="flex flex-col gap-1">`;
+		// Add create file button if owner of Git acc
+		if(state.isOwner && state.token && state.currentRepo) {
+			html += `
 					<div class="file-creation-card" onclick="showCreateFileModal()">
 						<i class="fas fa-file-circle-plus text-xl text-blue-400 mb-1"></i>
 						<div class="text-xs font-bold">Create File</div>
 					</div>
 				`;
-			}
-			
-			if(state.currentPath !== '') {
-				html += `
+		}
+		if(state.currentPath !== '') {
+			html += `
 					<div onclick="navigateUp()" class="flex items-center gap-2 p-2 hover:bg-[var(--bg-secondary)] rounded cursor-pointer text-xs text-blue-400 file-item transition-all">
 						<i class="fas fa-level-up-alt"></i> .. /
 					</div>
 				`;
-			}
-			
-			if(files.length === 0 && state.currentPath === '') {
-				html += '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">Empty Repository</p></div>';
-				html += `</div>`;
-				container.innerHTML = html;
-				return;
-			}
-			
-			const sorted = files.sort((a, b) => (b.type === 'dir') - (a.type === 'dir') || a.name.localeCompare(b.name));
-			html += sorted.map(file => {
-				const icon = file.type === 'dir' ? 'fa-folder text-yellow-500' : getFileIcon(file.name);
-				return `
-					<div onclick="${file.type === 'dir' ? `loadFiles('${file.path}')` : `openFile('${file.path}', '${file.sha}')`}" class="file-row flex items-center justify-between p-2 hover:bg-[rgba(31,111,235,0.15)] rounded cursor-pointer group file-item">
+		}
+		if(files.length === 0 && state.currentPath === '') {
+			html += '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">Empty Repository</p></div>';
+			html += `</div>`;
+			container.innerHTML = html;
+			return;
+		}
+		const sorted = files.sort((a, b) => (b.type === 'dir') - (a.type === 'dir') || a.name.localeCompare(b.name));
+		html += sorted.map(file => {
+					const icon = file.type === 'dir' ? 'fa-folder text-yellow-500' : getFileIcon(file.name);
+					return `
+					<div onclick="${file.type === 'dir' ? `
+					loadFiles('${file.path}')
+					` : `
+					openFile('${file.path}', '${file.sha}')
+					`}" class="file-row flex items-center justify-between p-2 hover:bg-[rgba(31,111,235,0.15)] rounded cursor-pointer group file-item">
 						<div class="flex items-center gap-2 overflow-hidden flex-1">
 							<i class="fas ${icon} w-4 text-center flex-shrink-0"></i>
 							<span class="text-xs truncate">${file.name}</span>
 						</div>
 						<div class="file-actions flex gap-2">
-							${state.isOwner ? `<i onclick="deleteFile('${file.path}', '${file.sha}', event)" class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button"></i>` : ''}
-							<i onclick="window.open('${file.html_url}', '_blank')" class="fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button"></i>
-						</div>
-					</div>
-				`;
+							${state.isOwner ? ` < i onclick = "deleteFile('${file.path}', '${file.sha}', event)"
+					class = "fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" > < /i>` : ''} < i onclick = "window.open('${file.html_url}', '_blank')"
+					class = "fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" > < /i> < /div> < /div>
+					`;
 			}).join('');
-			html += `</div>`;
-			container.innerHTML = html;
-		}
-
-		async function openFile(path, sha) {
-			state.currentPath = path;
-			state.currentSHA = sha;
-			const file = state.files.find(f => f.path === path);
-			document.getElementById('active-file-label').innerHTML = `<i class="fas ${getFileIcon(path)}"></i> ${path.split('/').pop()}`;
-			const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(path);
-			if(isImage) {
-				showImage(file.download_url);
-				document.getElementById('copy-code-btn').classList.add('hidden');
-			} else {
-				showEditor(file.download_url, path);
-				document.getElementById('copy-code-btn').classList.remove('hidden');
-			}
-			toggleEditButtons();
-		}
-
-		async function showEditor(url, path) {
-			document.getElementById('image-viewport').classList.add('hidden');
-			document.getElementById('editor-viewport').parentElement.classList.remove('hidden');
-			try {
-				const content = await (await fetch(url)).text();
-				state.monacoEditor.setValue(content);
-				const ext = path.split('.').pop();
-				const lang = getLanguageByExt(ext);
-				monaco.editor.setModelLanguage(state.monacoEditor.getModel(), lang);
-				state.monacoEditor.updateOptions({
-					readOnly: !state.isOwner
-				});
-			} catch(err) {
-				state.monacoEditor.setValue('Error loading file content');
-			}
-		}
-
-		function showImage(url) {
-			document.getElementById('editor-viewport').parentElement.classList.add('hidden');
-			const imgViewport = document.getElementById('image-viewport');
-			imgViewport.classList.remove('hidden');
-			document.getElementById('preview-img').src = url;
-			document.getElementById('img-download-link').href = url;
-			document.getElementById('img-download-link').download = state.currentPath.split('/').pop();
-		}
-
-		async function saveFileContent() {
-			if(!state.isOwner) return;
-			const newContent = state.monacoEditor.getValue();
-			const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
-			try {
-				const result = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${state.currentPath}`, {
-					method: 'PUT',
-					body: JSON.stringify({
-						message: `Update ${state.currentPath}`,
-						content: encodedContent,
-						sha: state.currentSHA
-					})
-				});
-				state.currentSHA = result.content.sha;
-				showNotification('✅ Commit successful!');
-			} catch(err) {
-				alert(`Error: ${err.message}`);
-			}
-		}
-
-		async function deleteFile(path, sha, event) {
-			event.stopPropagation();
-			if(!confirm(`Delete ${path}?`)) return;
-			try {
-				await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${path}`, {
-					method: 'DELETE',
-					body: JSON.stringify({
-						message: `Delete ${path}`,
-						sha: sha
-					})
-				});
-				const parentPath = state.currentPath.split('/').slice(0, -1).join('/');
-				await loadFiles(parentPath);
-				showNotification(`<i class="fas fa-trash"></i> File deleted`);
-			} catch(err) {
-				alert(`Delete failed: ${err.message}`);
-			}
-		}
-
-		// File Creation
-		function showCreateFileModal() {
-			if(!state.token) {
-				alert('PAT token required to create files');
-				return;
-			}
-			if(!state.currentRepo) {
-				alert('Please select a repository first');
-				return;
-			}
-			document.getElementById('file-name-input').value = '';
-			document.getElementById('file-path-input').value = state.currentPath ? state.currentPath + '/' : '';
-			document.getElementById('file-content-input').value = '';
-			document.getElementById('file-commit-msg').value = 'Create new file';
-			window.create_file_modal.showModal();
-		}
-
-		async function createNewFile() {
-			const fileName = document.getElementById('file-name-input').value.trim();
-			const filePath = document.getElementById('file-path-input').value.trim();
-			const content = document.getElementById('file-content-input').value;
-			const commitMsg = document.getElementById('file-commit-msg').value.trim() || 'Create new file';
-
-			if(!fileName) {
-				alert('Please enter a file name');
-				return;
-			}
-
-			try {
-				const fullPath = filePath ? `${filePath}${fileName}` : fileName;
-				const encodedContent = btoa(unescape(encodeURIComponent(content)));
-
-				await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${fullPath}`, {
-					method: 'PUT',
-					body: JSON.stringify({
-						message: commitMsg,
-						content: encodedContent
-					})
-				});
-
-				window.create_file_modal.close();
-				showNotification(`<i class="fas fa-check-circle text-green-400"></i> File "${fileName}" created!`);
-				await loadFiles(filePath);
-			} catch(err) {
-				alert(`Failed to create file: ${err.message}`);
-			}
-		}
-
-		// Upload Funct
-		function openUploadModal() {
-			document.getElementById('upload-path-label').innerText = `${state.currentRepo}/${state.currentPath || 'root'}`;
-			window.upload_modal.showModal();
-		}
-
-		async function performUpload() {
-			const fileInput = document.getElementById('file-picker');
-			const files = fileInput.files;
-			if(files.length === 0) {
-				alert('Please select at least one file');
-				return;
-			}
-			for(const file of files) {
-				const reader = new FileReader();
-				reader.onload = async(e) => {
-					const content = e.target.result.split(',')[1];
+			html += ` < /div>`;
+					container.innerHTML = html;
+				}
+				async function openFile(path, sha) {
+					state.currentPath = path;
+					state.currentSHA = sha;
+					const file = state.files.find(f => f.path === path);
+					document.getElementById('active-file-label').innerHTML = `<i class="fas ${getFileIcon(path)}"></i> ${path.split('/').pop()}`;
+					const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(path);
+					if(isImage) {
+						showImage(file.download_url);
+						document.getElementById('copy-code-btn').classList.add('hidden');
+					} else {
+						showEditor(file.download_url, path);
+						document.getElementById('copy-code-btn').classList.remove('hidden');
+					}
+					toggleEditButtons();
+				}
+				async function showEditor(url, path) {
+					document.getElementById('image-viewport').classList.add('hidden');
+					document.getElementById('editor-viewport').parentElement.classList.remove('hidden');
 					try {
-						const uploadPath = state.currentPath ? `${state.currentPath}/${file.name}` : file.name;
-						await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${uploadPath}`, {
-							method: 'PUT',
-							body: JSON.stringify({
-								message: `Upload ${file.name}`,
-								content: content
-							})
+						const content = await (await fetch(url)).text();
+						state.monacoEditor.setValue(content);
+						const ext = path.split('.').pop();
+						const lang = getLanguageByExt(ext);
+						monaco.editor.setModelLanguage(state.monacoEditor.getModel(), lang);
+						state.monacoEditor.updateOptions({
+							readOnly: !state.isOwner
 						});
 					} catch(err) {
-						alert(`Upload failed: ${err.message}`);
+						state.monacoEditor.setValue('Error loading file content');
 					}
-				};
-				reader.readAsDataURL(file);
-			}
-			window.upload_modal.close();
-			fileInput.value = '';
-			setTimeout(() => loadFiles(state.currentPath), 1000);
-			showNotification('✅ Files uploaded successfully!');
-		}
+				}
 
-		// Releases
-		async function loadReleases() {
-			try {
-				const releases = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=10`);
-				renderReleases(releases);
-			} catch(err) {
-				console.log('No releases found');
-			}
-		}
+				function showImage(url) {
+					document.getElementById('editor-viewport').parentElement.classList.add('hidden');
+					const imgViewport = document.getElementById('image-viewport');
+					imgViewport.classList.remove('hidden');
+					document.getElementById('preview-img').src = url;
+					document.getElementById('img-download-link').href = url;
+					document.getElementById('img-download-link').download = state.currentPath.split('/').pop();
+				}
+				async function saveFileContent() {
+					if(!state.isOwner) return;
+					const newContent = state.monacoEditor.getValue();
+					const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
+					try {
+						const result = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${state.currentPath}`, {
+							method: 'PUT',
+							body: JSON.stringify({
+								message: `Update ${state.currentPath}`,
+								content: encodedContent,
+								sha: state.currentSHA
+							})
+						});
+						state.currentSHA = result.content.sha;
+						showNotification('✅ Commit successful!');
+					} catch(err) {
+						alert(`Error: ${err.message}`);
+					}
+				}
+				async function deleteFile(path, sha, event) {
+					event.stopPropagation();
+					if(!confirm(`Delete ${path}?`)) return;
+					try {
+						await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${path}`, {
+							method: 'DELETE',
+							body: JSON.stringify({
+								message: `Delete ${path}`,
+								sha: sha
+							})
+						});
+						const parentPath = state.currentPath.split('/').slice(0, -1).join('/');
+						await loadFiles(parentPath);
+						showNotification(`<i class="fas fa-trash"></i> File deleted`);
+					} catch(err) {
+						alert(`Delete failed: ${err.message}`);
+					}
+				}
+				// File Creation
+				function showCreateFileModal() {
+					if(!state.token) {
+						alert('PAT token required to create files');
+						return;
+					}
+					if(!state.currentRepo) {
+						alert('Please select a repository first');
+						return;
+					}
+					document.getElementById('file-name-input').value = '';
+					document.getElementById('file-path-input').value = state.currentPath ? state.currentPath + '/' : '';
+					document.getElementById('file-content-input').value = '';
+					document.getElementById('file-commit-msg').value = 'Create new file';
+					window.create_file_modal.showModal();
+				}
+				async function createNewFile() {
+					const fileName = document.getElementById('file-name-input').value.trim();
+					const filePath = document.getElementById('file-path-input').value.trim();
+					const content = document.getElementById('file-content-input').value;
+					const commitMsg = document.getElementById('file-commit-msg').value.trim() || 'Create new file';
+					if(!fileName) {
+						alert('Please enter a file name');
+						return;
+					}
+					try {
+						const fullPath = filePath ? `${filePath}${fileName}` : fileName;
+						const encodedContent = btoa(unescape(encodeURIComponent(content)));
+						await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${fullPath}`, {
+							method: 'PUT',
+							body: JSON.stringify({
+								message: commitMsg,
+								content: encodedContent
+							})
+						});
+						window.create_file_modal.close();
+						showNotification(`<i class="fas fa-check-circle text-green-400"></i> File "${fileName}" created!`);
+						await loadFiles(filePath);
+					} catch(err) {
+						alert(`Failed to create file: ${err.message}`);
+					}
+				}
+				// Upload Funct
+				function openUploadModal() {
+					document.getElementById('upload-path-label').innerText = `${state.currentRepo}/${state.currentPath || 'root'}`;
+					window.upload_modal.showModal();
+				}
+				async function performUpload() {
+					const fileInput = document.getElementById('file-picker');
+					const files = fileInput.files;
+					if(files.length === 0) {
+						alert('Please select at least one file');
+						return;
+					}
+					for(const file of files) {
+						const reader = new FileReader();
+						reader.onload = async(e) => {
+							const content = e.target.result.split(',')[1];
+							try {
+								const uploadPath = state.currentPath ? `${state.currentPath}/${file.name}` : file.name;
+								await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${uploadPath}`, {
+									method: 'PUT',
+									body: JSON.stringify({
+										message: `Upload ${file.name}`,
+										content: content
+									})
+								});
+							} catch(err) {
+								alert(`Upload failed: ${err.message}`);
+							}
+						};
+						reader.readAsDataURL(file);
+					}
+					window.upload_modal.close();
+					fileInput.value = '';
+					setTimeout(() => loadFiles(state.currentPath), 1000);
+					showNotification('✅ Files uploaded successfully!');
+				}
+				// Releases
+				async function loadReleases() {
+					try {
+						const releases = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=10`);
+						renderReleases(releases);
+					} catch(err) {
+						console.log('No releases found');
+					}
+				}
 
-		function renderReleases(releases) {
-			const container = document.getElementById('releases-list');
-			if(releases.length === 0) {
-				container.innerHTML = '<div class="text-center text-gray-500 p-4"><i class="fas fa-inbox text-2xl opacity-20"></i><p class="text-sm mt-2">No releases</p></div>';
-				return;
-			}
-			container.innerHTML = releases.map(release => `
+				function renderReleases(releases) {
+					const container = document.getElementById('releases-list');
+					if(releases.length === 0) {
+						container.innerHTML = '<div class="text-center text-gray-500 p-4"><i class="fas fa-inbox text-2xl opacity-20"></i><p class="text-sm mt-2">No releases</p></div>';
+						return;
+					}
+					container.innerHTML = releases.map(release => `
 				<div class="release-item">
 					<div class="flex justify-between items-start mb-2">
 						<div>
@@ -1486,438 +1386,422 @@
 					</div>
 					<p class="text-xs text-gray-400 mb-3 line-clamp-2">${release.body || 'No description'}</p>
 					<div class="flex gap-2 flex-wrap">
-						${release.assets.map(asset => `
-							<a href="${asset.browser_download_url}" download class="btn btn-xs btn-outline gap-1">
-								<i class="fas fa-download text-xs"></i> ${asset.name}
-							</a>
+						${release.assets.map(asset => ` < a href = "${asset.browser_download_url}"
+						download class = "btn btn-xs btn-outline gap-1" > < i class = "fas fa-download text-xs" > < /i> ${asset.name} < /a>
 						`).join('')}
 					</div>
 				</div>
 			`).join('');
-		}
+				}
+				// Download
+				function downloadFile() {
+					if(!state.currentPath) {
+						alert('Please select a file first');
+						return;
+					}
+					const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(state.currentPath);
+					if(isImage) {
+						document.getElementById('img-download-link').click();
+					} else {
+						const filename = state.currentPath.split('/').pop();
+						const content = state.monacoEditor.getValue();
+						const blob = new Blob([content], {
+							type: 'text/plain'
+						});
+						const url = window.URL.createObjectURL(blob);
+						const a = document.createElement('a');
+						a.href = url;
+						a.download = filename;
+						a.click();
+						window.URL.revokeObjectURL(url);
+					}
+					showNotification('📥 Download started!');
+				}
+				// Coding Stuffs
+				function copyRawUrl() {
+					const url = `https://raw.githubusercontent.com/${state.currentUser}/${state.currentRepo}/${state.currentBranch}/${state.currentPath}`;
+					navigator.clipboard.writeText(url);
+					showNotification('📋 Raw URL copied!');
+				}
 
-		// Download
-		function downloadFile() {
-			if(!state.currentPath) {
-				alert('Please select a file first');
-				return;
-			}
-			const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(state.currentPath);
-			if(isImage) {
-				document.getElementById('img-download-link').click();
-			} else {
-				const filename = state.currentPath.split('/').pop();
-				const content = state.monacoEditor.getValue();
-				const blob = new Blob([content], {
-					type: 'text/plain'
-				});
-				const url = window.URL.createObjectURL(blob);
-				const a = document.createElement('a');
-				a.href = url;
-				a.download = filename;
-				a.click();
-				window.URL.revokeObjectURL(url);
-			}
-			showNotification('📥 Download started!');
-		}
-
-		// Coding Stuffs
-		function copyRawUrl() {
-			const url = `https://raw.githubusercontent.com/${state.currentUser}/${state.currentRepo}/${state.currentBranch}/${state.currentPath}`;
-			navigator.clipboard.writeText(url);
-			showNotification('📋 Raw URL copied!');
-		}
-
-		function copyCode() {
-			const code = state.monacoEditor.getValue();
-			navigator.clipboard.writeText(code);
-			showNotification('📋 Code copied!');
-		}
-
-		// Breadcrumb Naviggatoin
-		function updateBreadcrumbs(path) {
-			const container = document.getElementById('breadcrumb-container');
-			const parts = path.split('/').filter(p => p);
-			let html = `
+				function copyCode() {
+					const code = state.monacoEditor.getValue();
+					navigator.clipboard.writeText(code);
+					showNotification('📋 Code copied!');
+				}
+				// Breadcrumb Naviggatoin
+				function updateBreadcrumbs(path) {
+					const container = document.getElementById('breadcrumb-container');
+					const parts = path.split('/').filter(p => p);
+					let html = `
 				<span onclick="loadFiles('')" class="breadcrumb-item hover:text-blue-400 cursor-pointer code-link">
 					<i class="fas fa-folder-open mr-1"></i>${state.currentRepo || 'Repository'}
 				</span>
 			`;
-			let currentPathBuild = '';
-			parts.forEach((part, index) => {
-				currentPathBuild += (index === 0 ? '' : '/') + part;
-				html += `
+					let currentPathBuild = '';
+					parts.forEach((part, index) => {
+						currentPathBuild += (index === 0 ? '' : '/') + part;
+						html += `
 					<i class="fas fa-chevron-right text-[8px] text-gray-600"></i>
 					<span onclick="loadFiles('${currentPathBuild}')" class="breadcrumb-item hover:text-blue-400 cursor-pointer code-link">${part}</span>
 				`;
-			});
-			container.innerHTML = html;
-		}
+					});
+					container.innerHTML = html;
+				}
 
-		function navigateUp() {
-			const parts = state.currentPath.split('/').filter(p => p);
-			parts.pop();
-			loadFiles(parts.join('/'));
-		}
+				function navigateUp() {
+					const parts = state.currentPath.split('/').filter(p => p);
+					parts.pop();
+					loadFiles(parts.join('/'));
+				}
+				// UI Functions
+				function showTab(tab) {
+					state.activeTab = tab;
+					document.getElementById('tab-repos').className = `flex-1 py-2 border-b-2 ${tab === 'repos' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+					document.getElementById('tab-files').className = `flex-1 py-2 border-b-2 ${tab === 'files' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+					if(tab === 'repos') renderRepoList();
+					else if(tab === 'files') renderFileList();
+				}
 
-		// UI Functions
-		function showTab(tab) {
-			state.activeTab = tab;
-			document.getElementById('tab-repos').className = `flex-1 py-2 border-b-2 ${tab === 'repos' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
-			document.getElementById('tab-files').className = `flex-1 py-2 border-b-2 ${tab === 'files' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
-			if(tab === 'repos') renderRepoList();
-			else if(tab === 'files') renderFileList();
-		}
+				function getFileIcon(filename) {
+					const ext = filename.split('.').pop().toLowerCase();
+					const icons = {
+						js: 'fab fa-js text-yellow-400',
+						ts: 'fab fa-js-square text-blue-400',
+						html: 'fab fa-html5 text-orange-500',
+						css: 'fab fa-css3 text-blue-500',
+						json: 'fas fa-braces text-yellow-600',
+						md: 'fas fa-file-alt text-gray-400',
+						py: 'fab fa-python text-blue-300',
+						rb: 'fas fa-gem text-red-500',
+						java: 'fab fa-java text-orange-600',
+						cpp: 'fas fa-plus text-blue-600',
+						sh: 'fas fa-terminal text-green-500',
+						default: 'fas fa-file text-gray-400'
+					};
+					return icons[ext] || icons.default;
+				}
 
-		function getFileIcon(filename) {
-			const ext = filename.split('.').pop().toLowerCase();
-			const icons = {
-				js: 'fab fa-js text-yellow-400',
-				ts: 'fab fa-js-square text-blue-400',
-				html: 'fab fa-html5 text-orange-500',
-				css: 'fab fa-css3 text-blue-500',
-				json: 'fas fa-braces text-yellow-600',
-				md: 'fas fa-file-alt text-gray-400',
-				py: 'fab fa-python text-blue-300',
-				rb: 'fas fa-gem text-red-500',
-				java: 'fab fa-java text-orange-600',
-				cpp: 'fas fa-plus text-blue-600',
-				sh: 'fas fa-terminal text-green-500',
-				default: 'fas fa-file text-gray-400'
-			};
-			return icons[ext] || icons.default;
-		}
+				function getLanguageByExt(ext) {
+					const langs = {
+						'js': 'javascript',
+						'ts': 'typescript',
+						'py': 'python',
+						'html': 'html',
+						'css': 'css',
+						'json': 'json',
+						'md': 'markdown',
+						'java': 'java',
+						'cpp': 'cpp',
+						'sh': 'shell',
+						'bash': 'shell',
+						'yml': 'yaml',
+						'yaml': 'yaml',
+						'rb': 'ruby'
+					};
+					return langs[ext] || 'plaintext';
+				}
 
-		function getLanguageByExt(ext) {
-			const langs = {
-				'js': 'javascript',
-				'ts': 'typescript',
-				'py': 'python',
-				'html': 'html',
-				'css': 'css',
-				'json': 'json',
-				'md': 'markdown',
-				'java': 'java',
-				'cpp': 'cpp',
-				'sh': 'shell',
-				'bash': 'shell',
-				'yml': 'yaml',
-				'yaml': 'yaml',
-				'rb': 'ruby'
-			};
-			return langs[ext] || 'plaintext';
-		}
+				function filterSidebarContent() {
+					const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
+					sidebarSearchTerm = searchTerm;
+					if(state.activeTab === 'repos') {
+						state.filteredRepos = state.repos.filter(repo => repo.name.toLowerCase().includes(searchTerm) || (repo.description && repo.description.toLowerCase().includes(searchTerm)));
+					} else if(state.activeTab === 'files') {
+						state.filteredFiles = state.files.filter(file => file.name.toLowerCase().includes(searchTerm));
+					}
+					if(state.activeTab === 'repos') renderRepoList();
+					else if(state.activeTab === 'files') renderFileList();
+				}
 
-		function filterSidebarContent() {
-			const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
-			sidebarSearchTerm = searchTerm;
-			if(state.activeTab === 'repos') {
-				state.filteredRepos = state.repos.filter(repo => repo.name.toLowerCase().includes(searchTerm) || (repo.description && repo.description.toLowerCase().includes(searchTerm)));
-			} else if(state.activeTab === 'files') {
-				state.filteredFiles = state.files.filter(file => file.name.toLowerCase().includes(searchTerm));
-			}
-			if(state.activeTab === 'repos') renderRepoList();
-			else if(state.activeTab === 'files') renderFileList();
-		}
+				function handleSidebarSearch(event) {
+					if(event.key === 'Enter') {
+						filterSidebarContent();
+					}
+				}
 
-		function handleSidebarSearch(event) {
-			if(event.key === 'Enter') {
-				filterSidebarContent();
-			}
-		}
+				function updateAuthStatus() {
+					state.token = document.getElementById('pat-token').value;
+					const badge = document.getElementById('auth-badge');
+					if(state.token) {
+						badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
+						badge.innerHTML = '<i class="fas fa-unlock"></i> Authenticated';
+						searchUser();
+					} else {
+						badge.className = "badge badge-error gap-2 text-[10px] uppercase font-bold";
+						badge.innerHTML = '<i class="fas fa-lock"></i> Read Only';
+					}
+					toggleEditButtons();
+				}
 
-		function updateAuthStatus() {
-			state.token = document.getElementById('pat-token').value;
-			const badge = document.getElementById('auth-badge');
-			if(state.token) {
-				badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
-				badge.innerHTML = '<i class="fas fa-unlock"></i> Authenticated';
-				searchUser();
-			} else {
-				badge.className = "badge badge-error gap-2 text-[10px] uppercase font-bold";
-				badge.innerHTML = '<i class="fas fa-lock"></i> Read Only';
-			}
-			toggleEditButtons();
-		}
+				function handlePATInput(event) {
+					if(event.key === 'Enter') {
+						updateAuthStatus();
+					}
+				}
 
-		function handlePATInput(event) {
-			if(event.key === 'Enter') {
-				updateAuthStatus();
-			}
-		}
+				function toggleEditButtons() {
+					const saveBtn = document.getElementById('save-btn');
+					const uploadBtn = document.getElementById('upload-trigger');
+					const createFileBtn = document.getElementById('create-file-btn');
+					if(state.isOwner && state.token && state.currentRepo) {
+						saveBtn.classList.remove('hidden');
+						uploadBtn.classList.remove('hidden');
+						createFileBtn.classList.remove('hidden');
+					} else {
+						saveBtn.classList.add('hidden');
+						uploadBtn.classList.add('hidden');
+						createFileBtn.classList.add('hidden');
+					}
+				}
 
-		function toggleEditButtons() {
-			const saveBtn = document.getElementById('save-btn');
-			const uploadBtn = document.getElementById('upload-trigger');
-			const createFileBtn = document.getElementById('create-file-btn');
-			if(state.isOwner && state.token && state.currentRepo) {
-				saveBtn.classList.remove('hidden');
-				uploadBtn.classList.remove('hidden');
-				createFileBtn.classList.remove('hidden');
-			} else {
-				saveBtn.classList.add('hidden');
-				uploadBtn.classList.add('hidden');
-				createFileBtn.classList.add('hidden');
-			}
-		}
+				function refreshCurrent() {
+					if(state.activeTab === 'repos') {
+						loadRepositories();
+					} else if(state.currentRepo) {
+						loadFiles(state.currentPath);
+					}
+				}
 
-		function refreshCurrent() {
-			if(state.activeTab === 'repos') {
-				loadRepositories();
-			} else if(state.currentRepo) {
-				loadFiles(state.currentPath);
-			}
-		}
+				function toggleSidebarSize() {
+					const sidebar = document.querySelector('aside');
+					sidebar.classList.toggle('w-[500px]');
+				}
 
-		function toggleSidebarSize() {
-			const sidebar = document.querySelector('aside');
-			sidebar.classList.toggle('w-[500px]');
-		}
+				function openInCodespaces() {
+					if(!state.currentRepo) {
+						alert('Please select a repository');
+						return;
+					}
+					window.open(`https://github.com/codespaces/new?repo=${state.currentUser}/${state.currentRepo}`, '_blank');
+				}
+				async function starRepo() {
+					if(!state.token) {
+						alert('PAT token required');
+						return;
+					}
+					if(!state.currentRepo) {
+						alert('Please select a repository');
+						return;
+					}
+					try {
+						await fetchGH(`/user/starred/${state.currentUser}/${state.currentRepo}`, {
+							method: 'PUT'
+						});
+						showNotification('⭐ Repository starred!');
+					} catch(err) {
+						alert(`Failed: ${err.message}`);
+					}
+				}
+				// Manage Themes
+				function setTheme(theme) {
+					state.theme = theme;
+					document.documentElement.className = theme;
+					const themeMap = {
+						'dark': 'vs-dark',
+						'light': 'vs',
+						'high-contrast': 'hc-black',
+						'nord': 'vs-dark',
+						'dracula': 'vs-dark',
+						'gruvbox': 'vs-dark',
+						'monokai': 'vs-dark',
+						'solarized-dark': 'vs-dark'
+					};
+					if(state.monacoEditor) {
+						monaco.editor.setTheme(themeMap[theme] || 'vs-dark');
+					}
+					localStorage.setItem('gitnexus-theme', theme);
+					showNotification(`<i class="fa-solid fa-check"></i> 🎨 Theme changed to ${theme}`);
+				}
 
-		function openInCodespaces() {
-			if(!state.currentRepo) {
-				alert('Please select a repository');
-				return;
-			}
-			window.open(`https://github.com/codespaces/new?repo=${state.currentUser}/${state.currentRepo}`, '_blank');
-		}
-
-		async function starRepo() {
-			if(!state.token) {
-				alert('PAT token required');
-				return;
-			}
-			if(!state.currentRepo) {
-				alert('Please select a repository');
-				return;
-			}
-			try {
-				await fetchGH(`/user/starred/${state.currentUser}/${state.currentRepo}`, {
-					method: 'PUT'
-				});
-				showNotification('⭐ Repository starred!');
-			} catch(err) {
-				alert(`Failed: ${err.message}`);
-			}
-		}
-
-		// Manage Themes
-		function setTheme(theme) {
-			state.theme = theme;
-			document.documentElement.className = theme;
-			const themeMap = {
-				'dark': 'vs-dark',
-				'light': 'vs',
-				'high-contrast': 'hc-black',
-				'nord': 'vs-dark',
-				'dracula': 'vs-dark',
-				'gruvbox': 'vs-dark',
-				'monokai': 'vs-dark',
-				'solarized-dark': 'vs-dark'
-			};
-			if(state.monacoEditor) {
-				monaco.editor.setTheme(themeMap[theme] || 'vs-dark');
-			}
-			localStorage.setItem('gitnexus-theme', theme);
-			showNotification(`<i class="fa-solid fa-check"></i> 🎨 Theme changed to ${theme}`);
-		}
-
-		function showThemeMenu() {
-			const themes = ['dark', 'light', 'high-contrast', 'nord', 'dracula', 'gruvbox', 'monokai', 'solarized-dark'];
-			const menu = document.createElement('div');
-			menu.className = 'dropdown-content menu p-2 shadow bg-[var(--bg-secondary)] rounded-box w-52 border sidebar-border fixed z-[100]';
-			menu.innerHTML = themes.map(t => `
+				function showThemeMenu() {
+					const themes = ['dark', 'light', 'high-contrast', 'nord', 'dracula', 'gruvbox', 'monokai', 'solarized-dark'];
+					const menu = document.createElement('div');
+					menu.className = 'dropdown-content menu p-2 shadow bg-[var(--bg-secondary)] rounded-box w-52 border sidebar-border fixed z-[100]';
+					menu.innerHTML = themes.map(t => `
 				<ul class="menu menu-sm bg-[var(--bg-secondary)] animate-fade-in">
 					<li><a onclick="setTheme('${t}'); setTimeout(() => this.parentElement.parentElement.remove(), 100)">
 						<i class="fas fa-paint-brush mr-2"></i>${t.charAt(0).toUpperCase() + t.slice(1)}
 					</a></li>
 				</ul>
 			`).join('');
-			const avatarBtn = document.querySelector('.avatar');
-			menu.style.top = avatarBtn.getBoundingClientRect().bottom + 'px';
-			menu.style.right = '20px';
-			document.body.appendChild(menu);
-			setTimeout(() => {
-				menu.remove();
-			}, 3000);
-		}
-
-		// Profile & Customization
-		async function showProfileModal() {
-			if(!state.token) {
-				alert('Please enter your PAT token first');
-				return;
-			}
-			try {
-				const profile = await fetchGH('/user');
-				populateProfileModal(profile);
-				window.profile_modal.showModal();
-			} catch(err) {
-				alert(`Failed: ${err.message}`);
-			}
-		}
-
-		function populateProfileModal(profile) {
-			document.getElementById('modal-avatar').src = profile.avatar_url;
-			document.getElementById('modal-name').innerText = profile.name || profile.login;
-			document.getElementById('modal-login').innerText = `@${profile.login}`;
-			document.getElementById('modal-bio').innerText = profile.bio || 'No bio';
-			document.getElementById('profile-followers').innerText = profile.followers;
-			document.getElementById('profile-following').innerText = profile.following;
-			document.getElementById('profile-repos').innerText = profile.public_repos;
-			document.getElementById('profile-gists').innerText = profile.public_gists;
-			document.getElementById('edit-name').value = profile.name || '';
-			document.getElementById('edit-company').value = profile.company || '';
-			document.getElementById('edit-location').value = profile.location || '';
-			document.getElementById('edit-bio').value = profile.bio || '';
-			document.getElementById('edit-blog').value = profile.blog || '';
-			document.getElementById('edit-twitter').value = profile.twitter_username || '';
-			if(state.token) {
-				document.getElementById('edit-profile-btn').classList.remove('hidden');
-			}
-		}
-
-		function enableProfileEdit() {
-			document.getElementById('profile-editable').classList.remove('hidden');
-			document.getElementById('edit-profile-btn').classList.add('hidden');
-			document.getElementById('save-profile-btn').classList.remove('hidden');
-			document.getElementById('cancel-profile-btn').classList.remove('hidden');
-		}
-
-		function disableProfileEdit() {
-			document.getElementById('profile-editable').classList.add('hidden');
-			document.getElementById('edit-profile-btn').classList.remove('hidden');
-			document.getElementById('save-profile-btn').classList.add('hidden');
-			document.getElementById('cancel-profile-btn').classList.add('hidden');
-		}
-
-		async function saveProfileChanges() {
-			const updateData = {
-				name: document.getElementById('edit-name').value,
-				company: document.getElementById('edit-company').value,
-				location: document.getElementById('edit-location').value,
-				bio: document.getElementById('edit-bio').value,
-				blog: document.getElementById('edit-blog').value,
-				twitter_username: document.getElementById('edit-twitter').value
-			};
-			try {
-				await fetchGH('/user', {
-					method: 'PATCH',
-					body: JSON.stringify(updateData)
-				});
-				showNotification('✅ Profile updated!');
-				disableProfileEdit();
-			} catch(err) {
-				alert(`Failed: ${err.message}`);
-			}
-		}
-
-		function openAvatarUpload() {
-			const input = document.createElement('input');
-			input.type = 'file';
-			input.accept = 'image/*';
-			input.onchange = (e) => {
-				const file = e.target.files[0];
-				if(file) {
-					const reader = new FileReader();
-					reader.onload = (event) => {
-						document.getElementById('modal-avatar').src = event.target.result;
-						showNotification('📷 Avatar preview updated');
-					};
-					reader.readAsDataURL(file);
+					const avatarBtn = document.querySelector('.avatar');
+					menu.style.top = avatarBtn.getBoundingClientRect().bottom + 'px';
+					menu.style.right = '20px';
+					document.body.appendChild(menu);
+					setTimeout(() => {
+						menu.remove();
+					}, 3000);
 				}
-			};
-			input.click();
-		}
-
-		function showSettingsModal() {
-			window.customization_modal.showModal();
-		}
-
-		function updateEditorSettings() {
-			const fontSize = parseInt(document.getElementById('editor-font-size').value);
-			state.editorSettings.fontSize = fontSize;
-			document.getElementById('font-size-display').innerText = fontSize + 'px';
-			if(state.monacoEditor) {
-				state.monacoEditor.updateOptions({
-					fontSize
-				});
-			}
-		}
-
-		function setTabSize(size) {
-			state.editorSettings.tabSize = size;
-			if(state.monacoEditor) {
-				state.monacoEditor.updateOptions({
-					tabSize: size
-				});
-			}
-			showNotification(`📏 Tab size set to ${size}`);
-		}
-
-		function toggleWordWrap() {
-			state.editorSettings.wordWrap = !state.editorSettings.wordWrap;
-			if(state.monacoEditor) {
-				state.monacoEditor.updateOptions({
-					wordWrap: state.editorSettings.wordWrap ? 'on' : 'off'
-				});
-			}
-		}
-
-		function toggleMinimap() {
-			state.editorSettings.minimap = !state.editorSettings.minimap;
-			if(state.monacoEditor) {
-				state.monacoEditor.updateOptions({
-					minimap: {
-						enabled: state.editorSettings.minimap
+				// Profile & Customization
+				async function showProfileModal() {
+					if(!state.token) {
+						alert('Please enter your PAT token first');
+						return;
 					}
-				});
-			}
-		}
-
-		function showSortingMenu() {
-			window.sorting_modal.showModal();
-		}
-
-		// Music Player
-		function showMusicPlayer() {
-			window.music_modal.showModal();
-			document.getElementById('music-results').innerHTML = '';
-		}
-
-		function setMusicSource(source) {
-			state.musicSource = source;
-			document.getElementById('spotify-btn').className = source === 'spotify' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
-			document.getElementById('youtube-btn').className = source === 'youtube' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
-		}
-
-		function searchMusic() {
-			const searchTerm = document.getElementById('music-search').value;
-			if(!searchTerm) return;
-			const resultsContainer = document.getElementById('music-results');
-			const mockResults = [
-				{
-					title: 'Focus Mode',
-					artist: 'Lo-Fi Hip Hop',
-					duration: '∞'
-				},
-				{
-					title: 'Coding Vibes',
-					artist: 'Electronic',
-					duration: '2:45'
-				},
-				{
-					title: 'Deep Focus',
-					artist: 'Ambient',
-					duration: '3:12'
-				},
-				{
-					title: 'Night Coding',
-					artist: 'Synthwave',
-					duration: '4:00'
+					try {
+						const profile = await fetchGH('/user');
+						populateProfileModal(profile);
+						window.profile_modal.showModal();
+					} catch(err) {
+						alert(`Failed: ${err.message}`);
+					}
 				}
-			];
-			resultsContainer.innerHTML = mockResults.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()) || song.artist.toLowerCase().includes(searchTerm.toLowerCase())).map((song) => `
+
+				function populateProfileModal(profile) {
+					document.getElementById('modal-avatar').src = profile.avatar_url;
+					document.getElementById('modal-name').innerText = profile.name || profile.login;
+					document.getElementById('modal-login').innerText = `@${profile.login}`;
+					document.getElementById('modal-bio').innerText = profile.bio || 'No bio';
+					document.getElementById('profile-followers').innerText = profile.followers;
+					document.getElementById('profile-following').innerText = profile.following;
+					document.getElementById('profile-repos').innerText = profile.public_repos;
+					document.getElementById('profile-gists').innerText = profile.public_gists;
+					document.getElementById('edit-name').value = profile.name || '';
+					document.getElementById('edit-company').value = profile.company || '';
+					document.getElementById('edit-location').value = profile.location || '';
+					document.getElementById('edit-bio').value = profile.bio || '';
+					document.getElementById('edit-blog').value = profile.blog || '';
+					document.getElementById('edit-twitter').value = profile.twitter_username || '';
+					if(state.token) {
+						document.getElementById('edit-profile-btn').classList.remove('hidden');
+					}
+				}
+
+				function enableProfileEdit() {
+					document.getElementById('profile-editable').classList.remove('hidden');
+					document.getElementById('edit-profile-btn').classList.add('hidden');
+					document.getElementById('save-profile-btn').classList.remove('hidden');
+					document.getElementById('cancel-profile-btn').classList.remove('hidden');
+				}
+
+				function disableProfileEdit() {
+					document.getElementById('profile-editable').classList.add('hidden');
+					document.getElementById('edit-profile-btn').classList.remove('hidden');
+					document.getElementById('save-profile-btn').classList.add('hidden');
+					document.getElementById('cancel-profile-btn').classList.add('hidden');
+				}
+				async function saveProfileChanges() {
+					const updateData = {
+						name: document.getElementById('edit-name').value,
+						company: document.getElementById('edit-company').value,
+						location: document.getElementById('edit-location').value,
+						bio: document.getElementById('edit-bio').value,
+						blog: document.getElementById('edit-blog').value,
+						twitter_username: document.getElementById('edit-twitter').value
+					};
+					try {
+						await fetchGH('/user', {
+							method: 'PATCH',
+							body: JSON.stringify(updateData)
+						});
+						showNotification('✅ Profile updated!');
+						disableProfileEdit();
+					} catch(err) {
+						alert(`Failed: ${err.message}`);
+					}
+				}
+
+				function openAvatarUpload() {
+					const input = document.createElement('input');
+					input.type = 'file';
+					input.accept = 'image/*';
+					input.onchange = (e) => {
+						const file = e.target.files[0];
+						if(file) {
+							const reader = new FileReader();
+							reader.onload = (event) => {
+								document.getElementById('modal-avatar').src = event.target.result;
+								showNotification('📷 Avatar preview updated');
+							};
+							reader.readAsDataURL(file);
+						}
+					};
+					input.click();
+				}
+
+				function showSettingsModal() {
+					window.customization_modal.showModal();
+				}
+
+				function updateEditorSettings() {
+					const fontSize = parseInt(document.getElementById('editor-font-size').value);
+					state.editorSettings.fontSize = fontSize;
+					document.getElementById('font-size-display').innerText = fontSize + 'px';
+					if(state.monacoEditor) {
+						state.monacoEditor.updateOptions({
+							fontSize
+						});
+					}
+				}
+
+				function setTabSize(size) {
+					state.editorSettings.tabSize = size;
+					if(state.monacoEditor) {
+						state.monacoEditor.updateOptions({
+							tabSize: size
+						});
+					}
+					showNotification(`📏 Tab size set to ${size}`);
+				}
+
+				function toggleWordWrap() {
+					state.editorSettings.wordWrap = !state.editorSettings.wordWrap;
+					if(state.monacoEditor) {
+						state.monacoEditor.updateOptions({
+							wordWrap: state.editorSettings.wordWrap ? 'on' : 'off'
+						});
+					}
+				}
+
+				function toggleMinimap() {
+					state.editorSettings.minimap = !state.editorSettings.minimap;
+					if(state.monacoEditor) {
+						state.monacoEditor.updateOptions({
+							minimap: {
+								enabled: state.editorSettings.minimap
+							}
+						});
+					}
+				}
+
+				function showSortingMenu() {
+					window.sorting_modal.showModal();
+				}
+				// Music Player
+				function showMusicPlayer() {
+					window.music_modal.showModal();
+					document.getElementById('music-results').innerHTML = '';
+				}
+
+				function setMusicSource(source) {
+					state.musicSource = source;
+					document.getElementById('spotify-btn').className = source === 'spotify' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+					document.getElementById('youtube-btn').className = source === 'youtube' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+				}
+
+				function searchMusic() {
+					const searchTerm = document.getElementById('music-search').value;
+					if(!searchTerm) return;
+					const resultsContainer = document.getElementById('music-results');
+					const mockResults = [{
+						title: 'Focus Mode',
+						artist: 'Lo-Fi Hip Hop',
+						duration: '∞'
+					}, {
+						title: 'Coding Vibes',
+						artist: 'Electronic',
+						duration: '2:45'
+					}, {
+						title: 'Deep Focus',
+						artist: 'Ambient',
+						duration: '3:12'
+					}, {
+						title: 'Night Coding',
+						artist: 'Synthwave',
+						duration: '4:00'
+					}];
+					resultsContainer.innerHTML = mockResults.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()) || song.artist.toLowerCase().includes(searchTerm.toLowerCase())).map((song) => `
 				<div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" onclick="selectSong('${song.title}', '${song.artist}')">
 					<div class="flex justify-between items-center">
 						<div>
@@ -1928,66 +1812,64 @@
 					</div>
 				</div>
 			`).join('');
-		}
-
-		function selectSong(title, artist) {
-			state.currentlyPlaying = {
-				title, artist
-			};
-			document.getElementById('now-playing-title').innerText = title;
-			document.getElementById('now-playing-artist').innerText = artist;
-			document.getElementById('now-playing').classList.remove('hidden');
-			showNotification(`🎵 Now playing: ${title}`);
-		}
-
-		function toggleMusicPlayback() {
-			if(!state.currentlyPlaying) {
-				alert('Select a song first');
-				return;
-			}
-			showNotification('Music playback toggled');
-		}
-
-		function stopMusic() {
-			state.currentlyPlaying = null;
-			document.getElementById('now-playing').classList.add('hidden');
-			showNotification('Music stopped');
-		}
-
-		// Utils
-		function showNotification(message) {
-			const notification = document.createElement('div');
-			notification.className = 'fixed bottom-20 right-8 bg-blue-600 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100]';
-			notification.innerHTML = message;
-			document.body.appendChild(notification);
-			setTimeout(() => notification.remove(), 3000);
-		}
-
-		function toggleMainMenu() {
-			showNotification('Main menu opened');
-		}
-
-		// Init
-		window.addEventListener('load', () => {
-			const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
-			setTheme(savedTheme);
-			const saved = localStorage.getItem('gitnexus-search-history');
-			if(saved) searchHistory = JSON.parse(saved);
-			document.addEventListener('keydown', (e) => {
-				if(e.ctrlKey || e.metaKey) {
-					if(e.key === 's') {
-						e.preventDefault();
-						if(state.isOwner && state.currentRepo) saveFileContent();
-					}
-					if(e.key === 'k') {
-						e.preventDefault();
-						document.getElementById('user-search').focus();
-					}
 				}
-			});
-		});
+
+				function selectSong(title, artist) {
+					state.currentlyPlaying = {
+						title, artist
+					};
+					document.getElementById('now-playing-title').innerText = title;
+					document.getElementById('now-playing-artist').innerText = artist;
+					document.getElementById('now-playing').classList.remove('hidden');
+					showNotification(`🎵 Now playing: ${title}`);
+				}
+
+				function toggleMusicPlayback() {
+					if(!state.currentlyPlaying) {
+						alert('Select a song first');
+						return;
+					}
+					showNotification('Music playback toggled');
+				}
+
+				function stopMusic() {
+					state.currentlyPlaying = null;
+					document.getElementById('now-playing').classList.add('hidden');
+					showNotification('Music stopped');
+				}
+				// Utils
+				function showNotification(message) {
+					const notification = document.createElement('div');
+					notification.className = 'fixed bottom-20 right-8 bg-blue-600 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100]';
+					notification.innerHTML = message;
+					document.body.appendChild(notification);
+					setTimeout(() => notification.remove(), 3000);
+				}
+
+				function toggleMainMenu() {
+					showNotification('Main menu opened');
+				}
+				// Init
+				window.addEventListener('load', () => {
+					const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
+					setTheme(savedTheme);
+					const saved = localStorage.getItem('gitnexus-search-history');
+					if(saved) searchHistory = JSON.parse(saved);
+					document.addEventListener('keydown', (e) => {
+						if(e.ctrlKey || e.metaKey) {
+							if(e.key === 's') {
+								e.preventDefault();
+								if(state.isOwner && state.currentRepo) saveFileContent();
+							}
+							if(e.key === 'k') {
+								e.preventDefault();
+								document.getElementById('user-search').focus();
+							}
+						}
+					});
+				});
 	</script>
 </body>
-</html>
 
+</html>
 <!-- File, Repo, & Folder Creation still bugged w/ delays. Breadcrumb, and Navigation issues w/delays. Loading errors and issues with github connection. WORK IN PROGRESS -->
