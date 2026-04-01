@@ -1937,10 +1937,25 @@ function searchMusic() {
 	const resultsContainer = document.getElementById('music-results');
 	const musicMockTxt = "Duration: ";
 	const mockResults = [
-		{ title: 'Focus Mode', artist: 'Lo-Fi Hip Hop', duration: musicMockTxt + 'infinite' },
-		{ title: 'Coding Vibes', artist: 'Electronic', duration: musicMockTxt + '2:45' },
-		{ title: 'Deep Focus', artist: 'Ambient', duration: musicMockTxt + '3:12' },
-		{ title: 'Night Coding', artist: 'Synthwave', duration: musicMockTxt + '4:00' }
+		{ 
+            title: 'Focus Mode', 
+            artist: 'Lo-Fi Hip Hop', 
+            duration: musicMockTxt + 'infinite' 
+        },
+		{ 
+            title: 'Coding Vibes', 
+            artist: 'Electronic', 
+            duration: musicMockTxt + '2:45' 
+        },
+		{   title: 'Deep Focus', 
+            artist: 'Ambient', 
+            duration: musicMockTxt + '3:12' 
+        },
+		{ 
+            title: 'Night Coding', 
+            artist: 'Synthwave', 
+            duration: musicMockTxt + '4:00' 
+        }
 	];
 	resultsContainer.innerHTML = mockResults.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()) || song.artist.toLowerCase().includes(searchTerm.toLowerCase())).map((song) => `
 		<div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" onclick="selectSong('${song.title}', '${song.artist}')">
