@@ -1930,25 +1930,15 @@
 			`).join('');
 		}
 
-		function selectSong(title, artist, src) {
-    // If clicking the same song, toggle it
-    if(currentSongSrc === src) {
-        toggleMusicPlayback();
-        return;
-    }
-
-    // Set new song
-    currentSongSrc = src;
-    audioPlayer.src = src;
-    audioPlayer.play().catch(e => console.log("Play interrupted:", e));
-    
-    // Update UI
-    document.getElementById('now-playing-title').innerText = title;
-    document.getElementById('now-playing-artist').innerText = artist;
-    document.getElementById('now-playing').classList.remove('hidden');
-    // Assuming you have a play button icon that needs to change
-    showNotification(`🎵 Now playing: ${title}`);
-}
+		function selectSong(title, artist) {
+			state.currentlyPlaying = {
+				title, artist
+			};
+			document.getElementById('now-playing-title').innerText = title;
+			document.getElementById('now-playing-artist').innerText = artist;
+			document.getElementById('now-playing').classList.remove('hidden');
+			showNotification(`🎵 Now playing: ${title}`);
+		}
 
 		function toggleMusicPlayback() {
 			if(!state.currentlyPlaying) {
