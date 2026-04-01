@@ -994,6 +994,11 @@
 	</dialog>
 
 <script>
+// ============================================================================
+// GITNEXUS - GitHub Repository Browser with Monaco Editor
+// FIXED & OPTIMIZED VERSION
+// ============================================================================
+
 // Global State & Config
 const state = {
 	token: '',
@@ -1022,11 +1027,15 @@ const state = {
 		minimap: true
 	}
 };
+
 const GITHUB_API = "https://api.github.com";
 let sidebarSearchTerm = '';
 let searchHistory = [];
+let searchDebounceTimer;
 
+// ============================================================================
 // MONACO EDITOR SETUP
+// ============================================================================
 require.config({
 	paths: {
 		vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
@@ -1048,14 +1057,25 @@ require(['vs/editor/editor.main'], function() {
 		padding: {
 			top: 20
 		},
-		tabSize: state.editorSettings.tabSize
+		tabSize: state.editorSettings.tabSize,
+		readOnly: false
 	});
 
 	state.monacoEditor.onDidChangeCursorPosition(e => {
-		document.getElementById('cursor-pos').innerText = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
+		const cursorElement = document.getElementById('cursor-pos');
+		if(cursorElement) {
+			cursorElement.innerText = `Ln ${e.position.lineNumber}, Col ${e.position.column}`;
+		}
 	});
 });
 
+// ============================================================================
+// API UTILITIES
+// ============================================================================
+
+/**
+ * Fetch from GitHub API with proper error handling
+ */
 async function fetchGH(endpoint, options = {}) {
 	const headers = new Headers({
 		'Accept': 'application/vnd.github.v3+json',
@@ -1072,24 +1092,90 @@ async function fetchGH(endpoint, options = {}) {
 		});
 	}
 
-	const response = await fetch(`${GITHUB_API}${endpoint}`, {
-		...options,
-		headers
-	});
-
-	if(!response.ok) {
-		if(response.status === 404) throw new Error('Resource not found');
-		if(response.status === 403) throw new Error('Rate limited or insufficient permissions');
-		if(response.status === 401) throw new Error('Invalid authentication token');
-		throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
-	}
-
 	try {
-		return await response.json();
-	} catch(e) {
-		return null;
+		const response = await fetch(`${GITHUB_API}${endpoint}`, {
+			...options,
+			headers
+		});
+
+		if(!response.ok) {
+			if(response.status === 404) throw new Error('Resource not found');
+			if(response.status === 403) throw new Error('Rate limited or insufficient permissions');
+			if(response.status === 401) throw new Error('Invalid authentication token');
+			throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+		}
+
+		try {
+			return await response.json();
+		} catch(e) {
+			return null;
+		}
+	} catch(err) {
+		console.error('API Error:', err);
+		throw err;
 	}
 }
+
+// ============================================================================
+// SECURITY UTILITIES
+// ============================================================================
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+	if(!text) return '';
+	const div = document.createElement('div');
+	div.textContent = text;
+	return div.innerHTML;
+}
+
+/**
+ * Safe event delegation handler
+ */
+function attachEventListener(selector, eventType, callback) {
+	document.addEventListener(eventType, (e) => {
+		const target = e.target.closest(selector);
+		if(target) callback(e, target);
+	});
+}
+
+// ============================================================================
+// AUTHENTICATION & TOKEN MANAGEMENT
+// ============================================================================
+
+function updateAuthStatus() {
+	state.token = document.getElementById('pat-token').value.trim();
+	const badge = document.getElementById('auth-badge');
+
+	if(state.token && state.token.length > 0) {
+		// Store in sessionStorage (cleared on tab close)
+		sessionStorage.setItem('gh_token', state.token);
+		
+		badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
+		badge.innerHTML = '<i class="fas fa-unlock"></i> Authenticated';
+
+		if(state.currentUser && state.currentUser !== 'octocat') {
+			toggleEditButtons();
+		}
+	} else {
+		sessionStorage.removeItem('gh_token');
+		badge.className = "badge badge-error gap-2 text-[10px] uppercase font-bold";
+		badge.innerHTML = '<i class="fas fa-lock"></i> Read Only';
+		state.isOwner = false;
+		toggleEditButtons();
+	}
+}
+
+function handlePATInput(event) {
+	if(event.key === 'Enter') {
+		updateAuthStatus();
+	}
+}
+
+// ============================================================================
+// USER SEARCH & PROFILE
+// ============================================================================
 
 async function searchUser() {
 	const username = document.getElementById('user-search').value.trim();
@@ -1105,7 +1191,9 @@ async function searchUser() {
 		const user = await fetchGH(`/users/${username}`);
 		state.currentUser = user.login;
 		state.userProfile = user;
-		document.getElementById('user-avatar').src = user.avatar_url;
+		
+		const avatarElement = document.getElementById('user-avatar');
+		if(avatarElement) avatarElement.src = user.avatar_url;
 
 		if(state.token) {
 			try {
@@ -1151,7 +1239,9 @@ function showSearchSuggestions() {
 		return;
 	}
 
-	const suggestions = searchHistory.filter(h => h.toLowerCase().includes(searchTerm)).slice(0, 5);
+	const suggestions = searchHistory
+		.filter(h => h.toLowerCase().includes(searchTerm))
+		.slice(0, 5);
 
 	if(suggestions.length === 0) {
 		suggestionsContainer.classList.add('hidden');
@@ -1160,11 +1250,11 @@ function showSearchSuggestions() {
 
 	suggestionsContainer.innerHTML = suggestions.map(suggestion => `
 		<div class="suggestion-item">
-			<div onclick="selectSuggestion('${suggestion}')" class="flex items-center gap-2 flex-1 cursor-pointer">
+			<div onclick="selectSuggestion('${escapeHtml(suggestion)}')" class="flex items-center gap-2 flex-1 cursor-pointer">
 				<i class="fas fa-history mr-2 text-xs"></i>
-				${suggestion}
+				${escapeHtml(suggestion)}
 			</div>
-			<button type="button" onclick="deleteSuggestion('${suggestion}', event)" class="suggestion-delete-btn text-red-500 hover:text-red-400 text-xs">
+			<button type="button" onclick="deleteSuggestion('${escapeHtml(suggestion)}', event)" class="suggestion-delete-btn text-red-500 hover:text-red-400 text-xs">
 				<i class="fas fa-trash-alt"></i>
 			</button>
 		</div>
@@ -1187,6 +1277,10 @@ function deleteSuggestion(username, event) {
 	showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 }
 
+// ============================================================================
+// REPOSITORY MANAGEMENT
+// ============================================================================
+
 async function loadRepositories() {
 	setLoadingState(true);
 	try {
@@ -1198,11 +1292,17 @@ async function loadRepositories() {
 			'size': 'size'
 		}[state.sortBy] || 'updated';
 
-		const repos = await fetchGH(`/users/${state.currentUser}/repos?sort=${sortParams}&per_page=100&type=all`);
+		const repos = await fetchGH(
+			`/users/${state.currentUser}/repos?sort=${sortParams}&per_page=100&type=all`
+		);
+		
 		state.repos = sortRepositories(repos || [], state.sortBy);
 		state.filteredRepos = [...state.repos];
 		sidebarSearchTerm = '';
-		document.getElementById('sidebar-search').value = '';
+		
+		const sidebarSearch = document.getElementById('sidebar-search');
+		if(sidebarSearch) sidebarSearch.value = '';
+		
 		showTab('repos');
 		renderRepoList();
 	} catch(err) {
@@ -1236,12 +1336,14 @@ function sortRepositories(repos, sortBy) {
 
 function setSortBy(sortOption) {
 	state.sortBy = sortOption;
-	window.sorting_modal.close();
+	if(window.sorting_modal) window.sorting_modal.close();
 	loadRepositories();
 }
 
 function renderRepoList() {
 	const container = document.getElementById('sidebar-content');
+	if(!container) return;
+
 	const repos = sidebarSearchTerm ? state.filteredRepos : state.repos;
 	let html = '';
 
@@ -1256,30 +1358,33 @@ function renderRepoList() {
 	}
 
 	if(repos.length === 0) {
-		container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories found</p></div>';
+		container.innerHTML = html + 
+			'<div class="text-center text-gray-600 p-4 mt-10">' +
+			'<i class="fas fa-inbox text-3xl opacity-20 mb-2"></i>' +
+			'<p class="text-sm">No repositories found</p></div>';
 		return;
 	}
 
 	html += repos.map(repo => {
-		const safeRepoName = repo.name.replace(/'/g, "&#39;");
-		const safeDesc = (repo.description || '').replace(/'/g, "&#39;");
+		const safeRepoName = escapeHtml(repo.name);
+		const safeDesc = escapeHtml(repo.description || 'No description provided.');
 		return `
-			<div onclick="selectRepo('${safeRepoName}')" class="p-3 mb-2 rounded-lg border sidebar-border hover:border-blue-500 cursor-pointer bg-[#161b22] transition-all group repo-card">
+			<div onclick="selectRepo('${repo.name}')" class="p-3 mb-2 rounded-lg border sidebar-border hover:border-blue-500 cursor-pointer bg-[#161b22] transition-all group repo-card">
 				<div class="flex justify-between items-start mb-1">
 					<div class="flex-1">
 						<span class="text-sm font-bold text-blue-400 truncate block">${safeRepoName}</span>
-						<button onclick="openDescriptionModal('${safeRepoName}', \`${safeDesc}\`, '${repo.owner.login}'); event.stopPropagation();" class="text-[9px] text-gray-500 hover:text-blue-400 mt-0.5 transition">
+						<button onclick="openDescriptionModal('${repo.name}', '${repo.description || ''}', '${repo.owner.login}'); event.stopPropagation();" class="text-[9px] text-gray-500 hover:text-blue-400 mt-0.5 transition">
 							<i class="fas fa-edit mr-1"></i>Description
 						</button>
 					</div>
 					<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
-						<i class="fas fa-external-link-alt text-[10px] cursor-pointer hover:text-blue-400" onclick="window.open('https://github.com/${repo.owner.login}/${repo.name}', '_blank'); event.stopPropagation();"></i>
-						${state.isOwner ? `<i class="fas fa-trash text-[10px] text-red-500 cursor-pointer hover:text-red-400" onclick="showDeleteRepoModal('${safeRepoName}'); event.stopPropagation();"></i>` : ''}
+						<i class="fas fa-external-link-alt text-[10px] cursor-pointer hover:text-blue-400" onclick="window.open('https://github.com/${escapeHtml(repo.owner.login)}/${repo.name}', '_blank'); event.stopPropagation();"></i>
+						${state.isOwner ? `<i class="fas fa-trash text-[10px] text-red-500 cursor-pointer hover:text-red-400" onclick="showDeleteRepoModal('${repo.name}'); event.stopPropagation();"></i>` : ''}
 					</div>
 				</div>
-				<p class="text-[10px] text-gray-500 line-clamp-2">${safeDesc || 'No description provided.'}</p>
+				<p class="text-[10px] text-gray-500 line-clamp-2">${safeDesc}</p>
 				<div class="flex items-center gap-3 mt-2 text-[9px] uppercase tracking-tighter text-gray-400">
-					<span><i class="fas fa-circle text-orange-500 mr-1"></i>${repo.language || 'Plain'}</span>
+					<span><i class="fas fa-circle text-orange-500 mr-1"></i>${escapeHtml(repo.language || 'Plain')}</span>
 					<span><i class="fas fa-star mr-1"></i>${repo.stargazers_count}</span>
 					<span><i class="fas fa-code-branch mr-1"></i>${repo.forks_count}</span>
 				</div>
@@ -1300,7 +1405,7 @@ function openDescriptionModal(repoName, description, ownerLogin) {
 	modal.innerHTML = `
 		<form method="dialog" class="modal-box max-w-lg">
 			<h3 class="font-bold text-lg mb-4">
-				<i class="fas fa-file-alt mr-2 text-blue-400"></i>${repoName}
+				<i class="fas fa-file-alt mr-2 text-blue-400"></i>${escapeHtml(repoName)}
 			</h3>
 
 			<div id="desc-view" class="space-y-4">
@@ -1319,7 +1424,7 @@ function openDescriptionModal(repoName, description, ownerLogin) {
 			<div id="desc-edit" class="hidden space-y-4">
 				<div>
 					<label class="text-xs font-bold uppercase text-gray-500 block mb-2">Repository Description</label>
-					<textarea class="desc-textarea w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32" placeholder="Enter repository description...">${description || ''}</textarea>
+					<textarea class="desc-textarea w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32" placeholder="Enter repository description...">${escapeHtml(description || '')}</textarea>
 					<p class="text-[10px] text-gray-500 mt-1">Max 300 characters</p>
 				</div>
 
@@ -1419,22 +1524,21 @@ async function saveDescription(modal, repoName) {
 	}
 }
 
-function escapeHtml(text) {
-	const div = document.createElement('div');
-	div.textContent = text;
-	return div.innerHTML;
-}
-
 function showDeleteRepoModal(repoName) {
-	const modal = document.getElementById('delete_repo_modal');
-	document.getElementById('delete-repo-confirm').value = '';
-	document.getElementById('delete-repo-confirm').placeholder = repoName;
-	window.delete_repo_modal.showModal();
-	window.delete_repo_modal.dataset.repoName = repoName;
+	const confirmInput = document.getElementById('delete-repo-confirm');
+	if(confirmInput) {
+		confirmInput.value = '';
+		confirmInput.placeholder = repoName;
+	}
+	if(window.delete_repo_modal) {
+		window.delete_repo_modal.showModal();
+		window.delete_repo_modal.dataset.repoName = repoName;
+	}
 }
 
 async function confirmDeleteRepository() {
-	const repoName = window.delete_repo_modal.dataset.repoName;
+	const modal = window.delete_repo_modal;
+	const repoName = modal.dataset.repoName;
 	const confirmValue = document.getElementById('delete-repo-confirm').value.trim();
 
 	if(confirmValue !== repoName) {
@@ -1453,29 +1557,11 @@ async function confirmDeleteRepository() {
 			method: 'DELETE'
 		});
 
-		window.delete_repo_modal.close();
+		modal.close();
 		showNotification(`🗑️ Repository "${repoName}" deleted!`);
 		await loadRepositories();
 	} catch(err) {
 		alert(`Failed to delete: ${err.message}`);
-	} finally {
-		setLoadingState(false);
-	}
-}
-
-async function selectRepo(repoName) {
-	state.currentRepo = repoName;
-	state.currentPath = '';
-	showTab('files');
-	setLoadingState(true);
-	try {
-		await loadFiles('');
-		updateBreadcrumbs('');
-		document.getElementById('welcome-viewport').classList.add('hidden');
-		loadReleases();
-		toggleEditButtons();
-	} catch(err) {
-		showNotification(`❌ Failed to load repository`);
 	} finally {
 		setLoadingState(false);
 	}
@@ -1486,17 +1572,23 @@ function showCreateRepoModal() {
 		alert('PAT token required');
 		return;
 	}
-	document.getElementById('repo-name-input').value = '';
-	document.getElementById('repo-desc-input').value = '';
-	window.create_repo_modal.showModal();
+	const nameInput = document.getElementById('repo-name-input');
+	const descInput = document.getElementById('repo-desc-input');
+	if(nameInput) nameInput.value = '';
+	if(descInput) descInput.value = '';
+	if(window.create_repo_modal) window.create_repo_modal.showModal();
 }
 
 async function createNewRepository() {
 	const name = document.getElementById('repo-name-input').value.trim();
 	const description = document.getElementById('repo-desc-input').value;
-	const isPrivate = document.getElementById('repo-visibility').value === 'private';
-	const includeReadme = document.getElementById('repo-readme').checked;
-	const includeGitignore = document.getElementById('repo-gitignore').checked;
+	const visibilitySelect = document.getElementById('repo-visibility');
+	const readmeCheckbox = document.getElementById('repo-readme');
+	const gitignoreCheckbox = document.getElementById('repo-gitignore');
+
+	const isPrivate = visibilitySelect?.value === 'private';
+	const includeReadme = readmeCheckbox?.checked ?? true;
+	const includeGitignore = gitignoreCheckbox?.checked ?? true;
 
 	if(!name) {
 		alert('Please enter a repository name');
@@ -1512,27 +1604,33 @@ async function createNewRepository() {
 			auto_init: includeReadme
 		};
 
-		const repo = await fetchGH('/user/repos', {
+		await fetchGH('/user/repos', {
 			method: 'POST',
 			body: JSON.stringify(repoData)
 		});
 
 		if(includeGitignore) {
 			const gitignoreContent = btoa('node_modules/\n.DS_Store\n.env\n.env.local\n*.log\n');
-			await fetchGH(`/repos/${state.currentUser}/${name}/contents/.gitignore`, {
-				method: 'PUT',
-				body: JSON.stringify({
-					message: 'Add .gitignore',
-					content: gitignoreContent
-				})
-			});
+			try {
+				await fetchGH(`/repos/${state.currentUser}/${name}/contents/.gitignore`, {
+					method: 'PUT',
+					body: JSON.stringify({
+						message: 'Add .gitignore',
+						content: gitignoreContent
+					})
+				});
+			} catch(e) {
+				console.warn('Could not add .gitignore:', e);
+			}
 		}
 
-		window.create_repo_modal.close();
-		document.getElementById('repo-name-input').value = '';
-		document.getElementById('repo-desc-input').value = '';
-		document.getElementById('repo-readme').checked = true;
-		document.getElementById('repo-gitignore').checked = true;
+		if(window.create_repo_modal) {
+			window.create_repo_modal.close();
+		}
+		if(document.getElementById('repo-name-input')) document.getElementById('repo-name-input').value = '';
+		if(document.getElementById('repo-desc-input')) document.getElementById('repo-desc-input').value = '';
+		if(document.getElementById('repo-readme')) document.getElementById('repo-readme').checked = true;
+		if(document.getElementById('repo-gitignore')) document.getElementById('repo-gitignore').checked = true;
 
 		showNotification(`✅ Repository "${name}" created!`);
 		await loadRepositories();
@@ -1543,6 +1641,61 @@ async function createNewRepository() {
 	}
 }
 
+async function selectRepo(repoName) {
+	state.currentRepo = repoName;
+	state.currentPath = '';
+	showTab('files');
+	setLoadingState(true);
+
+	try {
+		await loadFiles('');
+		updateBreadcrumbs('');
+		const welcomeViewport = document.getElementById('welcome-viewport');
+		if(welcomeViewport) welcomeViewport.classList.add('hidden');
+		await loadReleases();
+		toggleEditButtons();
+	} catch(err) {
+		showNotification(`❌ Failed to load repository`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+async function starRepo() {
+	if(!state.token) {
+		alert('PAT token required');
+		return;
+	}
+	if(!state.currentRepo) {
+		alert('Please select a repository');
+		return;
+	}
+
+	setLoadingState(true);
+	try {
+		await fetchGH(`/user/starred/${state.currentUser}/${state.currentRepo}`, {
+			method: 'PUT'
+		});
+		showNotification('⭐ Repository starred!');
+	} catch(err) {
+		alert(`Failed: ${err.message}`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+function openInCodespaces() {
+	if(!state.currentRepo) {
+		alert('Please select a repository');
+		return;
+	}
+	window.open(
+		`https://github.com/codespaces/new?repo=${state.currentUser}/${state.currentRepo}`,
+		'_blank'
+	);
+}
+
+// File Management
 async function loadFiles(path) {
 	setLoadingState(true);
 	try {
@@ -1554,7 +1707,10 @@ async function loadFiles(path) {
 		state.filteredFiles = [...state.files];
 		state.currentPath = path;
 		sidebarSearchTerm = '';
-		document.getElementById('sidebar-search').value = '';
+		
+		const sidebarSearch = document.getElementById('sidebar-search');
+		if(sidebarSearch) sidebarSearch.value = '';
+		
 		renderFileList();
 		updateBreadcrumbs(path);
 	} catch(err) {
@@ -1569,6 +1725,8 @@ async function loadFiles(path) {
 
 function renderFileList() {
 	const container = document.getElementById('sidebar-content');
+	if(!container) return;
+
 	const files = sidebarSearchTerm ? state.filteredFiles : state.files;
 	let html = '<div class="flex flex-col gap-1">';
 
@@ -1600,7 +1758,9 @@ function renderFileList() {
 		return;
 	}
 
-	const sorted = files.sort((a, b) => (b.type === 'dir') - (a.type === 'dir') || a.name.localeCompare(b.name));
+	const sorted = files.sort((a, b) => 
+		(b.type === 'dir') - (a.type === 'dir') || a.name.localeCompare(b.name)
+	);
 
 	html += sorted.map(file => {
 		const icon = file.type === 'dir' ? 'fa-folder text-yellow-500' : getFileIcon(file.name);
@@ -1608,14 +1768,14 @@ function renderFileList() {
 		const safeSha = btoa(file.sha);
 
 		return `
-			<div class="file-row flex items-center justify-between p-2 hover:bg-[rgba(31,111,235,0.15)] rounded group file-item">
+			<div class="file-row flex items-center justify-between p-2 hover:bg-[rgba(31,111,235,0.15)] rounded group file-item" data-path="${escapeHtml(file.path)}" data-type="${file.type}" data-sha="${file.sha}" data-html-url="${escapeHtml(file.html_url)}">
 				<div onclick="${file.type === 'dir' ? `loadFiles('${file.path}')` : `openFile('${safePath}', '${safeSha}')`}" class="flex items-center gap-2 overflow-hidden flex-1 cursor-pointer">
 					<i class="fas ${icon} w-4 text-center flex-shrink-0"></i>
 					<span class="text-xs truncate">${escapeHtml(file.name)}</span>
 				</div>
 				<div class="file-actions flex gap-2 opacity-0 group-hover:opacity-100 transition">
-					${state.isOwner ? `<i onclick="deleteFile('${file.path}', '${file.sha}', event)" class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button"></i>` : ''}
-					<i onclick="window.open('${file.html_url}', '_blank')" class="fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button"></i>
+					${state.isOwner ? `<i class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" onclick="deleteFile('${escapeHtml(file.path)}', '${file.sha}', event)"></i>` : ''}
+					<i class="fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" onclick="window.open('${escapeHtml(file.html_url)}', '_blank')"></i>
 				</div>
 			</div>
 		`;
@@ -1634,16 +1794,21 @@ async function openFile(encodedPath, encodedSha) {
 	const file = state.files.find(f => f.path === path);
 	if(!file) return;
 
-	document.getElementById('active-file-label').innerHTML = `<i class="fas ${getFileIcon(path)}"></i> ${escapeHtml(path.split('/').pop())}`;
+	const label = document.getElementById('active-file-label');
+	if(label) {
+		label.innerHTML = `<i class="fas ${getFileIcon(path)}"></i> ${escapeHtml(path.split('/').pop())}`;
+	}
 
 	const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(path);
 
 	if(isImage) {
 		showImage(file.download_url);
-		document.getElementById('copy-code-btn').classList.add('hidden');
+		const copyBtn = document.getElementById('copy-code-btn');
+		if(copyBtn) copyBtn.classList.add('hidden');
 	} else {
 		await showEditor(file.download_url, path);
-		document.getElementById('copy-code-btn').classList.remove('hidden');
+		const copyBtn = document.getElementById('copy-code-btn');
+		if(copyBtn) copyBtn.classList.remove('hidden');
 	}
 
 	toggleEditButtons();
@@ -1655,10 +1820,25 @@ async function showEditor(url, path) {
 
 	try {
 		const response = await fetch(url);
+		
+		if(!response.ok) {
+			throw new Error(`HTTP ${response.status}`);
+		}
+
+		// Check file size - 5MB limit
+		const size = parseInt(response.headers.get('content-length') || '0');
+		const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+		if(size > MAX_FILE_SIZE) {
+			state.monacoEditor.setValue(`File too large to edit (${(size / 1024 / 1024).toFixed(2)}MB > 5MB limit)`);
+			state.monacoEditor.updateOptions({ readOnly: true });
+			return;
+		}
+
 		const content = await response.text();
 		state.monacoEditor.setValue(content);
 
-		const ext = path.split('.').pop();
+		const ext = path.split('.').pop().toLowerCase();
 		const lang = getLanguageByExt(ext);
 		monaco.editor.setModelLanguage(state.monacoEditor.getModel(), lang);
 
@@ -1666,7 +1846,9 @@ async function showEditor(url, path) {
 			readOnly: !state.isOwner
 		});
 	} catch(err) {
-		state.monacoEditor.setValue('Error loading file content');
+		console.error('Error loading file:', err);
+		state.monacoEditor.setValue(`Error loading file: ${err.message}`);
+		state.monacoEditor.updateOptions({ readOnly: true });
 	}
 }
 
@@ -1674,9 +1856,15 @@ function showImage(url) {
 	document.getElementById('editor-viewport').parentElement.classList.add('hidden');
 	const imgViewport = document.getElementById('image-viewport');
 	imgViewport.classList.remove('hidden');
-	document.getElementById('preview-img').src = url;
-	document.getElementById('img-download-link').href = url;
-	document.getElementById('img-download-link').download = state.currentPath.split('/').pop();
+	
+	const previewImg = document.getElementById('preview-img');
+	if(previewImg) previewImg.src = url;
+	
+	const downloadLink = document.getElementById('img-download-link');
+	if(downloadLink) {
+		downloadLink.href = url;
+		downloadLink.download = state.currentPath.split('/').pop();
+	}
 }
 
 async function saveFileContent() {
@@ -1690,14 +1878,17 @@ async function saveFileContent() {
 
 	setLoadingState(true);
 	try {
-		const result = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${state.currentPath}`, {
-			method: 'PUT',
-			body: JSON.stringify({
-				message: `Update ${state.currentPath.split('/').pop()}`,
-				content: encodedContent,
-				sha: state.currentSHA
-			})
-		});
+		const result = await fetchGH(
+			`/repos/${state.currentUser}/${state.currentRepo}/contents/${state.currentPath}`,
+			{
+				method: 'PUT',
+				body: JSON.stringify({
+					message: `Update ${state.currentPath.split('/').pop()}`,
+					content: encodedContent,
+					sha: state.currentSHA
+				})
+			}
+		);
 
 		state.currentSHA = result.content.sha;
 		showNotification('✅ File saved!');
@@ -1710,25 +1901,125 @@ async function saveFileContent() {
 
 async function deleteFile(path, sha, event) {
 	event.stopPropagation();
-	if(!confirm(`Delete "${path.split('/').pop()}"?`)) return;
+	
+	const fileName = path.split('/').pop();
+	if(!confirm(`Are you sure you want to delete "${fileName}"?`)) return;
+
+	if(!state.token) {
+		alert('PAT token required for deletion');
+		return;
+	}
 
 	setLoadingState(true);
 	try {
-		await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${path}`, {
-			method: 'DELETE',
-			body: JSON.stringify({
-				message: `Delete ${path}`,
-				sha: sha
-			})
-		});
+		await fetchGH(
+			`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(path)}`,
+			{
+				method: 'DELETE',
+				body: JSON.stringify({
+					message: `Delete ${fileName}`,
+					sha: sha
+				})
+			}
+		);
 
 		const parentPath = path.split('/').slice(0, -1).join('/');
 		await loadFiles(parentPath);
-		showNotification(`🗑️ File deleted`);
+		showNotification(`🗑️ "${fileName}" deleted successfully!`);
 	} catch(err) {
-		alert(`Delete failed: ${err.message}`);
+		console.error('Delete error:', err);
+		alert(`Failed to delete: ${err.message}`);
 	} finally {
 		setLoadingState(false);
+	}
+}
+
+async function deleteFolder(path, sha, event) {
+	event.stopPropagation();
+	
+	const folderName = path.split('/').pop();
+	if(!confirm(`Delete folder "${folderName}" and all contents? This cannot be undone!`)) return;
+
+	if(!state.token) {
+		alert('PAT token required for deletion');
+		return;
+	}
+
+	setLoadingState(true);
+	try {
+		// Get all files in folder recursively
+		const filesToDelete = await getAllFilesInFolder(path);
+		
+		if(filesToDelete.length === 0) {
+			// Empty folder - just delete the .gitkeep
+			try {
+				const gitkeepPath = `${path}/.gitkeep`;
+				const gitkeepFile = state.files.find(f => f.path === gitkeepPath);
+				if(gitkeepFile) {
+					await fetchGH(
+						`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(gitkeepPath)}`,
+						{
+							method: 'DELETE',
+							body: JSON.stringify({
+								message: `Delete folder ${folderName}`,
+								sha: gitkeepFile.sha
+							})
+						}
+					);
+				}
+			} catch(e) {
+				console.warn('Could not delete .gitkeep:', e);
+			}
+		} else {
+			// Delete all files in folder
+			await Promise.all(filesToDelete.map(file =>
+				fetchGH(
+					`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(file.path)}`,
+					{
+						method: 'DELETE',
+						body: JSON.stringify({
+							message: `Delete ${file.name}`,
+							sha: file.sha
+						})
+					}
+				)
+			));
+		}
+
+		const parentPath = path.split('/').slice(0, -1).join('/');
+		await loadFiles(parentPath);
+		showNotification(`🗑️ Folder "${folderName}" deleted successfully!`);
+	} catch(err) {
+		console.error('Folder delete error:', err);
+		alert(`Failed to delete folder: ${err.message}`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+async function getAllFilesInFolder(folderPath) {
+	try {
+		const contents = await fetchGH(
+			`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(folderPath)}`
+		);
+		const files = Array.isArray(contents) ? contents : [contents];
+		
+		let allFiles = [];
+		
+		// Recursively get all files, excluding folders
+		for(const item of files) {
+			if(item.type === 'file') {
+				allFiles.push(item);
+			} else if(item.type === 'dir') {
+				const subFiles = await getAllFilesInFolder(item.path);
+				allFiles = allFiles.concat(subFiles);
+			}
+		}
+		
+		return allFiles;
+	} catch(err) {
+		console.error('Error getting folder contents:', err);
+		return [];
 	}
 }
 
@@ -1742,11 +2033,17 @@ function showCreateFileModal() {
 		return;
 	}
 
-	document.getElementById('file-name-input').value = '';
-	document.getElementById('file-path-input').value = state.currentPath ? state.currentPath + '/' : '';
-	document.getElementById('file-content-input').value = '';
-	document.getElementById('file-commit-msg').value = 'Create new file';
-	window.create_file_modal.showModal();
+	const nameInput = document.getElementById('file-name-input');
+	const pathInput = document.getElementById('file-path-input');
+	const contentInput = document.getElementById('file-content-input');
+	const commitMsg = document.getElementById('file-commit-msg');
+
+	if(nameInput) nameInput.value = '';
+	if(pathInput) pathInput.value = state.currentPath ? state.currentPath + '/' : '';
+	if(contentInput) contentInput.value = '';
+	if(commitMsg) commitMsg.value = 'Create new file';
+
+	if(window.create_file_modal) window.create_file_modal.showModal();
 }
 
 async function createNewFile() {
@@ -1777,10 +2074,10 @@ async function createNewFile() {
 			})
 		});
 
-		window.create_file_modal.close();
-		document.getElementById('file-name-input').value = '';
-		document.getElementById('file-path-input').value = '';
-		document.getElementById('file-content-input').value = '';
+		if(window.create_file_modal) window.create_file_modal.close();
+		if(document.getElementById('file-name-input')) document.getElementById('file-name-input').value = '';
+		if(document.getElementById('file-path-input')) document.getElementById('file-path-input').value = '';
+		if(document.getElementById('file-content-input')) document.getElementById('file-content-input').value = '';
 
 		showNotification(`✅ File "${fileName}" created!`);
 		await loadFiles(filePath);
@@ -1801,9 +2098,13 @@ function showCreateFolderModal() {
 		return;
 	}
 
-	document.getElementById('folder-name-input').value = '';
-	document.getElementById('folder-path-input').value = state.currentPath ? state.currentPath + '/' : '';
-	window.create_folder_modal.showModal();
+	const nameInput = document.getElementById('folder-name-input');
+	const pathInput = document.getElementById('folder-path-input');
+
+	if(nameInput) nameInput.value = '';
+	if(pathInput) pathInput.value = state.currentPath ? state.currentPath + '/' : '';
+
+	if(window.create_folder_modal) window.create_folder_modal.showModal();
 }
 
 async function createNewFolder() {
@@ -1832,9 +2133,9 @@ async function createNewFolder() {
 			})
 		});
 
-		window.create_folder_modal.close();
-		document.getElementById('folder-name-input').value = '';
-		document.getElementById('folder-path-input').value = '';
+		if(window.create_folder_modal) window.create_folder_modal.close();
+		if(document.getElementById('folder-name-input')) document.getElementById('folder-name-input').value = '';
+		if(document.getElementById('folder-path-input')) document.getElementById('folder-path-input').value = '';
 
 		showNotification(`✅ Folder "${folderName}" created!`);
 		await loadFiles(folderPath);
@@ -1846,10 +2147,18 @@ async function createNewFolder() {
 }
 
 function openUploadModal() {
-	document.getElementById('upload-path-label').innerText = `${state.currentRepo}/${state.currentPath || 'root'}`;
-	document.getElementById('file-picker').value = '';
-	document.getElementById('upload-progress').classList.add('hidden');
-	window.upload_modal.showModal();
+	const pathLabel = document.getElementById('upload-path-label');
+	if(pathLabel) {
+		pathLabel.innerText = `${state.currentRepo}/${state.currentPath || 'root'}`;
+	}
+	
+	const filePicker = document.getElementById('file-picker');
+	if(filePicker) filePicker.value = '';
+	
+	const progress = document.getElementById('upload-progress');
+	if(progress) progress.classList.add('hidden');
+
+	if(window.upload_modal) window.upload_modal.showModal();
 }
 
 async function performUpload() {
@@ -1862,131 +2171,72 @@ async function performUpload() {
 	}
 
 	const uploadBtn = document.getElementById('upload-btn');
-	uploadBtn.disabled = true;
+	if(uploadBtn) uploadBtn.disabled = true;
 
 	document.getElementById('upload-progress').classList.remove('hidden');
-	document.getElementById('upload-total').innerText = files.length;
+	const uploadTotal = document.getElementById('upload-total');
+	if(uploadTotal) uploadTotal.innerText = files.length;
 
 	let uploadedCount = 0;
+	const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB limit
 
 	for(const file of files) {
 		try {
-			await new Promise((resolve, reject) => {
-				const reader = new FileReader();
+			// Validate file size
+			if(file.size > MAX_FILE_SIZE) {
+				showNotification(`⚠️ File ${file.name} exceeds 100MB limit`);
+				continue;
+			}
 
-				reader.onload = async(e) => {
-					try {
-						const content = e.target.result.split(',')[1];
-						const uploadPath = state.currentPath ? `${state.currentPath}/${file.name}` : file.name;
-
-						await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${uploadPath}`, {
-							method: 'PUT',
-							body: JSON.stringify({
-								message: `Upload ${file.name}`,
-								content: content
-							})
-						});
-
-						uploadedCount++;
-						document.getElementById('upload-current').innerText = uploadedCount;
-						resolve();
-					} catch(err) {
-						reject(err);
-					}
-				};
-
-				reader.onerror = () => reject(new Error('File read error'));
-				reader.readAsDataURL(file);
-			});
+			await uploadFile(file);
+			uploadedCount++;
+			const uploadCurrent = document.getElementById('upload-current');
+			if(uploadCurrent) uploadCurrent.innerText = uploadedCount;
 		} catch(err) {
 			console.error(`Upload failed for ${file.name}:`, err);
+			showNotification(`❌ Failed to upload ${file.name}`);
 		}
 	}
 
-	window.upload_modal.close();
+	if(window.upload_modal) window.upload_modal.close();
 	fileInput.value = '';
-	uploadBtn.disabled = false;
+	if(uploadBtn) uploadBtn.disabled = false;
 	await loadFiles(state.currentPath);
 	showNotification(`✅ ${uploadedCount}/${files.length} files uploaded!`);
 }
 
-async function loadReleases() {
-	try {
-		const releases = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=10`);
-		renderReleases(releases || []);
-	} catch(err) {
-		console.log('No releases found');
-	}
-}
+async function uploadFile(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
 
-function renderReleases(releases) {
-	const container = document.getElementById('releases-list');
+		reader.onload = async(e) => {
+			try {
+				const content = e.target.result.split(',')[1];
+				const uploadPath = state.currentPath ? `${state.currentPath}/${file.name}` : file.name;
 
-	if(releases.length === 0) {
-		container.innerHTML = '<div class="text-center text-gray-500 p-4"><i class="fas fa-inbox text-2xl opacity-20"></i><p class="text-sm mt-2">No releases</p></div>';
-		return;
-	}
+				await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${uploadPath}`, {
+					method: 'PUT',
+					body: JSON.stringify({
+						message: `Upload ${file.name}`,
+						content: content
+					})
+				});
 
-	container.innerHTML = releases.map(release => `
-		<div class="release-item">
-			<div class="flex justify-between items-start mb-2">
-				<div>
-					<h4 class="font-bold text-sm">${escapeHtml(release.name || release.tag_name)}</h4>
-					<p class="text-xs text-gray-500">${new Date(release.published_at).toLocaleDateString()}</p>
-				</div>
-				${release.prerelease ? '<span class="badge badge-warning text-xs">Pre-release</span>' : ''}
-			</div>
-			<p class="text-xs text-gray-400 mb-3 line-clamp-2">${escapeHtml(release.body || 'No description')}</p>
-			<div class="flex gap-2 flex-wrap">
-				${release.assets.map(asset => `
-					<a href="${asset.browser_download_url}" download class="btn btn-xs btn-outline gap-1">
-						<i class="fas fa-download text-xs"></i> ${escapeHtml(asset.name)}
-					</a>
-				`).join('')}
-			</div>
-		</div>
-	`).join('');
-}
+				resolve();
+			} catch(err) {
+				reject(err);
+			}
+		};
 
-function downloadFile() {
-	if(!state.currentPath) {
-		alert('Please select a file first');
-		return;
-	}
-
-	const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(state.currentPath);
-
-	if(isImage) {
-		document.getElementById('img-download-link').click();
-	} else {
-		const filename = state.currentPath.split('/').pop();
-		const content = state.monacoEditor.getValue();
-		const blob = new Blob([content], { type: 'text/plain' });
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = filename;
-		a.click();
-		window.URL.revokeObjectURL(url);
-	}
-
-	showNotification('📥 Download started!');
-}
-
-function copyRawUrl() {
-	const url = `https://raw.githubusercontent.com/${state.currentUser}/${state.currentRepo}/${state.currentBranch}/${state.currentPath}`;
-	navigator.clipboard.writeText(url);
-	showNotification('📋 Raw URL copied!');
-}
-
-function copyCode() {
-	const code = state.monacoEditor.getValue();
-	navigator.clipboard.writeText(code);
-	showNotification('📋 Code copied!');
+		reader.onerror = () => reject(new Error('File read error'));
+		reader.readAsDataURL(file);
+	});
 }
 
 function updateBreadcrumbs(path) {
 	const container = document.getElementById('breadcrumb-container');
+	if(!container) return;
+
 	const parts = path.split('/').filter(p => p);
 
 	let html = `
@@ -2013,13 +2263,88 @@ function navigateUp() {
 	loadFiles(parts.join('/'));
 }
 
-function showTab(tab) {
-	state.activeTab = tab;
-	document.getElementById('tab-repos').className = `flex-1 py-2 border-b-2 ${tab === 'repos' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
-	document.getElementById('tab-files').className = `flex-1 py-2 border-b-2 ${tab === 'files' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+// Releases
+async function loadReleases() {
+	try {
+		const releases = await fetchGH(
+			`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=10`
+		);
+		renderReleases(releases || []);
+	} catch(err) {
+		console.log('No releases found');
+	}
+}
 
-	if(tab === 'repos') renderRepoList();
-	else if(tab === 'files') renderFileList();
+function renderReleases(releases) {
+	const container = document.getElementById('releases-list');
+	if(!container) return;
+
+	if(releases.length === 0) {
+		container.innerHTML = 
+			'<div class="text-center text-gray-500 p-4">' +
+			'<i class="fas fa-inbox text-2xl opacity-20"></i>' +
+			'<p class="text-sm mt-2">No releases</p></div>';
+		return;
+	}
+
+	container.innerHTML = releases.map(release => `
+		<div class="release-item">
+			<div class="flex justify-between items-start mb-2">
+				<div>
+					<h4 class="font-bold text-sm">${escapeHtml(release.name || release.tag_name)}</h4>
+					<p class="text-xs text-gray-500">${new Date(release.published_at).toLocaleDateString()}</p>
+				</div>
+				${release.prerelease ? '<span class="badge badge-warning text-xs">Pre-release</span>' : ''}
+			</div>
+			<p class="text-xs text-gray-400 mb-3 line-clamp-2">${escapeHtml(release.body || 'No description')}</p>
+			<div class="flex gap-2 flex-wrap">
+				${release.assets.map(asset => `
+					<a href="${escapeHtml(asset.browser_download_url)}" download class="btn btn-xs btn-outline gap-1">
+						<i class="fas fa-download text-xs"></i> ${escapeHtml(asset.name)}
+					</a>
+				`).join('')}
+			</div>
+		</div>
+	`).join('');
+}
+
+// File Utils
+function downloadFile() {
+	if(!state.currentPath) {
+		alert('Please select a file first');
+		return;
+	}
+
+	const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(state.currentPath);
+
+	if(isImage) {
+		const downloadLink = document.getElementById('img-download-link');
+		if(downloadLink) downloadLink.click();
+	} else {
+		const filename = state.currentPath.split('/').pop();
+		const content = state.monacoEditor.getValue();
+		const blob = new Blob([content], { type: 'text/plain' });
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = filename;
+		a.click();
+		window.URL.revokeObjectURL(url);
+	}
+
+	showNotification('📥 Download started!');
+}
+
+function copyRawUrl() {
+	const url = `https://raw.githubusercontent.com/${state.currentUser}/${state.currentRepo}/${state.currentBranch}/${state.currentPath}`;
+	navigator.clipboard.writeText(url);
+	showNotification('📋 Raw URL copied!');
+}
+
+function copyCode() {
+	const code = state.monacoEditor.getValue();
+	navigator.clipboard.writeText(code);
+	showNotification('📋 Code copied!');
 }
 
 function getFileIcon(filename) {
@@ -2058,122 +2383,65 @@ function getLanguageByExt(ext) {
 		'bash': 'shell',
 		'yml': 'yaml',
 		'yaml': 'yaml',
-		'rb': 'ruby'
+		'rb': 'ruby',
+		'go': 'go',
+		'rs': 'rust',
+		'php': 'php',
+		'sql': 'sql',
+		'xml': 'xml'
 	};
-	return langs[ext] || 'plaintext';
+	return langs[ext.toLowerCase()] || 'plaintext';
 }
 
-function filterSidebarContent() {
-	const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
-	sidebarSearchTerm = searchTerm;
+// UI/UX - Tabs an seach
+function showTab(tab) {
+	state.activeTab = tab;
+	const tabRepos = document.getElementById('tab-repos');
+	const tabFiles = document.getElementById('tab-files');
 
-	if(state.activeTab === 'repos') {
-		state.filteredRepos = state.repos.filter(repo => 
-			repo.name.toLowerCase().includes(searchTerm) || 
-			(repo.description && repo.description.toLowerCase().includes(searchTerm))
-		);
-	} else if(state.activeTab === 'files') {
-		state.filteredFiles = state.files.filter(file => file.name.toLowerCase().includes(searchTerm));
+	if(tabRepos) {
+		tabRepos.className = `flex-1 py-2 border-b-2 ${tab === 'repos' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+	}
+	if(tabFiles) {
+		tabFiles.className = `flex-1 py-2 border-b-2 ${tab === 'files' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
 	}
 
-	if(state.activeTab === 'repos') renderRepoList();
-	else if(state.activeTab === 'files') renderFileList();
+	if(tab === 'repos') renderRepoList();
+	else if(tab === 'files') renderFileList();
+}
+
+// Debounced search filter to prevent UI freezing
+function filterSidebarContent() {
+	clearTimeout(searchDebounceTimer);
+	searchDebounceTimer = setTimeout(() => {
+		const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
+		sidebarSearchTerm = searchTerm;
+
+		if(state.activeTab === 'repos') {
+			state.filteredRepos = state.repos.filter(repo => 
+				repo.name.toLowerCase().includes(searchTerm) || 
+				(repo.description && repo.description.toLowerCase().includes(searchTerm))
+			);
+		} else if(state.activeTab === 'files') {
+			state.filteredFiles = state.files.filter(file => 
+				file.name.toLowerCase().includes(searchTerm)
+			);
+		}
+
+		if(state.activeTab === 'repos') renderRepoList();
+		else if(state.activeTab === 'files') renderFileList();
+	}, 300);
 }
 
 function handleSidebarSearch(event) {
 	if(event.key === 'Enter') {
 		filterSidebarContent();
-	}
-}
-
-function updateAuthStatus() {
-	state.token = document.getElementById('pat-token').value.trim();
-	const badge = document.getElementById('auth-badge');
-
-	if(state.token && state.token.length > 0) {
-		badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
-		badge.innerHTML = '<i class="fas fa-unlock"></i> Authenticated';
-
-		if(state.currentUser && state.currentUser !== 'octocat') {
-			toggleEditButtons();
-		}
 	} else {
-		badge.className = "badge badge-error gap-2 text-[10px] uppercase font-bold";
-		badge.innerHTML = '<i class="fas fa-lock"></i> Read Only';
-		state.isOwner = false;
-		toggleEditButtons();
+		filterSidebarContent();
 	}
 }
 
-function handlePATInput(event) {
-	if(event.key === 'Enter') {
-		updateAuthStatus();
-	}
-}
-
-function toggleEditButtons() {
-	const saveBtn = document.getElementById('save-btn');
-	const uploadBtn = document.getElementById('upload-trigger');
-	const createFileBtn = document.getElementById('create-file-btn');
-	const createFolderBtn = document.getElementById('create-folder-btn');
-
-	if(state.isOwner && state.token && state.currentRepo) {
-		saveBtn.classList.remove('hidden');
-		uploadBtn.classList.remove('hidden');
-		createFileBtn.classList.remove('hidden');
-		createFolderBtn.classList.remove('hidden');
-	} else {
-		saveBtn.classList.add('hidden');
-		uploadBtn.classList.add('hidden');
-		createFileBtn.classList.add('hidden');
-		createFolderBtn.classList.add('hidden');
-	}
-}
-
-function refreshCurrent() {
-	if(state.activeTab === 'repos') {
-		loadRepositories();
-	} else if(state.currentRepo) {
-		loadFiles(state.currentPath);
-	}
-}
-
-function toggleSidebarSize() {
-	const sidebar = document.querySelector('aside');
-	sidebar.classList.toggle('w-[500px]');
-}
-
-function openInCodespaces() {
-	if(!state.currentRepo) {
-		alert('Please select a repository');
-		return;
-	}
-	window.open(`https://github.com/codespaces/new?repo=${state.currentUser}/${state.currentRepo}`, '_blank');
-}
-
-async function starRepo() {
-	if(!state.token) {
-		alert('PAT token required');
-		return;
-	}
-	if(!state.currentRepo) {
-		alert('Please select a repository');
-		return;
-	}
-
-	setLoadingState(true);
-	try {
-		await fetchGH(`/user/starred/${state.currentUser}/${state.currentRepo}`, {
-			method: 'PUT'
-		});
-		showNotification('⭐ Repository starred!');
-	} catch(err) {
-		alert(`Failed: ${err.message}`);
-	} finally {
-		setLoadingState(false);
-	}
-}
-
+// Theme & Editor Settings
 function setTheme(theme) {
 	state.theme = theme;
 	document.documentElement.className = theme;
@@ -2224,110 +2492,19 @@ function showThemeMenu() {
 	}, 3000);
 }
 
-async function showProfileModal() {
-	if(!state.token) {
-		alert('Please enter your PAT token first');
-		return;
-	}
-
-	setLoadingState(true);
-	try {
-		const profile = await fetchGH('/user');
-		populateProfileModal(profile);
-		window.profile_modal.showModal();
-	} catch(err) {
-		alert(`Failed: ${err.message}`);
-	} finally {
-		setLoadingState(false);
-	}
-}
-
-function populateProfileModal(profile) {
-	document.getElementById('modal-avatar').src = profile.avatar_url;
-	document.getElementById('modal-name').innerText = profile.name || profile.login;
-	document.getElementById('modal-login').innerText = `@${profile.login}`;
-	document.getElementById('modal-bio').innerText = profile.bio || 'No bio';
-	document.getElementById('profile-followers').innerText = profile.followers;
-	document.getElementById('profile-following').innerText = profile.following;
-	document.getElementById('profile-repos').innerText = profile.public_repos;
-	document.getElementById('profile-gists').innerText = profile.public_gists;
-	document.getElementById('edit-name').value = profile.name || '';
-	document.getElementById('edit-company').value = profile.company || '';
-	document.getElementById('edit-location').value = profile.location || '';
-	document.getElementById('edit-bio').value = profile.bio || '';
-	document.getElementById('edit-blog').value = profile.blog || '';
-	document.getElementById('edit-twitter').value = profile.twitter_username || '';
-
-	if(state.token) {
-		document.getElementById('edit-profile-btn').classList.remove('hidden');
-	}
-}
-
-function enableProfileEdit() {
-	document.getElementById('profile-editable').classList.remove('hidden');
-	document.getElementById('edit-profile-btn').classList.add('hidden');
-	document.getElementById('save-profile-btn').classList.remove('hidden');
-	document.getElementById('cancel-profile-btn').classList.remove('hidden');
-}
-
-function disableProfileEdit() {
-	document.getElementById('profile-editable').classList.add('hidden');
-	document.getElementById('edit-profile-btn').classList.remove('hidden');
-	document.getElementById('save-profile-btn').classList.add('hidden');
-	document.getElementById('cancel-profile-btn').classList.add('hidden');
-}
-
-async function saveProfileChanges() {
-	const updateData = {
-		name: document.getElementById('edit-name').value,
-		company: document.getElementById('edit-company').value,
-		location: document.getElementById('edit-location').value,
-		bio: document.getElementById('edit-bio').value,
-		blog: document.getElementById('edit-blog').value,
-		twitter_username: document.getElementById('edit-twitter').value
-	};
-
-	setLoadingState(true);
-	try {
-		await fetchGH('/user', {
-			method: 'PATCH',
-			body: JSON.stringify(updateData)
-		});
-		showNotification('✅ Profile updated!');
-		disableProfileEdit();
-	} catch(err) {
-		alert(`Failed: ${err.message}`);
-	} finally {
-		setLoadingState(false);
-	}
-}
-
-function openAvatarUpload() {
-	const input = document.createElement('input');
-	input.type = 'file';
-	input.accept = 'image/*';
-	input.onchange = (e) => {
-		const file = e.target.files[0];
-		if(file) {
-			const reader = new FileReader();
-			reader.onload = (event) => {
-				document.getElementById('modal-avatar').src = event.target.result;
-				showNotification('📷 Avatar preview updated');
-			};
-			reader.readAsDataURL(file);
-		}
-	};
-	input.click();
-}
-
 function showSettingsModal() {
-	window.customization_modal.showModal();
+	if(window.customization_modal) {
+		window.customization_modal.showModal();
+	}
 }
 
 function updateEditorSettings() {
-	const fontSize = parseInt(document.getElementById('editor-font-size').value);
+	const fontSizeInput = document.getElementById('editor-font-size');
+	const fontSize = parseInt(fontSizeInput.value);
 	state.editorSettings.fontSize = fontSize;
-	document.getElementById('font-size-display').innerText = fontSize + 'px';
+
+	const fontSizeDisplay = document.getElementById('font-size-display');
+	if(fontSizeDisplay) fontSizeDisplay.innerText = fontSize + 'px';
 
 	if(state.monacoEditor) {
 		state.monacoEditor.updateOptions({ fontSize });
@@ -2369,19 +2546,154 @@ function toggleMinimap() {
 }
 
 function showSortingMenu() {
-	window.sorting_modal.showModal();
+	if(window.sorting_modal) window.sorting_modal.showModal();
 }
 
+// Profile Management
+async function showProfileModal() {
+	if(!state.token) {
+		alert('Please enter your PAT token first');
+		return;
+	}
+
+	setLoadingState(true);
+	try {
+		const profile = await fetchGH('/user');
+		populateProfileModal(profile);
+		if(window.profile_modal) window.profile_modal.showModal();
+	} catch(err) {
+		alert(`Failed: ${err.message}`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+function populateProfileModal(profile) {
+	const avatar = document.getElementById('modal-avatar');
+	const name = document.getElementById('modal-name');
+	const login = document.getElementById('modal-login');
+	const bio = document.getElementById('modal-bio');
+	const followers = document.getElementById('profile-followers');
+	const following = document.getElementById('profile-following');
+	const repos = document.getElementById('profile-repos');
+	const gists = document.getElementById('profile-gists');
+
+	if(avatar) avatar.src = profile.avatar_url;
+	if(name) name.innerText = profile.name || profile.login;
+	if(login) login.innerText = `@${profile.login}`;
+	if(bio) bio.innerText = profile.bio || 'No bio';
+	if(followers) followers.innerText = profile.followers;
+	if(following) following.innerText = profile.following;
+	if(repos) repos.innerText = profile.public_repos;
+	if(gists) gists.innerText = profile.public_gists;
+
+	const editName = document.getElementById('edit-name');
+	const editCompany = document.getElementById('edit-company');
+	const editLocation = document.getElementById('edit-location');
+	const editBio = document.getElementById('edit-bio');
+	const editBlog = document.getElementById('edit-blog');
+	const editTwitter = document.getElementById('edit-twitter');
+
+	if(editName) editName.value = profile.name || '';
+	if(editCompany) editCompany.value = profile.company || '';
+	if(editLocation) editLocation.value = profile.location || '';
+	if(editBio) editBio.value = profile.bio || '';
+	if(editBlog) editBlog.value = profile.blog || '';
+	if(editTwitter) editTwitter.value = profile.twitter_username || '';
+
+	const editBtn = document.getElementById('edit-profile-btn');
+	if(editBtn && state.token) {
+		editBtn.classList.remove('hidden');
+	}
+}
+
+function enableProfileEdit() {
+	const profileEditable = document.getElementById('profile-editable');
+	const editBtn = document.getElementById('edit-profile-btn');
+	const saveBtn = document.getElementById('save-profile-btn');
+	const cancelBtn = document.getElementById('cancel-profile-btn');
+
+	if(profileEditable) profileEditable.classList.remove('hidden');
+	if(editBtn) editBtn.classList.add('hidden');
+	if(saveBtn) saveBtn.classList.remove('hidden');
+	if(cancelBtn) cancelBtn.classList.remove('hidden');
+}
+
+function disableProfileEdit() {
+	const profileEditable = document.getElementById('profile-editable');
+	const editBtn = document.getElementById('edit-profile-btn');
+	const saveBtn = document.getElementById('save-profile-btn');
+	const cancelBtn = document.getElementById('cancel-profile-btn');
+
+	if(profileEditable) profileEditable.classList.add('hidden');
+	if(editBtn) editBtn.classList.remove('hidden');
+	if(saveBtn) saveBtn.classList.add('hidden');
+	if(cancelBtn) cancelBtn.classList.add('hidden');
+}
+
+async function saveProfileChanges() {
+	const updateData = {
+		name: document.getElementById('edit-name').value,
+		company: document.getElementById('edit-company').value,
+		location: document.getElementById('edit-location').value,
+		bio: document.getElementById('edit-bio').value,
+		blog: document.getElementById('edit-blog').value,
+		twitter_username: document.getElementById('edit-twitter').value
+	};
+
+	setLoadingState(true);
+	try {
+		await fetchGH('/user', {
+			method: 'PATCH',
+			body: JSON.stringify(updateData)
+		});
+		showNotification('✅ Profile updated!');
+		disableProfileEdit();
+	} catch(err) {
+		alert(`Failed: ${err.message}`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+function openAvatarUpload() {
+	const input = document.createElement('input');
+	input.type = 'file';
+	input.accept = 'image/*';
+	input.onchange = (e) => {
+		const file = e.target.files[0];
+		if(file) {
+			const reader = new FileReader();
+			reader.onload = (event) => {
+				const avatar = document.getElementById('modal-avatar');
+				if(avatar) avatar.src = event.target.result;
+				showNotification('📷 Avatar preview updated');
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+	input.click();
+}
+
+// [Mock] Music Player
 function showMusicPlayer() {
-	window.music_modal.showModal();
-	document.getElementById('music-results').innerHTML = '';
+	const musicResults = document.getElementById('music-results');
+	if(musicResults) musicResults.innerHTML = '';
+	if(window.music_modal) window.music_modal.showModal();
 	setMusicSource(state.musicSource);
 }
 
 function setMusicSource(source) {
 	state.musicSource = source;
-	document.getElementById('spotify-btn').className = source === 'spotify' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
-	document.getElementById('youtube-btn').className = source === 'youtube' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+	const spotifyBtn = document.getElementById('spotify-btn');
+	const youtubeBtn = document.getElementById('youtube-btn');
+
+	if(spotifyBtn) {
+		spotifyBtn.className = source === 'spotify' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+	}
+	if(youtubeBtn) {
+		youtubeBtn.className = source === 'youtube' ? 'flex-1 btn btn-sm btn-primary' : 'flex-1 btn btn-sm btn-outline';
+	}
 }
 
 function searchMusic() {
@@ -2403,11 +2715,11 @@ function searchMusic() {
 	);
 
 	resultsContainer.innerHTML = filtered.map((song) => `
-		<div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" onclick="selectSong('${song.title}', '${song.artist}')">
+		<div class="p-3 bg-[var(--bg-secondary)] rounded-lg cursor-pointer hover:bg-blue-500/20 transition" onclick="selectSong('${escapeHtml(song.title)}', '${escapeHtml(song.artist)}')">
 			<div class="flex justify-between items-center">
 				<div>
-					<div class="font-bold text-sm">${song.title}</div>
-					<div class="text-xs text-gray-500">${song.artist}</div>
+					<div class="font-bold text-sm">${escapeHtml(song.title)}</div>
+					<div class="text-xs text-gray-500">${escapeHtml(song.artist)}</div>
 				</div>
 				<div class="text-xs text-gray-400">Duration: ${song.duration}</div>
 			</div>
@@ -2417,9 +2729,14 @@ function searchMusic() {
 
 function selectSong(title, artist) {
 	state.currentlyPlaying = { title, artist };
-	document.getElementById('now-playing-title').innerText = title;
-	document.getElementById('now-playing-artist').innerText = artist;
-	document.getElementById('now-playing').classList.remove('hidden');
+	const nowPlayingTitle = document.getElementById('now-playing-title');
+	const nowPlayingArtist = document.getElementById('now-playing-artist');
+	const nowPlaying = document.getElementById('now-playing');
+
+	if(nowPlayingTitle) nowPlayingTitle.innerText = title;
+	if(nowPlayingArtist) nowPlayingArtist.innerText = artist;
+	if(nowPlaying) nowPlaying.classList.remove('hidden');
+
 	showNotification(`🎵 Now playing: ${title}`);
 }
 
@@ -2433,8 +2750,37 @@ function toggleMusicPlayback() {
 
 function stopMusic() {
 	state.currentlyPlaying = null;
-	document.getElementById('now-playing').classList.add('hidden');
+	const nowPlaying = document.getElementById('now-playing');
+	if(nowPlaying) nowPlaying.classList.add('hidden');
 	showNotification('⏹️ Music stopped');
+}
+
+// Utility Funta
+function toggleEditButtons() {
+	const saveBtn = document.getElementById('save-btn');
+	const uploadBtn = document.getElementById('upload-trigger');
+	const createFileBtn = document.getElementById('create-file-btn');
+	const createFolderBtn = document.getElementById('create-folder-btn');
+
+	const shouldShow = state.isOwner && state.token && state.currentRepo;
+
+	if(saveBtn) saveBtn.classList.toggle('hidden', !shouldShow);
+	if(uploadBtn) uploadBtn.classList.toggle('hidden', !shouldShow);
+	if(createFileBtn) createFileBtn.classList.toggle('hidden', !shouldShow);
+	if(createFolderBtn) createFolderBtn.classList.toggle('hidden', !shouldShow);
+}
+
+function refreshCurrent() {
+	if(state.activeTab === 'repos') {
+		loadRepositories();
+	} else if(state.currentRepo) {
+		loadFiles(state.currentPath);
+	}
+}
+
+function toggleSidebarSize() {
+	const sidebar = document.querySelector('aside');
+	if(sidebar) sidebar.classList.toggle('w-[500px]');
 }
 
 function showNotification(message) {
@@ -2443,33 +2789,57 @@ function showNotification(message) {
 	notification.innerHTML = message;
 	document.body.appendChild(notification);
 
-	setTimeout(() => notification.remove(), 3000);
+	setTimeout(() => {
+		if(notification.parentElement) notification.remove();
+	}, 3000);
 }
 
 function setLoadingState(isLoading) {
 	state.isLoading = isLoading;
+	const loader = document.querySelector('.loading');
+	if(loader) {
+		loader.classList.toggle('hidden', !isLoading);
+	}
 }
 
-function toggleMainMenu() {
-	showNotification('🚀 Main menu opened');
-}
-
+// Key Shortcuts & Init
 window.addEventListener('load', () => {
+	// Load saved theme
 	const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
 	setTheme(savedTheme);
 
+	// Load search history
 	const saved = localStorage.getItem('gitnexus-search-history');
-	if(saved) searchHistory = JSON.parse(saved);
+	if(saved) {
+		try {
+			searchHistory = JSON.parse(saved);
+		} catch(e) {
+			searchHistory = [];
+		}
+	}
 
+	// Load token from sessionStorage
+	const savedToken = sessionStorage.getItem('gh_token');
+	if(savedToken) {
+		state.token = savedToken;
+		const patInput = document.getElementById('pat-token');
+		if(patInput) patInput.value = savedToken;
+		updateAuthStatus();
+	}
+
+	// Keyboard shortcuts
 	document.addEventListener('keydown', (e) => {
 		if(e.ctrlKey || e.metaKey) {
+			// Ctrl+S: Save file
 			if(e.key === 's') {
 				e.preventDefault();
 				if(state.isOwner && state.currentRepo) saveFileContent();
 			}
+			// Ctrl+K: Focus search
 			if(e.key === 'k') {
 				e.preventDefault();
-				document.getElementById('user-search').focus();
+				const searchInput = document.getElementById('user-search');
+				if(searchInput) searchInput.focus();
 			}
 		}
 	});
