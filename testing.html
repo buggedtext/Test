@@ -994,10 +994,6 @@
 	</dialog>
 
 <script>
-// ============================================================================
-// GITNEXUS - GitHub Repository Browser with Monaco Editor
-// COMPLETE INTEGRATED & OPTIMIZED VERSION
-// ============================================================================
 
 // Global State & Config
 const state = {
@@ -1033,10 +1029,7 @@ let sidebarSearchTerm = '';
 let searchHistory = [];
 let searchDebounceTimer;
 
-// ============================================================================
-// MONACO EDITOR SETUP
-// ============================================================================
-
+// Monaco Editor Setup
 require.config({
 	paths: {
 		vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
@@ -1070,14 +1063,7 @@ require(['vs/editor/editor.main'], function() {
 	});
 });
 
-// ============================================================================
-// API UTILITIES & ERROR HANDLING (FIXED)
-// ============================================================================
-
-/**
- * Enhanced API fetch with comprehensive error handling
- * Handles 422 errors and other edge cases
- */
+// API Utils
 async function fetchGH(endpoint, options = {}) {
 	const headers = new Headers({
 		'Accept': 'application/vnd.github.v3+json',
@@ -1143,10 +1129,7 @@ async function fetchGH(endpoint, options = {}) {
 	}
 }
 
-// ============================================================================
-// SECURITY UTILITIES
-// ============================================================================
-
+// Security Utils
 function escapeHtml(text) {
 	if(!text) return '';
 	const div = document.createElement('div');
@@ -1161,10 +1144,7 @@ function attachEventListener(selector, eventType, callback) {
 	});
 }
 
-// ============================================================================
-// AUTHENTICATION & TOKEN MANAGEMENT
-// ============================================================================
-
+// Auth & Token Management
 function updateAuthStatus() {
 	state.token = document.getElementById('pat-token').value.trim();
 	const badge = document.getElementById('auth-badge');
@@ -1193,10 +1173,7 @@ function handlePATInput(event) {
 	}
 }
 
-// ============================================================================
-// USER SEARCH & PROFILE
-// ============================================================================
-
+// User Search & Profile
 async function searchUser() {
 	const username = document.getElementById('user-search').value.trim();
 	if(!username) {
@@ -1297,10 +1274,7 @@ function deleteSuggestion(username, event) {
 	showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 }
 
-// ============================================================================
-// REPOSITORY MANAGEMENT
-// ============================================================================
-
+// Repo Management
 async function loadRepositories() {
 	setLoadingState(true);
 	try {
@@ -1715,10 +1689,7 @@ function openInCodespaces() {
 	);
 }
 
-// ============================================================================
-// FILE MANAGEMENT
-// ============================================================================
-
+// File Management
 async function loadFiles(path) {
 	setLoadingState(true);
 	try {
@@ -1922,13 +1893,7 @@ async function saveFileContent() {
 	}
 }
 
-// ============================================================================
-// IMPROVED DELETE WITH RETRY LOGIC (FIXED)
-// ============================================================================
-
-/**
- * Delete file with fresh SHA validation - prevents 422 errors
- */
+// Del w/ Rety
 async function deleteFileWithValidation(path, expectedSha, event) {
 	if(event) {
 		event.stopPropagation();
@@ -1944,7 +1909,6 @@ async function deleteFileWithValidation(path, expectedSha, event) {
 
 	setLoadingState(true);
 	try {
-		// Step 1: Fetch current file state
 		let fileData;
 		try {
 			fileData = await fetchGH(
@@ -1957,7 +1921,6 @@ async function deleteFileWithValidation(path, expectedSha, event) {
 			throw err;
 		}
 
-		// Step 2: Verify SHA hasn't changed
 		if(expectedSha && fileData.sha !== expectedSha) {
 			const confirmOverride = confirm(
 				'File has been modified since it was loaded. Delete anyway?'
@@ -1967,7 +1930,6 @@ async function deleteFileWithValidation(path, expectedSha, event) {
 			}
 		}
 
-		// Step 3: Delete with current SHA
 		await fetchGH(
 			`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(path)}`,
 			{
@@ -1993,9 +1955,6 @@ async function deleteFileWithValidation(path, expectedSha, event) {
 	}
 }
 
-/**
- * Refresh file list before operations - ensures fresh SHA
- */
 async function refreshAndDelete(path, sha, event) {
 	event.stopPropagation();
 	
@@ -2019,9 +1978,6 @@ async function refreshAndDelete(path, sha, event) {
 	}
 }
 
-/**
- * Delete file with retry logic
- */
 async function deleteFileWithRetry(filePath, sha, retries = 3) {
 	for(let attempt = 1; attempt <= retries; attempt++) {
 		try {
@@ -2060,9 +2016,6 @@ async function deleteFileWithRetry(filePath, sha, retries = 3) {
 	}
 }
 
-/**
- * Delete folder with retry logic for all contained files
- */
 async function deleteFolder(path, sha, event) {
 	event.stopPropagation();
 	
@@ -2105,9 +2058,6 @@ async function deleteFolder(path, sha, event) {
 	}
 }
 
-/**
- * Helper: Delete folder marker (.gitkeep)
- */
 async function deleteFolderMarker(folderPath) {
 	try {
 		const gitkeepPath = `${folderPath}/.gitkeep`;
@@ -2155,10 +2105,7 @@ async function getAllFilesInFolder(folderPath, maxDepth = 10, currentDepth = 0) 
 	}
 }
 
-// ============================================================================
-// FILE CREATION
-// ============================================================================
-
+// File Creation
 function showCreateFileModal() {
 	if(!state.token) {
 		alert('PAT token required');
@@ -2541,10 +2488,7 @@ function getLanguageByExt(ext) {
 	return langs[ext.toLowerCase()] || 'plaintext';
 }
 
-// ============================================================================
-// UI/UX - TABS & SEARCH
-// ============================================================================
-
+// UI/UX Tabs & sarch
 function showTab(tab) {
 	state.activeTab = tab;
 	const tabRepos = document.getElementById('tab-repos');
@@ -2591,10 +2535,7 @@ function handleSidebarSearch(event) {
 	}
 }
 
-// ============================================================================
-// THEME & EDITOR SETTINGS
-// ============================================================================
-
+// Theme & Editor Settings
 function setTheme(theme) {
 	state.theme = theme;
 	document.documentElement.className = theme;
@@ -2702,10 +2643,7 @@ function showSortingMenu() {
 	if(window.sorting_modal) window.sorting_modal.showModal();
 }
 
-// ============================================================================
-// PROFILE MANAGEMENT
-// ============================================================================
-
+// Profile Management
 async function showProfileModal() {
 	if(!state.token) {
 		alert('Please enter your PAT token first');
@@ -2831,10 +2769,7 @@ function openAvatarUpload() {
 	input.click();
 }
 
-// ============================================================================
-// MUSIC PLAYER (MOCK)
-// ============================================================================
-
+// Music Player (MOCK)
 function showMusicPlayer() {
 	const musicResults = document.getElementById('music-results');
 	if(musicResults) musicResults.innerHTML = '';
@@ -2914,10 +2849,7 @@ function stopMusic() {
 	showNotification('⏹️ Music stopped');
 }
 
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
-
+// Util Funct
 function toggleEditButtons() {
 	const saveBtn = document.getElementById('save-btn');
 	const uploadBtn = document.getElementById('upload-trigger');
@@ -2964,10 +2896,7 @@ function setLoadingState(isLoading) {
 	}
 }
 
-// ============================================================================
-// KEYBOARD SHORTCUTS & INITIALIZATION
-// ============================================================================
-
+// Key Shortcuts & Init
 window.addEventListener('load', () => {
 	// Load saved theme
 	const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
