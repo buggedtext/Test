@@ -994,6 +994,11 @@
 	</dialog>
 
 <script>
+// ============================================================================
+// GITNEXUS - GitHub Repository Browser with Monaco Editor
+// COMPLETE INTEGRATED & OPTIMIZED VERSION
+// ============================================================================
+
 // Global State & Config
 const state = {
 	token: '',
@@ -1028,7 +1033,10 @@ let sidebarSearchTerm = '';
 let searchHistory = [];
 let searchDebounceTimer;
 
-// Monaco Edit Setup
+// ============================================================================
+// MONACO EDITOR SETUP
+// ============================================================================
+
 require.config({
 	paths: {
 		vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
@@ -1062,7 +1070,14 @@ require(['vs/editor/editor.main'], function() {
 	});
 });
 
-// API Utils
+// ============================================================================
+// API UTILITIES & ERROR HANDLING (FIXED)
+// ============================================================================
+
+/**
+ * Enhanced API fetch with comprehensive error handling
+ * Handles 422 errors and other edge cases
+ */
 async function fetchGH(endpoint, options = {}) {
 	const headers = new Headers({
 		'Accept': 'application/vnd.github.v3+json',
@@ -1086,10 +1101,35 @@ async function fetchGH(endpoint, options = {}) {
 		});
 
 		if(!response.ok) {
-			if(response.status === 404) throw new Error('Resource not found');
-			if(response.status === 403) throw new Error('Rate limited or insufficient permissions');
-			if(response.status === 401) throw new Error('Invalid authentication token');
-			throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+			let errorMessage = `HTTP Error: ${response.status}`;
+
+			// IMPROVED: Handle specific error codes with details
+			if(response.status === 404) {
+				errorMessage = 'Resource not found - file may have already been deleted';
+			} else if(response.status === 403) {
+				errorMessage = 'Rate limited or insufficient permissions - wait a moment and try again';
+			} else if(response.status === 401) {
+				errorMessage = 'Invalid authentication token';
+			} else if(response.status === 422) {
+				// UNPROCESSABLE ENTITY - most common for delete issues
+				try {
+					const errorData = await response.json();
+					if(errorData.message) {
+						errorMessage = `GitHub API: ${errorData.message}`;
+					}
+					if(errorData.errors && errorData.errors.length > 0) {
+						errorMessage = `GitHub API: ${errorData.errors[0].message}`;
+					}
+				} catch(e) {
+					errorMessage = 'File could not be deleted - may be part of a commit or protected';
+				}
+			} else if(response.status === 409) {
+				errorMessage = 'Conflict - repository state has changed, please refresh';
+			} else if(response.status === 500) {
+				errorMessage = 'GitHub server error - please try again later';
+			}
+
+			throw new Error(errorMessage);
 		}
 
 		try {
@@ -1103,7 +1143,10 @@ async function fetchGH(endpoint, options = {}) {
 	}
 }
 
-// Security Utils
+// ============================================================================
+// SECURITY UTILITIES
+// ============================================================================
+
 function escapeHtml(text) {
 	if(!text) return '';
 	const div = document.createElement('div');
@@ -1118,13 +1161,15 @@ function attachEventListener(selector, eventType, callback) {
 	});
 }
 
-// Auth Token Management
+// ============================================================================
+// AUTHENTICATION & TOKEN MANAGEMENT
+// ============================================================================
+
 function updateAuthStatus() {
 	state.token = document.getElementById('pat-token').value.trim();
 	const badge = document.getElementById('auth-badge');
 
 	if(state.token && state.token.length > 0) {
-		// Store in sessionStorage (cleared on tab close)
 		sessionStorage.setItem('gh_token', state.token);
 		
 		badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
@@ -1148,7 +1193,10 @@ function handlePATInput(event) {
 	}
 }
 
-// User seachr & Prof
+// ============================================================================
+// USER SEARCH & PROFILE
+// ============================================================================
+
 async function searchUser() {
 	const username = document.getElementById('user-search').value.trim();
 	if(!username) {
@@ -1249,7 +1297,10 @@ function deleteSuggestion(username, event) {
 	showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 }
 
-// Repo Management
+// ============================================================================
+// REPOSITORY MANAGEMENT
+// ============================================================================
+
 async function loadRepositories() {
 	setLoadingState(true);
 	try {
@@ -1664,7 +1715,10 @@ function openInCodespaces() {
 	);
 }
 
-// File Management
+// ============================================================================
+// FILE MANAGEMENT
+// ============================================================================
+
 async function loadFiles(path) {
 	setLoadingState(true);
 	try {
@@ -1743,7 +1797,7 @@ function renderFileList() {
 					<span class="text-xs truncate">${escapeHtml(file.name)}</span>
 				</div>
 				<div class="file-actions flex gap-2 opacity-0 group-hover:opacity-100 transition">
-					${state.isOwner ? `<i class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" onclick="deleteFile('${escapeHtml(file.path)}', '${file.sha}', event)"></i>` : ''}
+					${state.isOwner ? `<i class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" onclick="refreshAndDelete('${escapeHtml(file.path)}', '${file.sha}', event)"></i>` : ''}
 					<i class="fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" onclick="window.open('${escapeHtml(file.html_url)}', '_blank')"></i>
 				</div>
 			</div>
@@ -1796,7 +1850,7 @@ async function showEditor(url, path) {
 
 		// Check file size - 5MB limit
 		const size = parseInt(response.headers.get('content-length') || '0');
-		const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+		const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 		if(size > MAX_FILE_SIZE) {
 			state.monacoEditor.setValue(`File too large to edit (${(size / 1024 / 1024).toFixed(2)}MB > 5MB limit)`);
@@ -1868,41 +1922,147 @@ async function saveFileContent() {
 	}
 }
 
-async function deleteFile(path, sha, event) {
-	event.stopPropagation();
+// ============================================================================
+// IMPROVED DELETE WITH RETRY LOGIC (FIXED)
+// ============================================================================
+
+/**
+ * Delete file with fresh SHA validation - prevents 422 errors
+ */
+async function deleteFileWithValidation(path, expectedSha, event) {
+	if(event) {
+		event.stopPropagation();
+	}
 	
 	const fileName = path.split('/').pop();
-	if(!confirm(`Are you sure you want to delete "${fileName}"?`)) return;
+	if(!confirm(`Delete "${fileName}"?`)) return;
 
 	if(!state.token) {
-		alert('PAT token required for deletion');
+		alert('PAT token required');
 		return;
 	}
 
 	setLoadingState(true);
 	try {
+		// Step 1: Fetch current file state
+		let fileData;
+		try {
+			fileData = await fetchGH(
+				`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(path)}`
+			);
+		} catch(err) {
+			if(err.message.includes('404')) {
+				throw new Error('File not found - it may have already been deleted');
+			}
+			throw err;
+		}
+
+		// Step 2: Verify SHA hasn't changed
+		if(expectedSha && fileData.sha !== expectedSha) {
+			const confirmOverride = confirm(
+				'File has been modified since it was loaded. Delete anyway?'
+			);
+			if(!confirmOverride) {
+				throw new Error('Delete cancelled - file has changed');
+			}
+		}
+
+		// Step 3: Delete with current SHA
 		await fetchGH(
 			`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(path)}`,
 			{
 				method: 'DELETE',
 				body: JSON.stringify({
 					message: `Delete ${fileName}`,
-					sha: sha
+					sha: fileData.sha,
+					committer: {
+						name: 'GitNexus',
+						email: 'gitnexus@app.local'
+					}
 				})
 			}
 		);
 
-		const parentPath = path.split('/').slice(0, -1).join('/');
-		await loadFiles(parentPath);
-		showNotification(`🗑️ "${fileName}" deleted successfully!`);
+		await loadFiles(state.currentPath);
+		showNotification(`✅ "${fileName}" deleted!`);
 	} catch(err) {
 		console.error('Delete error:', err);
-		alert(`Failed to delete: ${err.message}`);
+		showNotification(`❌ ${err.message}`);
 	} finally {
 		setLoadingState(false);
 	}
 }
 
+/**
+ * Refresh file list before operations - ensures fresh SHA
+ */
+async function refreshAndDelete(path, sha, event) {
+	event.stopPropagation();
+	
+	setLoadingState(true);
+	try {
+		// Refresh current directory
+		await loadFiles(state.currentPath);
+		
+		// Find updated file
+		const updatedFile = state.files.find(f => f.path === path);
+		if(!updatedFile) {
+			throw new Error('File not found in current directory');
+		}
+
+		// Now attempt delete with fresh SHA
+		await deleteFileWithValidation(path, updatedFile.sha);
+	} catch(err) {
+		showNotification(`❌ ${err.message}`);
+	} finally {
+		setLoadingState(false);
+	}
+}
+
+/**
+ * Delete file with retry logic
+ */
+async function deleteFileWithRetry(filePath, sha, retries = 3) {
+	for(let attempt = 1; attempt <= retries; attempt++) {
+		try {
+			let currentSha = sha;
+			try {
+				const freshContent = await fetchGH(
+					`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(filePath)}`
+				);
+				if(freshContent && freshContent.sha) {
+					currentSha = freshContent.sha;
+				}
+			} catch(e) {
+				if(e.message.includes('404')) return;
+			}
+
+			await fetchGH(
+				`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(filePath)}`,
+				{
+					method: 'DELETE',
+					body: JSON.stringify({
+						message: `Delete ${filePath.split('/').pop()}`,
+						sha: currentSha
+					})
+				}
+			);
+			
+			return;
+		} catch(err) {
+			if(attempt === retries) {
+				throw new Error(`Failed to delete ${filePath}: ${err.message}`);
+			}
+
+			// Wait before retry with exponential backoff
+			await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 100));
+		}
+	}
+}
+
+/**
+ * Delete folder with retry logic for all contained files
+ */
 async function deleteFolder(path, sha, event) {
 	event.stopPropagation();
 	
@@ -1916,43 +2076,22 @@ async function deleteFolder(path, sha, event) {
 
 	setLoadingState(true);
 	try {
-		// Get all files in folder recursively
 		const filesToDelete = await getAllFilesInFolder(path);
 		
 		if(filesToDelete.length === 0) {
-			// Empty folder - just delete the .gitkeep
-			try {
-				const gitkeepPath = `${path}/.gitkeep`;
-				const gitkeepFile = state.files.find(f => f.path === gitkeepPath);
-				if(gitkeepFile) {
-					await fetchGH(
-						`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(gitkeepPath)}`,
-						{
-							method: 'DELETE',
-							body: JSON.stringify({
-								message: `Delete folder ${folderName}`,
-								sha: gitkeepFile.sha
-							})
-						}
-					);
-				}
-			} catch(e) {
-				console.warn('Could not delete .gitkeep:', e);
-			}
+			await deleteFolderMarker(path);
 		} else {
-			// Delete all files in folder
-			await Promise.all(filesToDelete.map(file =>
-				fetchGH(
-					`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(file.path)}`,
-					{
-						method: 'DELETE',
-						body: JSON.stringify({
-							message: `Delete ${file.name}`,
-							sha: file.sha
-						})
-					}
-				)
-			));
+			const results = await Promise.allSettled(
+				filesToDelete.map(file => deleteFileWithRetry(file.path, file.sha, 3))
+			);
+
+			const failed = results.filter(r => r.status === 'rejected');
+			if(failed.length > 0) {
+				throw new Error(
+					`Failed to delete ${failed.length}/${filesToDelete.length} files. ` +
+					`Please try again or delete files individually.`
+				);
+			}
 		}
 
 		const parentPath = path.split('/').slice(0, -1).join('/');
@@ -1960,13 +2099,34 @@ async function deleteFolder(path, sha, event) {
 		showNotification(`🗑️ Folder "${folderName}" deleted successfully!`);
 	} catch(err) {
 		console.error('Folder delete error:', err);
-		alert(`Failed to delete folder: ${err.message}`);
+		showNotification(`❌ ${err.message}`);
 	} finally {
 		setLoadingState(false);
 	}
 }
 
-async function getAllFilesInFolder(folderPath) {
+/**
+ * Helper: Delete folder marker (.gitkeep)
+ */
+async function deleteFolderMarker(folderPath) {
+	try {
+		const gitkeepPath = `${folderPath}/.gitkeep`;
+		const gitkeepFile = state.files.find(f => f.path === gitkeepPath);
+		
+		if(gitkeepFile) {
+			await deleteFileWithRetry(gitkeepPath, gitkeepFile.sha, 3);
+		}
+	} catch(e) {
+		console.warn('Could not delete .gitkeep:', e);
+	}
+}
+
+async function getAllFilesInFolder(folderPath, maxDepth = 10, currentDepth = 0) {
+	if(currentDepth > maxDepth) {
+		console.warn(`Max folder depth (${maxDepth}) exceeded`);
+		return [];
+	}
+
 	try {
 		const contents = await fetchGH(
 			`/repos/${state.currentUser}/${state.currentRepo}/contents/${encodeURIComponent(folderPath)}`
@@ -1975,13 +2135,16 @@ async function getAllFilesInFolder(folderPath) {
 		
 		let allFiles = [];
 		
-		// Recursively get all files, excluding folders
 		for(const item of files) {
 			if(item.type === 'file') {
 				allFiles.push(item);
-			} else if(item.type === 'dir') {
-				const subFiles = await getAllFilesInFolder(item.path);
-				allFiles = allFiles.concat(subFiles);
+			} else if(item.type === 'dir' && item.name !== '.git') {
+				try {
+					const subFiles = await getAllFilesInFolder(item.path, maxDepth, currentDepth + 1);
+					allFiles = allFiles.concat(subFiles);
+				} catch(subErr) {
+					console.warn(`Could not read subfolder ${item.path}:`, subErr);
+				}
 			}
 		}
 		
@@ -1991,6 +2154,10 @@ async function getAllFilesInFolder(folderPath) {
 		return [];
 	}
 }
+
+// ============================================================================
+// FILE CREATION
+// ============================================================================
 
 function showCreateFileModal() {
 	if(!state.token) {
@@ -2092,7 +2259,6 @@ async function createNewFolder() {
 			fullPath = folderPath.endsWith('/') ? `${folderPath}${folderName}` : `${folderPath}/${folderName}`;
 		}
 
-		// Create .gitkeep file to initialize folder
 		const gitkeepPath = `${fullPath}/.gitkeep`;
 		await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${gitkeepPath}`, {
 			method: 'PUT',
@@ -2114,6 +2280,10 @@ async function createNewFolder() {
 		setLoadingState(false);
 	}
 }
+
+// ============================================================================
+// FILE UPLOAD
+// ============================================================================
 
 function openUploadModal() {
 	const pathLabel = document.getElementById('upload-path-label');
@@ -2147,11 +2317,10 @@ async function performUpload() {
 	if(uploadTotal) uploadTotal.innerText = files.length;
 
 	let uploadedCount = 0;
-	const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB limit
+	const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
 	for(const file of files) {
 		try {
-			// Validate file size
 			if(file.size > MAX_FILE_SIZE) {
 				showNotification(`⚠️ File ${file.name} exceeds 100MB limit`);
 				continue;
@@ -2202,6 +2371,10 @@ async function uploadFile(file) {
 	});
 }
 
+// ============================================================================
+// NAVIGATION & UTILITIES
+// ============================================================================
+
 function updateBreadcrumbs(path) {
 	const container = document.getElementById('breadcrumb-container');
 	if(!container) return;
@@ -2232,7 +2405,10 @@ function navigateUp() {
 	loadFiles(parts.join('/'));
 }
 
-// Releases
+// ============================================================================
+// RELEASES
+// ============================================================================
+
 async function loadReleases() {
 	try {
 		const releases = await fetchGH(
@@ -2277,7 +2453,10 @@ function renderReleases(releases) {
 	`).join('');
 }
 
-// File Utils
+// ============================================================================
+// FILE UTILITIES
+// ============================================================================
+
 function downloadFile() {
 	if(!state.currentPath) {
 		alert('Please select a file first');
@@ -2362,7 +2541,10 @@ function getLanguageByExt(ext) {
 	return langs[ext.toLowerCase()] || 'plaintext';
 }
 
-// UI/UX - Tabs an seach
+// ============================================================================
+// UI/UX - TABS & SEARCH
+// ============================================================================
+
 function showTab(tab) {
 	state.activeTab = tab;
 	const tabRepos = document.getElementById('tab-repos');
@@ -2379,7 +2561,6 @@ function showTab(tab) {
 	else if(tab === 'files') renderFileList();
 }
 
-// Debounced search filter to prevent UI freezing
 function filterSidebarContent() {
 	clearTimeout(searchDebounceTimer);
 	searchDebounceTimer = setTimeout(() => {
@@ -2410,7 +2591,10 @@ function handleSidebarSearch(event) {
 	}
 }
 
-// Theme & Editor Settings
+// ============================================================================
+// THEME & EDITOR SETTINGS
+// ============================================================================
+
 function setTheme(theme) {
 	state.theme = theme;
 	document.documentElement.className = theme;
@@ -2518,7 +2702,10 @@ function showSortingMenu() {
 	if(window.sorting_modal) window.sorting_modal.showModal();
 }
 
-// Profile Management
+// ============================================================================
+// PROFILE MANAGEMENT
+// ============================================================================
+
 async function showProfileModal() {
 	if(!state.token) {
 		alert('Please enter your PAT token first');
@@ -2644,7 +2831,10 @@ function openAvatarUpload() {
 	input.click();
 }
 
-// [Mock] Music Player
+// ============================================================================
+// MUSIC PLAYER (MOCK)
+// ============================================================================
+
 function showMusicPlayer() {
 	const musicResults = document.getElementById('music-results');
 	if(musicResults) musicResults.innerHTML = '';
@@ -2724,7 +2914,10 @@ function stopMusic() {
 	showNotification('⏹️ Music stopped');
 }
 
-// Utility Funta
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
 function toggleEditButtons() {
 	const saveBtn = document.getElementById('save-btn');
 	const uploadBtn = document.getElementById('upload-trigger');
@@ -2771,7 +2964,10 @@ function setLoadingState(isLoading) {
 	}
 }
 
-// Key Shortcuts & Init
+// ============================================================================
+// KEYBOARD SHORTCUTS & INITIALIZATION
+// ============================================================================
+
 window.addEventListener('load', () => {
 	// Load saved theme
 	const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
@@ -2812,6 +3008,15 @@ window.addEventListener('load', () => {
 			}
 		}
 	});
+
+	console.log('GitNexus loaded successfully');
+	console.log('Features:');
+	console.log('  - Enhanced 422 error handling');
+	console.log('  - File deletion with retry logic');
+	console.log('  - Fresh SHA validation');
+	console.log('  - Recursive folder deletion');
+	console.log('  - Debounced search');
+	console.log('  - Full file management');
 });
 </script>
 </body>
