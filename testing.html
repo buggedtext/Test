@@ -1042,60 +1042,180 @@
 	}
 
 	function renderRepoList() {
-		const container = document.getElementById('sidebar-content');
-		const repos = sidebarSearchTerm ? state.filteredRepos : state.repos;
-		let html = '';
-		// Add create repo button if owner
-		if(state.isOwner && state.token) {
-			html += `
-					<div class="repo-creation-card mb-2" onclick="showCreateRepoModal()">
-						<i class="fas fa-plus text-2xl text-green-400 mb-2"></i>
-						<div class="text-xs font-bold">Create Repository</div>
-						<div class="text-[10px] text-gray-500">New project</div>
-					</div>
-				`;
-		}
-		if(repos.length === 0) {
-			container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories found</p></div>';
-			return;
-		}
-		html += repos.map(repo => {
-			return `
-        <div class="p-3 mb-2 rounded-lg border sidebar-border hover:border-blue-500 bg-[var(--bg-secondary)] transition-all group repo-card">
-            <div class="flex justify-between items-start mb-1">
-                <div onclick="selectRepo('${repo.name}')" class="flex-1 cursor-pointer">
-                    <p class="font-semibold text-[10px]">${repo.name}</p>
-                </div>
-                <i class="fas fa-external-link-alt text-[10px] opacity-0 group-hover:opacity-100"></i>
-            </div>
-            
-            <!-- Description View/Edit Section -->
-            <div id="desc-view-${repo.name}" class="mb-2">
-                <p class="text-[10px] text-gray-500 line-clamp-2 cursor-pointer hover:text-gray-400" onclick="showDescriptionEditor('${repo.name}')">
-                    ${repo.description || '<span class="italic text-gray-600">No description</span>'}
-                </p>
-            </div>
-            
-            <!-- Description Edit Form (Hidden by default) -->
-            <div id="desc-edit-${repo.name}" class="hidden mb-2 space-y-2 p-2 bg-[var(--bg-tertiary)] rounded">
-                <textarea id="desc-textarea-${repo.name}" class="w-full bg-[var(--bg-secondary)] border sidebar-border rounded px-2 py-1 text-[10px] focus:outline-none search-input resize-none h-16" placeholder="Enter repository description...">${repo.description || ''}</textarea>
-                <div class="flex gap-1">
-                    <input id="pat-edit-${repo.name}" type="password" placeholder="Enter PAT" class="flex-1 bg-[var(--bg-secondary)] border sidebar-border rounded px-2 py-1 text-[10px] focus:outline-none search-input" />
-                    <button onclick="saveDescription('${repo.name}')" class="btn btn-xs btn-success action-button">Save</button>
-                    <button onclick="cancelDescriptionEdit('${repo.name}')" class="btn btn-xs btn-outline action-button">Cancel</button>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-3 mt-2 text-[9px] uppercase tracking-tighter text-gray-400 flex-wrap">
-                <span><i class="fas fa-circle text-orange-500 mr-1"></i>${repo.language || 'Plain'}</span>
-                <span><i class="fas fa-star mr-1"></i>${repo.stargazers_count}</span>
-                <span><i class="fas fa-code-branch mr-1"></i>${repo.forks_count}</span>
-            </div>
-        </div>
-    `;
-		}).join('');
-		container.innerHTML = html;
+	const container = document.getElementById('sidebar-content');
+	const repos = sidebarSearchTerm ? state.filteredRepos : state.repos;
+	
+	let html = '';
+	
+	// Add create repo button if owner
+	if(state.isOwner && state.token) {
+		html += `
+			<div class="repo-creation-card mb-2" onclick="showCreateRepoModal()">
+				<i class="fas fa-plus text-2xl text-green-400 mb-2"></i>
+				<div class="text-xs font-bold">Create Repository</div>
+				<div class="text-[10px] text-gray-500">New project</div>
+			</div>
+		`;
 	}
+	
+	if(repos.length === 0) {
+		container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories found</p></div>';
+		return;
+	}
+	
+	html += repos.map(repo => {
+		return `
+			<div onclick="selectRepo('${repo.name}')" class="p-3 mb-2 rounded-lg border sidebar-border hover:border-blue-500 cursor-pointer bg-[#161b22] transition-all group repo-card dark:bg-[#161b22]">
+				<div class="flex justify-between items-start mb-1">
+					<div class="flex-1">
+						<span class="text-sm font-bold text-blue-400 truncate block">${repo.name}</span>
+						<button onclick="openDescriptionModal('${repo.name}', '${(repo.description || '').replace(/'/g, "\\'")}', '${repo.owner.login}'); event.stopPropagation();" class="text-[9px] text-gray-500 hover:text-blue-400 mt-0.5 transition">
+							<i class="fas fa-edit mr-1"></i>View Description
+						</button>
+					</div>
+					<i class="fas fa-external-link-alt text-[10px] opacity-0 group-hover:opacity-100"></i>
+				</div>
+				<p class="text-[10px] text-gray-500 line-clamp-2">${repo.description || 'No description provided.'}</p>
+				<div class="flex items-center gap-3 mt-2 text-[9px] uppercase tracking-tighter text-gray-400">
+					<span><i class="fas fa-circle text-orange-500 mr-1"></i>${repo.language || 'Plain'}</span>
+					<span><i class="fas fa-star mr-1"></i>${repo.stargazers_count}</span>
+					<span><i class="fas fa-code-branch mr-1"></i>${repo.forks_count}</span>
+				</div>
+			</div>
+		`;
+	}).join('');
+	
+	container.innerHTML = html;
+}
+
+// Description Modal Functions
+function openDescriptionModal(repoName, description, ownerLogin) {
+	const isOwner = state.currentUser.toLowerCase() === ownerLogin.toLowerCase() && state.isOwner && state.token;
+	
+	const modal = document.createElement('dialog');
+	modal.className = 'modal';
+	modal.id = `desc-modal-${repoName}`;
+	modal.innerHTML = `
+		<form method="dialog" class="modal-box max-w-lg">
+			<h3 class="font-bold text-lg mb-4">
+				<i class="fas fa-file-alt mr-2 text-blue-400"></i>${repoName}
+			</h3>
+			
+			<!-- View Mode -->
+			<div id="desc-view-${repoName}" class="space-y-4">
+				<div class="bg-[var(--bg-tertiary)] p-4 rounded-lg border sidebar-border min-h-32">
+					<p class="text-sm text-gray-300 whitespace-pre-wrap break-words">
+						${description || '<span class="text-gray-600 italic">No description provided.</span>'}
+					</p>
+				</div>
+				${isOwner ? `
+					<button type="button" onclick="switchToEditMode('${repoName}')" class="btn btn-sm btn-primary w-full gap-2">
+						<i class="fas fa-edit"></i> Edit Description
+					</button>
+				` : '<p class="text-xs text-gray-500 italic">Only repository owner can edit description</p>'}
+			</div>
+			
+			<!-- Edit Mode (Hidden by default) -->
+			<div id="desc-edit-${repoName}" class="hidden space-y-4">
+				<div>
+					<label class="text-xs font-bold uppercase text-gray-500 block mb-2">Repository Description</label>
+					<textarea id="desc-textarea-${repoName}" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32" placeholder="Enter repository description...">${description || ''}</textarea>
+					<p class="text-[10px] text-gray-500 mt-1">Max 300 characters</p>
+				</div>
+				
+				<div>
+					<label class="text-xs font-bold uppercase text-gray-500 block mb-2">Personal Access Token (PAT)</label>
+					<input id="pat-input-${repoName}" type="password" placeholder="Enter your GitHub PAT for authentication" class="w-full bg-[var(--bg-tertiary)] border sidebar-border rounded px-3 py-2 text-sm focus:outline-none search-input">
+					<p class="text-[10px] text-gray-500 mt-1"><i class="fas fa-info-circle mr-1"></i>Your PAT will not be saved</p>
+				</div>
+				
+				<div class="flex gap-2">
+					<button type="button" onclick="saveDescription('${repoName}')" class="flex-1 btn btn-sm btn-success gap-2 action-button">
+						<i class="fas fa-check"></i> Save Changes
+					</button>
+					<button type="button" onclick="switchToViewMode('${repoName}')" class="flex-1 btn btn-sm btn-outline action-button">
+						<i class="fas fa-times"></i> Cancel
+					</button>
+				</div>
+			</div>
+			
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	`;
+	
+	document.body.appendChild(modal);
+	modal.showModal();
+	
+	// Remove modal from DOM when closed
+	modal.addEventListener('close', () => {
+		modal.remove();
+	});
+}
+
+function switchToEditMode(repoName) {
+	document.getElementById(`desc-view-${repoName}`).classList.add('hidden');
+	document.getElementById(`desc-edit-${repoName}`).classList.remove('hidden');
+}
+
+function switchToViewMode(repoName) {
+	document.getElementById(`desc-view-${repoName}`).classList.remove('hidden');
+	document.getElementById(`desc-edit-${repoName}`).classList.add('hidden');
+	document.getElementById(`pat-input-${repoName}`).value = '';
+}
+
+async function saveDescription(repoName) {
+	const newDescription = document.getElementById(`desc-textarea-${repoName}`).value.trim();
+	const pat = document.getElementById(`pat-input-${repoName}`).value;
+	
+	if(!pat) {
+		alert('Please enter your PAT token');
+		return;
+	}
+	
+	if(newDescription.length > 300) {
+		alert('Description must be 300 characters or less');
+		return;
+	}
+	
+	try {
+		const response = await fetch(`${GITHUB_API}/repos/${state.currentUser}/${repoName}`, {
+			method: 'PATCH',
+			headers: {
+				'Authorization': `token ${pat}`,
+				'Accept': 'application/vnd.github.v3+json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				description: newDescription
+			})
+		});
+		
+		if(!response.ok) {
+			if(response.status === 401) throw new Error('Invalid PAT token');
+			if(response.status === 403) throw new Error('Permission denied - check token permissions');
+			if(response.status === 404) throw new Error('Repository not found');
+			throw new Error(`Error: ${response.status}`);
+		}
+		
+		// Update local repo data
+		const repoIndex = state.repos.findIndex(r => r.name === repoName);
+		if(repoIndex !== -1) {
+			state.repos[repoIndex].description = newDescription;
+			state.filteredRepos = state.repos;
+		}
+		
+		// Close modal and refresh
+		const modal = document.getElementById(`desc-modal-${repoName}`);
+		modal.close();
+		renderRepoList();
+		showNotification('✅ Description updated successfully!');
+		
+	} catch(err) {
+		alert(`Failed to update description: ${err.message}`);
+	}
+}
 	async function selectRepo(repoName) {
 		state.currentRepo = repoName;
 		state.currentPath = '';
@@ -1890,58 +2010,6 @@
 						}
 					});
 				});
-				// Desc Manage Funct
-				function showDescriptionEditor(repoName) {
-					if(!state.isOwner || !state.token) {
-						showNotification('⚠️ Only repo owner can edit description');
-						return;
-					}
-					document.getElementById(`desc-view-${repoName}`).classList.add('hidden');
-					document.getElementById(`desc-edit-${repoName}`).classList.remove('hidden');
-				}
-
-				function cancelDescriptionEdit(repoName) {
-					document.getElementById(`desc-view-${repoName}`).classList.remove('hidden');
-					document.getElementById(`desc-edit-${repoName}`).classList.add('hidden');
-				}
-				async function saveDescription(repoName) {
-					const newDescription = document.getElementById(`desc-textarea-${repoName}`).value;
-					const pat = document.getElementById(`pat-edit-${repoName}`).value;
-					if(!pat) {
-						alert('Please enter your PAT token');
-						return;
-					}
-					try {
-						const response = await fetch(`${GITHUB_API}/repos/${state.currentUser}/${repoName}`, {
-							method: 'PATCH',
-							headers: {
-								'Authorization': `token ${pat}`,
-								'Accept': 'application/vnd.github.v3+json',
-								'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({
-								description: newDescription
-							})
-						});
-						if(!response.ok) {
-							if(response.status === 401) throw new Error('Invalid PAT token');
-							if(response.status === 403) throw new Error('Permission denied');
-							throw new Error(`Error: ${response.status}`);
-						}
-						// Update local repo data
-						const repoIndex = state.repos.findIndex(r => r.name === repoName);
-						if(repoIndex !== -1) {
-							state.repos[repoIndex].description = newDescription;
-							state.filteredRepos = state.repos;
-						}
-						document.getElementById(`pat-edit-${repoName}`).value = '';
-						cancelDescriptionEdit(repoName);
-						renderRepoList();
-						showNotification('✅ Description updated successfully!');
-					} catch(err) {
-						alert(`Failed to update description: ${err.message}`);
-					}
-				}
 	</script>
 </body>
 
