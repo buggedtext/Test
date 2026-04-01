@@ -1895,24 +1895,25 @@
 			const searchTerm = document.getElementById('music-search').value;
 			if(!searchTerm) return;
 			const resultsContainer = document.getElementById('music-results');
+            const musicMockTxt = "Duration: ";
 			const mockResults = [
 				{
-					title: 'Focus Mode',
+					title: musicMockTxt + 'Focus Mode',
 					artist: 'Lo-Fi Hip Hop',
-					duration: '∞'
+					duration: 'infinite'
 				},
 				{
-					title: 'Coding Vibes',
+					title: musicMockTxt + 'Coding Vibes',
 					artist: 'Electronic',
 					duration: '2:45'
 				},
 				{
-					title: 'Deep Focus',
+					title: musicMockTxt + 'Deep Focus',
 					artist: 'Ambient',
 					duration: '3:12'
 				},
 				{
-					title: 'Night Coding',
+					title: musicMockTxt + 'Night Coding',
 					artist: 'Synthwave',
 					duration: '4:00'
 				}
