@@ -994,11 +994,6 @@
 	</dialog>
 
 <script>
-// ============================================================================
-// GITNEXUS - GitHub Repository Browser with Monaco Editor
-// FIXED & OPTIMIZED VERSION
-// ============================================================================
-
 // Global State & Config
 const state = {
 	token: '',
@@ -1033,9 +1028,7 @@ let sidebarSearchTerm = '';
 let searchHistory = [];
 let searchDebounceTimer;
 
-// ============================================================================
-// MONACO EDITOR SETUP
-// ============================================================================
+// Monaco Edit Setup
 require.config({
 	paths: {
 		vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
@@ -1116,13 +1109,7 @@ async function fetchGH(endpoint, options = {}) {
 	}
 }
 
-// ============================================================================
-// SECURITY UTILITIES
-// ============================================================================
-
-/**
- * Escape HTML to prevent XSS
- */
+// Security Utils
 function escapeHtml(text) {
 	if(!text) return '';
 	const div = document.createElement('div');
@@ -1130,9 +1117,6 @@ function escapeHtml(text) {
 	return div.innerHTML;
 }
 
-/**
- * Safe event delegation handler
- */
 function attachEventListener(selector, eventType, callback) {
 	document.addEventListener(eventType, (e) => {
 		const target = e.target.closest(selector);
@@ -1140,10 +1124,7 @@ function attachEventListener(selector, eventType, callback) {
 	});
 }
 
-// ============================================================================
-// AUTHENTICATION & TOKEN MANAGEMENT
-// ============================================================================
-
+// Auth Token Management
 function updateAuthStatus() {
 	state.token = document.getElementById('pat-token').value.trim();
 	const badge = document.getElementById('auth-badge');
