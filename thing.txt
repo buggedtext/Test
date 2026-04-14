@@ -1,32 +1,32 @@
-<!-- GitNexus v5.0 | Full Release -->
+
+<!-- GitNexus v5.0 beta | Pre-release-->
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>GitNexus | Advanced Git IDE</title>
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cdefs%3E%3ClinearGradient id='grad'%3E%3Cstop offset='0%25' style='stop-color:%231f6feb;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%238957e5;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='640' height='640' fill='url(%23grad)'/%3E%3Cpath fill='%23ffffff' d='M237.9 461.4C237.9 463.4 235.6 465 232.7 465C229.4 465.3 227.1 463.7 227.1 461.4C227.1 459.4 229.4 457.8 232.3 457.8C235.3 457.5 237.9 459.1 237.9 461.4zM206.8 456.9C206.1 458.9 208.1 461.2 211.1 461.8C213.7 462.8 216.7 461.8 217.3 459.8C217.9 457.8 216 455.5 213 454.6C210.4 453.9 207.5 454.9 206.8 456.9zM251 455.2C248.1 455.9 246.1 457.8 246.4 460.1C246.7 462.1 249.3 463.4 252.3 462.7C255.2 462 257.2 460.1 256.9 458.1C256.6 456.2 253.9 454.9 251 455.2zM316.8 72C178.1 72 72 177.3 72 316C72 426.9 141.8 521.8 241.5 555.2C254.3 557.5 258.8 549.6 258.8 543.1C258.8 536.9 258.5 502.7 258.5 481.7C258.5 481.7 188.5 496.7 173.8 451.9C173.8 451.9 162.4 422.8 146 415.3C146 415.3 123.1 399.6 147.6 399.9C147.6 399.9 172.5 401.9 186.2 425.7C208.1 464.3 244.8 453.2 259.1 446.6C261.4 430.6 267.9 419.5 275.1 412.9C219.2 406.7 162.8 398.6 162.8 302.4C162.8 274.9 170.4 261.1 186.4 243.5C183.8 237 175.3 210.2 189 175.6C209.9 169.1 258 202.6 258 202.6C278 197 299.5 194.1 320.8 194.1C342.1 194.1 363.6 197 383.6 202.6C383.6 202.6 431.7 169 452.6 175.6C466.3 210.3 457.8 237 455.2 243.5C471.2 261.2 481 275 481 302.4C481 398.9 422.1 406.6 366.2 412.9C375.4 420.8 383.2 435.8 383.2 459.3C383.2 493 382.9 534.7 382.9 542.9C382.9 549.4 387.5 557.3 400.2 555C500.2 521.8 568 426.9 568 316C568 177.3 455.5 72 316.8 72zM169.2 416.9C167.9 417.9 168.2 420.2 169.9 422.1C171.5 423.7 173.8 424.4 175.1 423.1C176.4 422.1 176.1 419.8 174.4 417.9C172.8 416.3 170.5 415.6 169.2 416.9zM158.4 408.8C157.7 410.1 158.7 411.7 160.7 412.7C162.3 413.7 164.3 413.4 165 412C165.7 410.7 164.7 409.1 162.7 408.1C160.7 407.5 159.1 407.8 158.4 408.8zM190.8 444.4C189.2 445.7 189.8 448.7 192.1 450.6C194.4 452.9 197.3 453.2 198.6 451.6C199.9 450.3 199.3 447.3 197.3 445.4C195.1 443.1 192.1 442.8 190.8 444.4zM179.4 429.7C177.8 430.7 177.8 433.3 179.4 435.6C181 437.9 183.7 438.9 185 437.9C186.6 436.6 186.6 434 185 431.7C183.6 429.4 181 428.4 179.4 429.7z'/%3E%3C/svg%3E">
+	<title>GitNexus | Advanced Git Viewer & Editor</title>
+	<link rel="icon" type="image/svg+xml" style="fill: white;" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20640%22%3E%3Cdefs%3E%3Cstyle%3E%20%20%20%20%20%20%3Aroot%20%7B%20%20%20%20%20%20%20%20%20%20%20%20--primary-color%3A%20%231f6feb%3B%20%20%20%20%20%20%20%20%20%20%20%20--secondary-color%3A%20%238957e5%3B%20%20%20%20%20%20%7D%20%20%20%20%3C%2Fstyle%3E%3ClinearGradient%20id%3D%22grad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3Avar(--primary-color)%3Bstop-opacity%3A1%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3Avar(--secondary-color)%3Bstop-opacity%3A1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22640%22%20height%3D%22640%22%20fill%3D%22url(%23grad)%22%2F%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M237.9%20461.4C237.9%20463.4%20235.6%20465%20232.7%20465C229.4%20465.3%20227.1%20463.7%20227.1%20461.4C227.1%20459.4%20229.4%20457.8%20232.3%20457.8C235.3%20457.5%20237.9%20459.1%20237.9%20461.4zM206.8%20456.9C206.1%20458.9%20208.1%20461.2%20211.1%20461.8C213.7%20462.8%20216.7%20461.8%20217.3%20459.8C217.9%20457.8%20216%20455.5%20213%20454.6C210.4%20453.9%20207.5%20454.9%20206.8%20456.9zM251%20455.2C248.1%20455.9%20246.1%20457.8%20246.4%20460.1C246.7%20462.1%20249.3%20463.4%20252.3%20462.7C255.2%20462%20257.2%20460.1%20256.9%20458.1C256.6%20456.2%20253.9%20454.9%20251%20455.2zM316.8%2072C178.1%2072%2072%20177.3%2072%20316C72%20426.9%20141.8%20521.8%20241.5%20555.2C254.3%20557.5%20258.8%20549.6%20258.8%20543.1C258.8%20536.9%20258.5%20502.7%20258.5%20481.7C258.5%20481.7%20188.5%20496.7%20173.8%20451.9C173.8%20451.9%20162.4%20422.8%20146%20415.3C146%20415.3%20123.1%20399.6%20147.6%20399.9C147.6%20399.9%20172.5%20401.9%20186.2%20425.7C208.1%20464.3%20244.8%20453.2%20259.1%20446.6C261.4%20430.6%20267.9%20419.5%20275.1%20412.9C219.2%20406.7%20162.8%20398.6%20162.8%20302.4C162.8%20274.9%20170.4%20261.1%20186.4%20243.5C183.8%20237%20175.3%20210.2%20189%20175.6C209.9%20169.1%20258%20202.6%20258%20202.6C278%20197%20299.5%20194.1%20320.8%20194.1C342.1%20194.1%20363.6%20197%20383.6%20202.6C383.6%20202.6%20431.7%20169%20452.6%20175.6C466.3%20210.3%20457.8%20237%20455.2%20243.5C471.2%20261.2%20481%20275%20481%20302.4C481%20398.9%20422.1%20406.6%20366.2%20412.9C375.4%20420.8%20383.2%20435.8%20383.2%20459.3C383.2%20493%20382.9%20534.7%20382.9%20542.9C382.9%20549.4%20387.5%20557.3%20400.2%20555C500.2%20521.8%20568%20426.9%20568%20316C568%20177.3%20455.5%2072%20316.8%2072zM169.2%20416.9C167.9%20417.9%20168.2%20420.2%20169.9%20422.1C171.5%20423.7%20173.8%20424.4%20175.1%20423.1C176.4%20422.1%20176.1%20419.8%20174.4%20417.9C172.8%20416.3%20170.5%20415.6%20169.2%20416.9zM158.4%20408.8C157.7%20410.1%20158.7%20411.7%20160.7%20412.7C162.3%20413.7%20164.3%20413.4%20165%20412C165.7%20410.7%20164.7%20409.1%20162.7%20408.1C160.7%20407.5%20159.1%20407.8%20158.4%20408.8zM190.8%20444.4C189.2%20445.7%20189.8%20448.7%20192.1%20450.6C194.4%20452.9%20197.3%20453.2%20198.6%20451.6C199.9%20450.3%20199.3%20447.3%20197.3%20445.4C195.1%20443.1%20192.1%20442.8%20190.8%20444.4zM179.4%20429.7C177.8%20430.7%20177.8%20433.3%20179.4%20435.6C181%20437.9%20183.7%20438.9%20185%20437.9C186.6%20436.6%20186.6%20434%20185%20431.7C183.6%20429.4%20181%20428.4%20179.4%20429.7z%22%2F%3E%3C%2Fsvg%3E">
 	<script src="https://cdn.tailwindcss.com"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.0/dist/full.css" rel="stylesheet" type="text/css" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.50.0/min/vs/loader.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/loader.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap');
-
+		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
 		:root {
-			--primary: #1f6feb;
-			--secondary: #8957e5;
-			--accent: #58a6ff;
+			--editor-height: calc(100vh - 160px);
+			--sidebar-width: 320px;
+			--primary-color: #1f6feb;
+			--secondary-color: #8957e5;
+			--accent-color: #58a6ff;
 		}
-
+		
 		* {
-			transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+			transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		}
-
+		
 		html.dark {
 			color-scheme: dark;
 			--bg-primary: #0d1117;
@@ -36,7 +36,7 @@
 			--text-secondary: #8b949e;
 			--border-color: #30363d;
 		}
-
+		
 		html.light {
 			color-scheme: light;
 			--bg-primary: #f6f8fa;
@@ -46,241 +46,310 @@
 			--text-secondary: #57606a;
 			--border-color: #d0d7de;
 		}
-
+		
+		html.high-contrast {
+			color-scheme: dark;
+			--bg-primary: #000000;
+			--bg-secondary: #1a1a1a;
+			--bg-tertiary: #000000;
+			--text-primary: #ffffff;
+			--text-secondary: #cccccc;
+			--border-color: #ffffff;
+		}
+		
+		html.nord {
+			color-scheme: dark;
+			--bg-primary: #2e3440;
+			--bg-secondary: #3b4252;
+			--bg-tertiary: #2e3440;
+			--text-primary: #eceff4;
+			--text-secondary: #d4d8de;
+			--border-color: #434c5e;
+		}
+		
+		html.dracula {
+			color-scheme: dark;
+			--bg-primary: #282a36;
+			--bg-secondary: #44475a;
+			--bg-tertiary: #1e1f29;
+			--text-primary: #f8f8f2;
+			--text-secondary: #bfbfbf;
+			--border-color: #44475a;
+		}
+		
+		html.gruvbox {
+			color-scheme: dark;
+			--bg-primary: #282828;
+			--bg-secondary: #3c3836;
+			--bg-tertiary: #1d2021;
+			--text-primary: #ebdbb2;
+			--text-secondary: #bdae93;
+			--border-color: #504945;
+		}
+		
+		html.monokai {
+			color-scheme: dark;
+			--bg-primary: #272822;
+			--bg-secondary: #3e3d32;
+			--bg-tertiary: #1d1d1d;
+			--text-primary: #f8f8f2;
+			--text-secondary: #bfbfbf;
+			--border-color: #49483e;
+		}
+		
+		html.solarized-dark {
+			color-scheme: dark;
+			--bg-primary: #002b36;
+			--bg-secondary: #073642;
+			--bg-tertiary: #001b22;
+			--text-primary: #839496;
+			--text-secondary: #657b83;
+			--border-color: #073642;
+		}
+		
 		body {
 			font-family: 'Inter', sans-serif;
 			background-color: var(--bg-primary);
 			color: var(--text-primary);
 			overflow: hidden;
 		}
-
+		
+		.glass {
+			background: rgba(var(--bg-primary), 0.7);
+			backdrop-filter: blur(12px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+		
 		.custom-scrollbar::-webkit-scrollbar {
 			width: 8px;
 			height: 8px;
 		}
-
+		
+		.custom-scrollbar::-webkit-scrollbar-track {
+			background: transparent;
+		}
+		
 		.custom-scrollbar::-webkit-scrollbar-thumb {
 			background: var(--border-color);
-			border-radius: 4px;
+			border-radius: 10px;
 		}
-
+		
 		.custom-scrollbar::-webkit-scrollbar-thumb:hover {
 			background: var(--text-secondary);
 		}
-
+		
 		@keyframes slideIn {
-			from { transform: translateY(20px); opacity: 0; }
+			from { transform: translateY(100%); opacity: 0; }
 			to { transform: translateY(0); opacity: 1; }
 		}
-
+		
 		@keyframes fadeIn {
 			from { opacity: 0; }
 			to { opacity: 1; }
 		}
-
+		
 		@keyframes spin {
 			to { transform: rotate(360deg); }
 		}
-
-		@keyframes pulse {
-			0%, 100% { opacity: 1; }
-			50% { opacity: 0.5; }
-		}
-
-		.animate-slide-up {
-			animation: slideIn 0.3s ease-out;
-		}
-
-		.animate-fade-in {
-			animation: fadeIn 0.3s ease-out;
-		}
-
-		.animate-spin-fast {
-			animation: spin 1s linear infinite;
-		}
-
-		.animate-pulse-fast {
-			animation: pulse 1s ease-in-out infinite;
-		}
-
-		.glass {
-			background: rgba(var(--bg-primary), 0.7);
-			backdrop-filter: blur(12px);
-			border: 1px solid var(--border-color);
-		}
-
-		.btn-theme {
-			background-color: var(--bg-secondary);
-			border-color: var(--border-color);
-			color: var(--text-primary);
-		}
-
-		.btn-theme:hover {
-			background-color: var(--bg-tertiary);
-			border-color: var(--accent);
-			color: var(--accent);
-		}
-
-		.repo-card {
-			border: 1px solid var(--border-color);
-			background-color: var(--bg-secondary);
-			border-radius: 8px;
-			transition: all 0.2s ease;
-		}
-
-		.repo-card:hover {
-			border-color: var(--accent);
-			transform: translateX(4px);
-			box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
-		}
-
-		.file-item {
-			transition: all 0.2s ease;
+		
+				.suggestion-item {
+			padding: 0.75rem;
 			cursor: pointer;
+			transition: all 0.2s ease;
+			border-radius: 4px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
-
-		.file-item:hover {
-			background-color: rgba(31, 111, 235, 0.1);
-			transform: translateX(2px);
+		
+		.suggestion-item:hover {
+			background-color: rgba(31, 111, 235, 0.2);
 		}
-
-		.nexus-gradient {
-			background: linear-gradient(135deg, #1f6feb 0%, #8957e5 100%);
+		
+		.suggestion-delete-btn {
+			transition: opacity 0.2s ease;
 		}
-
-		.text-gradient {
-			background: linear-gradient(135deg, #1f6feb 0%, #8957e5 100%);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-clip: text;
+		
+		.suggestion-item:hover .suggestion-delete-btn {
 		}
-
-		.modal-box {
-			background-color: var(--bg-secondary);
-			border: 1px solid var(--border-color);
+		
+				.file-creation-card {
+			border: 2px dashed var(--border-color);
+			border-radius: 8px;
+			padding: 1rem;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s ease;
 		}
-
-		.search-input {
-			background-color: var(--bg-tertiary);
-			color: var(--text-primary);
+		
+		.file-creation-card:hover {
+			border-color: var(--accent-color);
+			background-color: rgba(31, 111, 235, 0.05);
+		}
+        
+        .btn-outline-theme {
+            border: var(--border-color) solid 1px;
+            background-color: var(--bg-primary);
+            color: var(--border-color);
+        }
+        
+        .btn-theme {
+            background-color: var(--bg-primary);
+            color: var(--border-color);
+        }
+		
+		.btn-theme:hover {
+            background-color: var(--border-color);
+            color: var(--bg-primary);
+        }
+		
+		.repo-creation-card {
+			border: 2px dashed var(--border-color);
+			border-radius: 8px;
+			padding: 2rem;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		
+		.repo-creation-card:hover {
+			border-color: var(--accent-color);
+			background-color: rgba(31, 111, 235, 0.05);
+		}
+		
+		.sidebar-border {
 			border-color: var(--border-color);
 		}
-
+		
+		.animate-slide-up {
+		  animation: slideIn 0.4s ease-out cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+		.animate-fade-in {
+		  animation: fadeIn 0.5s ease-out;
+		}
+		.animate-spin {
+		  animation: spin 1s linear infinite;
+		}
+		
+		.hover-lift:hover {
+		  transform: translateY(-4px);
+		  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+		}
+		
+		.repo-card {
+		  transition: all 0.3s ease; cursor: pointer;
+		}
+		
+		.repo-card:hover {
+		  transform: translateX(4px);
+		  border-color: var(--accent-color);
+		}
+		
+		.file-item {
+		  transition: all 0.2s ease;
+		}
+		
+		.file-item:hover {
+		  background-color: rgba(31, 111, 235, 0.15); transform: translateX(2px);
+		}
+		
+		.modal-box {
+		  animation: slideIn 0.3s ease-out;
+		  background-color: var(--bg-secondary);
+		  color: var(--text-primary);
+		  border: 1px solid var(--border-color);
+		}
+		
+		.search-input {
+		  background-color: var(--bg-tertiary);
+		  color: var(--text-primary);
+		  border-color: var(--border-color);
+		}
+		
 		.search-input:focus {
-			border-color: var(--accent);
-			box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+		  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+		  border-color: var(--accent-color);
 		}
-
+		
 		.code-block {
-			background-color: var(--bg-tertiary);
-			border: 1px solid var(--border-color);
-			border-radius: 6px;
-			padding: 12px;
-			font-family: 'JetBrains Mono', monospace;
-			font-size: 12px;
-			overflow-x: auto;
+		  background-color: var(--bg-tertiary);
+		  border-radius: 6px;
+		  padding: 12px;
+		  font-family: 'JetBrains Mono', monospace;
+		  font-size: 12px;
+		  overflow-x: auto;
+		  color: var(--text-primary);
+		  border: 1px solid var(--border-color);
 		}
-
-		.terminal {
-			background-color: #000;
-			color: #0f0;
-			font-family: 'JetBrains Mono', monospace;
-			border-radius: 4px;
-			padding: 12px;
-			font-size: 12px;
-		}
-
-		.branch-badge {
-			background-color: rgba(31, 111, 235, 0.1);
-			border: 1px solid rgba(31, 111, 235, 0.3);
-			padding: 4px 8px;
-			border-radius: 4px;
-			font-size: 11px;
-		}
-
-		.status-badge {
-			padding: 4px 12px;
-			border-radius: 12px;
-			font-size: 11px;
-			font-weight: bold;
-		}
-
-		.status-online {
-			background-color: rgba(34, 197, 94, 0.2);
-			color: #22c55e;
-			border: 1px solid rgba(34, 197, 94, 0.3);
-		}
-
+		
 		.loading-spinner {
-			display: inline-block;
-			width: 20px;
-			height: 20px;
-			border: 3px solid rgba(31, 111, 235, 0.2);
-			border-top-color: var(--accent);
-			border-radius: 50%;
-			animation: spin 1s linear infinite;
+		  display: inline-block;
+		  width: 20px;
+		  height: 20px;
+		  border: 3px solid rgba(31, 111, 235, 0.3);
+		  border-radius: 50%;
+		  border-top-color: #1f6feb;
+		  animation: spin 1s ease-in-out infinite;
+		}
+		
+		.delete-btn-danger {
+		  background-color: #dc2626;
+		}
+		
+		.delete-btn-danger:hover {
+		  background-color: #991b1b;
+		  
+		}
+		
+		.nexus-badge {
+		  background: linear-gradient(135deg, #1f6feb 0%, #8957e5 100%);
 		}
 	</style>
 </head>
 
-<body class="dark">
-	<div id="app" class="flex flex-col h-screen overflow-hidden bg-[var(--bg-primary)]">
-		<!-- Enhanced Top Navigation -->
-		<header class="h-16 border-b glass flex items-center justify-between px-6 z-50" style="border-color: var(--border-color);">
+<body class="text-gray-300 dark">
+	<div id="app" class="flex flex-col h-screen overflow-hidden">
+		<!-- Top Navigation Bar -->
+		<header class="h-16 border-b flex items-center justify-between px-6 z-50 glass animate-fade-in" style="border-color: var(--border-color);">
 			<div class="flex items-center gap-4">
-				<div class="nexus-gradient p-2 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer transition" onclick="toggleMainMenu()" title="GitNexus Menu">
+				<div class="nexus-badge p-2 rounded-lg hover-lift cursor-pointer" onclick="toggleMainMenu()">
 					<i class="fab fa-github text-white text-xl"></i>
 				</div>
-				<h1 class="text-lg font-bold tracking-tight hidden md:block">
-					GitNexus <span class="text-xs font-normal text-gradient">v5.0</span>
-				</h1>
-				<div class="relative ml-4 hidden sm:block">
-					<i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2" style="color: var(--text-secondary);"></i>
+				<h1 class="text-lg font-bold tracking-tight hidden md:block">GitNexus <span class="text-xs font-normal" style="color: var(--text-secondary);">v5.0 beta | Pre-release</span></h1>
+				<div class="relative ml-4 hidden sm:block group">
+					<i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2" style="color: var(--text-secondary); font-size: 0.875rem;"></i>
 					<input id="user-search" type="text" placeholder="Search GitHub User..." class="rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:outline-none search-input" onkeyup="handleSearchInput(event)" oninput="showSearchSuggestions()">
-					<button onclick="searchUser()" class="ml-2 btn btn-xs btn-primary rounded-full">
-						<i class="fas fa-arrow-right"></i>
-					</button>
-					<div id="search-suggestions" class="absolute top-full left-0 w-full mt-2 rounded-lg hidden max-h-64 overflow-y-auto custom-scrollbar z-50" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.3);"></div>
+					<button onclick="searchUser()" class="ml-2 btn btn-xs btn-primary">Go</button>
+					<div id="search-suggestions" class="absolute top-full left-0 w-full mt-2 rounded-lg hidden max-h-64 overflow-y-auto custom-scrollbar z-50 shadow-xl" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);"></div>
 				</div>
 			</div>
-
 			<div class="flex items-center gap-3">
-				<div class="flex items-center rounded-lg px-3 py-1 hidden lg:flex" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+				<div class="flex items-center rounded-md px-3 py-1 hidden lg:flex" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
 					<i class="fas fa-key text-xs mr-2"></i>
-					<input id="pat-token" type="password" placeholder="GitHub PAT" class="bg-transparent text-xs w-48 outline-none" onchange="updateAuthStatus()" onkeyup="handlePATInput(event)">
+					<input id="pat-token" type="password" placeholder="Enter PAT for Full Access" class="bg-transparent text-xs w-48 outline-none" onchange="updateAuthStatus()" onkeyup="handlePATInput(event)">
 				</div>
-
-				<div id="auth-badge" class="badge gap-2 text-[10px] uppercase font-bold animate-pulse-fast" style="background-color: rgba(220, 38, 38, 0.2); color: #ef4444; border: 1px solid rgba(220, 38, 38, 0.3);">
-					<span class="inline-block w-2 h-2 rounded-full bg-red-500"></span> Read Only
+				<div id="auth-badge" class="badge badge-error gap-2 text-[10px] uppercase font-bold animate-slide-up">
+					<i class="fas fa-lock"></i> Read Only
 				</div>
-
-				<button onclick="showNotifications()" class="btn btn-ghost btn-circle relative hover:bg-[var(--bg-secondary)]" title="Notifications">
+				<button onclick="showNotifications()" class="btn btn-ghost btn-circle relative" title="Notifications">
 					<i class="fas fa-bell text-lg"></i>
-					<span id="notification-badge" class="badge badge-primary badge-sm absolute -top-2 -right-2 hidden text-white">0</span>
+					<span id="notification-badge" class="badge badge-primary badge-sm absolute -top-2 -right-2 hidden">0</span>
 				</button>
-
-				<button onclick="showActivityFeed()" class="btn btn-ghost btn-circle hover:bg-[var(--bg-secondary)]" title="Activity Feed">
-					<i class="fas fa-stream text-lg"></i>
-				</button>
-
 				<div class="dropdown dropdown-end">
-					<button tabindex="0" class="btn btn-ghost btn-circle avatar hover:shadow-lg hover:shadow-blue-500/20" title="User Menu">
-						<div class="w-10 rounded-full" style="border: 2px solid var(--accent);">
+					<label tabindex="0" class="btn btn-ghost btn-circle avatar hover-lift">
+						<div class="w-10 rounded-full" style="border: 1px solid var(--border-color);" id="user-avatar-container">
 							<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" id="user-avatar" alt="avatar" />
 						</div>
-					</button>
-					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 animate-fade-in" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					</label>
+					<ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52 animate-fade-in" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
 						<li><a onclick="showThemeMenu()"><i class="fas fa-palette mr-2"></i>Themes</a></li>
 						<li><a onclick="showSettingsModal()"><i class="fas fa-sliders-h mr-2"></i>Settings</a></li>
 						<li><a onclick="showProfileModal()"><i class="fas fa-user mr-2"></i>My Profile</a></li>
-						<li><a onclick="showGitHubInsights()"><i class="fas fa-chart-bar mr-2"></i>Insights</a></li>
+						<li><a onclick="showGitHubInsights()"><i class="fas fa-chart-bar mr-2"></i>GitHub Insights</a></li>
 						<li><a onclick="showNexusBot()"><i class="fas fa-robot mr-2"></i>NexusBot AI</a></li>
-						<li><a onclick="showCommitsViewer()"><i class="fas fa-code-commit mr-2"></i>Commits</a></li>
-						<hr style="border-color: var(--border-color); margin: 0.25rem 0;">
+						<hr style="border-color: var(--border-color); margin: 0.5rem 0;">
 						<li><a onclick="showMusicPlayer()"><i class="fas fa-music mr-2"></i>Music Player</a></li>
-						<li><a onclick="showTerminal()"><i class="fas fa-terminal mr-2"></i>Terminal</a></li>
 						<li><a href="https://github.com/settings/tokens" target="_blank"><i class="fas fa-key mr-2"></i>Generate PAT</a></li>
-						<li><a href="https://github.com" target="_blank"><i class="fas fa-github mr-2"></i>GitHub</a></li>
 					</ul>
 				</div>
 			</div>
@@ -288,105 +357,102 @@
 
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left Sidebar -->
-			<aside class="w-80 border-r flex flex-col overflow-hidden transition-all duration-300" style="border-color: var(--border-color); background-color: var(--bg-primary);">
+			<aside class="w-[320px] border-r flex flex-col animate-fade-in transition-all duration-300" style="border-color: var(--border-color); background-color: var(--bg-primary);">
 				<div class="p-4 border-b flex justify-between items-center" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
-					<span class="text-xs font-bold uppercase text-gradient">Explorer</span>
+					<span class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Explorer</span>
 					<div class="flex gap-2">
-						<button onclick="refreshCurrent()" class="hover:text-[var(--accent)] transition" title="Refresh"><i class="fas fa-sync-alt text-xs animate-spin-fast"></i></button>
-						<button onclick="toggleSidebarSize()" class="hover:text-[var(--accent)] transition" title="Toggle Size"><i class="fas fa-columns text-xs"></i></button>
-						<button onclick="showSortingMenu()" class="hover:text-[var(--accent)] transition" title="Sort"><i class="fas fa-sort text-xs"></i></button>
+						<button onclick="refreshCurrent()" class="hover:text-white" title="Refresh"><i class="fas fa-sync-alt text-xs"></i></button>
+						<button onclick="toggleSidebarSize()" class="hover:text-white" title="Toggle Size"><i class="fas fa-columns text-xs"></i></button>
+						<button onclick="showSortingMenu()" class="hover:text-white" title="Sort"><i class="fas fa-sort text-xs"></i></button>
 					</div>
 				</div>
-
+				
 				<!-- Tabs -->
-				<div class="flex text-[11px] font-bold border-b" style="border-color: var(--border-color);">
-					<button id="tab-repos" onclick="showTab('repos')" class="flex-1 py-2 px-2 border-b-2 border-[var(--accent)] transition" style="background-color: var(--bg-primary);">REPOS</button>
-					<button id="tab-files" onclick="showTab('files')" class="flex-1 py-2 px-2 border-b-2 border-transparent hover:bg-[var(--bg-secondary)] transition" style="background-color: var(--bg-primary);">FILES</button>
-					<button id="tab-branches" onclick="showTab('branches')" class="flex-1 py-2 px-2 border-b-2 border-transparent hover:bg-[var(--bg-secondary)] transition" style="background-color: var(--bg-primary);">BRANCHES</button>
+				<div class="flex text-[11px] font-bold border-b" style="border-color: var(--border-color); background-color: var(--bg-primary);">
+					<button id="tab-repos" onclick="showTab('repos')" class="flex-1 py-2 border-b-2 border-blue-500">REPOSITORIES</button>
+					<button id="tab-files" onclick="showTab('files')" class="flex-1 py-2 border-b-2 border-transparent hover:bg-[var(--bg-secondary)]">FILE TREE</button>
+					<button id="tab-branches" onclick="showTab('branches')" class="flex-1 py-2 border-b-2 border-transparent hover:bg-[var(--bg-secondary)]">BRANCHES</button>
 				</div>
-
+				
 				<!-- Search -->
 				<div class="p-2 border-b" style="border-color: var(--border-color);">
 					<input id="sidebar-search" type="text" placeholder="Search..." class="w-full rounded px-3 py-1.5 text-xs focus:outline-none search-input" onkeyup="filterSidebarContent()" onkeypress="handleSidebarSearch(event)">
 				</div>
-
-				<!-- Content Area -->
+				
+				<!-- Content -->
 				<div class="flex-1 overflow-y-auto custom-scrollbar p-2" id="sidebar-content">
-					<div class="flex flex-col items-center justify-center h-full text-center p-4 animate-fade-in">
+					<div class="flex flex-col items-center justify-center h-full text-center p-4 animate-fade-in" style="color: var(--text-secondary);">
 						<i class="fab fa-github text-4xl mb-4 opacity-20"></i>
-						<p class="text-sm" style="color: var(--text-secondary);">Search a user to explore</p>
+						<p class="text-sm italic">Search a user to explore repositories</p>
 					</div>
 				</div>
 			</aside>
 
-			<!-- Main Content -->
-			<main class="flex-1 flex flex-col overflow-hidden">
+			<!-- Main Stage -->
+			<main class="flex-1 flex flex-col relative" style="background-color: var(--bg-primary);">
 				<!-- Breadcrumbs -->
-				<nav class="h-10 border-b flex items-center px-4 gap-2 text-xs font-mono overflow-x-auto custom-scrollbar" style="border-color: var(--border-color); background-color: rgba(255,255,255,0.02);">
-					<div id="breadcrumb-container" class="flex items-center gap-2">
-						<span style="color: var(--text-secondary);">No resource selected</span>
+				<nav class="h-10 border-b flex items-center px-4 gap-2 text-xs font-mono overflow-x-auto whitespace-nowrap custom-scrollbar" style="border-color: var(--border-color); background-color: rgba(255,255,255,0.02);">
+					<div id="breadcrumb-container" class="flex items-center gap-2 animate-fade-in">
+						<span style="color: var(--text-secondary); font-style: italic;">No resource selected</span>
 					</div>
 				</nav>
-
+				
 				<!-- Action Bar -->
 				<div class="h-12 flex items-center justify-between px-4 border-b flex-wrap" style="background-color: var(--bg-primary); border-color: var(--border-color);">
-					<div id="active-file-label" class="text-sm font-medium flex items-center gap-2">
-						<i class="fas fa-file-code text-[var(--accent)]"></i>
-						<span>Welcome</span>
+					<div id="active-file-label" class="text-sm font-medium flex items-center gap-2 animate-fade-in">
+						<i class="fas fa-code text-blue-400"></i> <span>welcome.md</span>
 					</div>
 					<div class="flex items-center gap-2 flex-wrap justify-end">
-						<button onclick="copyRawUrl()" class="btn btn-xs btn-theme" title="Copy Raw URL"><i class="fas fa-copy"></i></button>
-						<button onclick="copyCode()" class="btn btn-xs btn-theme hidden" id="copy-code-btn" title="Copy Code"><i class="fas fa-code"></i></button>
-						<button onclick="starRepo()" class="btn btn-xs btn-theme gap-1"><i class="far fa-star"></i> Star</button>
-						<button onclick="downloadFile()" class="btn btn-xs btn-theme gap-1" id="download-btn"><i class="fas fa-download"></i> Download</button>
-						<button onclick="togglePreview()" class="btn btn-xs btn-theme hidden" id="preview-btn" title="Preview"><i class="fas fa-eye"></i></button>
-						<div class="divider divider-horizontal mx-1" style="height: 20px; margin: 0 4px;"></div>
-						<button onclick="showCreateFileModal()" class="btn btn-xs btn-info hidden" id="create-file-btn"><i class="fas fa-file-plus"></i></button>
+						<button onclick="copyRawUrl()" class="btn btn-xs btn-outline-theme" title="Copy Raw URL"><i class="fas fa-copy"></i></button>
+						<button onclick="copyCode()" class="btn btn-xs btn-outline-theme hidden" id="copy-code-btn" title="Copy Code"><i class="fas fa-code"></i></button>
+						<button onclick="starRepo()" class="btn btn-xs btn-outline-theme gap-1"><i class="far fa-star"></i> Star</button>
+						<button onclick="downloadFile()" class="btn btn-xs btn-outline-theme gap-1" id="download-btn"><i class="fas fa-download"></i> Download</button>
+						<button onclick="togglePreview()" class="btn btn-xs btn-outline-theme hidden" id="preview-btn" title="Toggle Preview"><i class="fas fa-eye"></i></button>
+						<div class="divider divider-horizontal mx-1"></div>
+						<button onclick="showCreateFileModal()" class="btn btn-xs btn-info hidden" id="create-file-btn"><i class="fas fa-file-circle-plus"></i></button>
 						<button onclick="showCreateFolderModal()" class="btn btn-xs btn-warning hidden" id="create-folder-btn"><i class="fas fa-folder-plus"></i></button>
-						<button onclick="openUploadModal()" class="btn btn-xs btn-success hidden" id="upload-trigger"><i class="fas fa-cloud-upload"></i></button>
+						<button onclick="openUploadModal()" class="btn btn-xs btn-success hidden" id="upload-trigger"><i class="fas fa-cloud-upload-alt"></i></button>
 						<button onclick="saveFileContent()" class="btn btn-xs btn-primary hidden" id="save-btn"><i class="fas fa-check"></i></button>
-						<button onclick="forkRepository()" class="btn btn-xs btn-secondary hidden" id="fork-btn" title="Fork"><i class="fas fa-code-branch"></i></button>
+						<button onclick="forkRepository()" class="btn btn-xs btn-secondary hidden" id="fork-btn" title="Fork Repository"><i class="fas fa-code-branch"></i></button>
 					</div>
 				</div>
-
-				<!-- Editor/Viewport -->
-				<div class="flex-1 relative overflow-hidden">
+				
+				<!-- Editor / Preview Viewport -->
+				<div class="flex-1 relative animate-fade-in overflow-hidden">
 					<div id="editor-viewport" class="w-full h-full"></div>
 					<div id="image-viewport" class="hidden absolute inset-0 z-10 flex items-center justify-center p-10" style="background-color: var(--bg-primary);">
 						<div class="relative group">
-							<img id="preview-img" src="" class="max-w-full max-h-[70vh] rounded-lg shadow-2xl hover:shadow-2xl hover:scale-105 transition" alt="preview" style="border: 2px solid var(--accent);">
-							<a id="img-download-link" href="#" download class="absolute bottom-4 left-4 btn btn-sm btn-primary opacity-0 group-hover:opacity-100 transition">
-								<i class="fas fa-download"></i> Download
-							</a>
+							<img id="preview-img" src="" class="max-w-full max-h-[70vh] rounded shadow-2xl hover-lift" alt="preview" style="border: 1px solid var(--border-color);">
+							<div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded" style="background-color: rgba(0,0,0,0.4);">
+								<a id="img-download-link" href="#" download class="btn btn-primary">Download Image</a>
+							</div>
 						</div>
 					</div>
-					<div id="preview-viewport" class="hidden absolute inset-0 z-10 overflow-auto p-8" style="background-color: var(--bg-secondary);"></div>
-					<div id="welcome-viewport" class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center overflow-y-auto" style="background-color: var(--bg-primary);">
+					<div id="preview-viewport" class="hidden absolute inset-0 z-10 bg-white overflow-auto" style="background-color: var(--bg-secondary);"></div>
+					<div id="welcome-viewport" class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center animate-fade-in overflow-y-auto" style="background-color: var(--bg-primary);">
 						<div class="max-w-2xl p-4">
-							<div class="text-6xl mb-6 animate-pulse-fast">
-								<i class="fas fa-code text-gradient"></i>
-							</div>
-							<h2 class="text-3xl font-bold mb-3">GitNexus IDE</h2>
-							<p class="mb-8 text-sm" style="color: var(--text-secondary);">Advanced Git management with AI integration. Search a user to get started.</p>
+							<i class="fas fa-terminal text-6xl text-blue-500 mb-6 animate-pulse"></i>
+							<h2 class="text-3xl font-bold mb-3">Ready to Build?</h2>
+							<p class="mb-8 text-sm" style="color: var(--text-secondary);">Select a repository and file from the sidebar to explore code and collaborate.</p>
 							<div class="grid grid-cols-2 gap-4 mb-8">
-								<div class="p-4 rounded-lg transition hover:shadow-lg hover:shadow-blue-500/20 repo-card">
+								<div class="p-4 rounded-lg hover-lift" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="alert('Search a user first')">
 									<div class="text-blue-400 font-bold mb-1"><i class="fas fa-eye mr-2"></i>Viewer</div>
-									<div class="text-[10px]" style="color: var(--text-secondary);">Browse repositories</div>
+									<div class="text-[10px]" style="color: var(--text-secondary);">Read code and explore files</div>
 								</div>
-								<div class="p-4 rounded-lg transition hover:shadow-lg hover:shadow-purple-500/20 repo-card">
+								<div class="p-4 rounded-lg hover-lift" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="alert('Search a user first')">
 									<div class="text-purple-400 font-bold mb-1"><i class="fas fa-edit mr-2"></i>Editor</div>
-									<div class="text-[10px]" style="color: var(--text-secondary);">Edit & commit</div>
+									<div class="text-[10px]" style="color: var(--text-secondary);">Edit and commit directly</div>
 								</div>
-								<div class="p-4 rounded-lg transition hover:shadow-lg hover:shadow-green-500/20 repo-card">
+								<div class="p-4 rounded-lg hover-lift" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="alert('Search a user first')">
 									<div class="text-green-400 font-bold mb-1"><i class="fas fa-code-branch mr-2"></i>Branches</div>
-									<div class="text-[10px]" style="color: var(--text-secondary);">Manage branches</div>
+									<div class="text-[10px]" style="color: var(--text-secondary);">Manage branches and releases</div>
 								</div>
-								<div class="p-4 rounded-lg transition hover:shadow-lg hover:shadow-yellow-500/20 repo-card" onclick="showMusicPlayer()">
+								<div class="p-4 rounded-lg hover-lift" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="showMusicPlayer()">
 									<div class="text-yellow-400 font-bold mb-1"><i class="fas fa-music mr-2"></i>Music</div>
 									<div class="text-[10px]" style="color: var(--text-secondary);">Code with music</div>
 								</div>
 							</div>
-							<button onclick="document.getElementById('user-search').focus()" class="btn btn-primary gap-2 rounded-full">
+							<button onclick="document.getElementById('user-search').focus()" class="btn btn-primary gap-2">
 								<i class="fas fa-search"></i> Start Exploring
 							</button>
 						</div>
@@ -395,102 +461,47 @@
 			</main>
 		</div>
 
-		<!-- Enhanced Footer -->
-		<footer class="h-8 border-t flex items-center justify-between px-4 text-[10px] uppercase font-medium tracking-widest overflow-x-auto" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-secondary);">
+		<!-- Footer / Status Bar -->
+		<footer class="h-8 border-t flex items-center justify-between px-4 text-[10px] uppercase font-medium tracking-widest" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-secondary);">
 			<div class="flex items-center gap-4">
-				<span class="flex items-center gap-1 whitespace-nowrap"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span>
-				<span class="flex items-center gap-1 whitespace-nowrap"><i class="fas fa-check-circle text-green-500"></i> Online</span>
-				<span id="file-stats" class="flex items-center gap-1 whitespace-nowrap"><i class="fas fa-files"></i> <span id="stats-count">0</span></span>
+				<span class="flex items-center gap-1"><i class="fas fa-code-branch"></i> <span id="status-branch">main</span></span>
+				<span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-500"></i> Engine Online</span>
+				<span id="file-stats" class="flex items-center gap-1"><i class="fas fa-files"></i> <span id="stats-count">0</span> items</span>
 			</div>
 			<div class="flex items-center gap-4">
-				<span id="cursor-pos" class="whitespace-nowrap">Ln 1, Col 1</span>
-				<span class="whitespace-nowrap">UTF-8</span>
-				<span class="status-badge status-online">API ACTIVE</span>
+				<span id="cursor-pos">Ln 1, Col 1</span>
+				<span>UTF-8</span>
+				<span class="bg-blue-600 text-white px-2 py-0.5 rounded cursor-pointer action-button hover:bg-blue-700" onclick="updateAuthStatus()">API ACTIVE</span>
 			</div>
 		</footer>
 	</div>
 
-	<!-- MODALS SECTION -->
+	<!-- MODALS -->
 	
-	<!-- Repository Description Editor Modal -->
-	<dialog id="desc_editor_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-2xl">
-			<h3 class="font-bold text-lg mb-4">
-				<i class="fas fa-file-alt mr-2 text-blue-400"></i>
-				<span id="desc-repo-name"></span>
-			</h3>
-
-			<!-- View Mode -->
-			<div id="desc-view" class="space-y-4">
-				<div class="rounded-lg p-4 min-h-32 break-words" style="background-color: var(--bg-tertiary); border: 1px solid var(--border-color);">
-					<p class="text-sm whitespace-pre-wrap" id="desc-content-display" style="color: var(--text-primary);">
-						No description provided.
-					</p>
-				</div>
-				<button type="button" id="desc-edit-btn" onclick="switchToDescEditMode()" class="btn btn-sm btn-primary w-full gap-2" style="display: none;">
-					<i class="fas fa-edit"></i> Edit Description
-				</button>
-				<p id="desc-view-note" class="text-xs italic" style="color: var(--text-secondary);">Only repository owner can edit</p>
-			</div>
-
-			<!-- Edit Mode -->
-			<div id="desc-edit" class="hidden space-y-4">
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Repository Description</label>
-					<textarea id="desc-textarea" placeholder="Enter repository description..." class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32"></textarea>
-					<p class="text-[10px] mt-1" style="color: var(--text-secondary);"><i class="fas fa-info-circle mr-1"></i>Max 300 characters</p>
-				</div>
-
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Personal Access Token</label>
-					<input id="desc-pat-input" type="password" placeholder="Enter your GitHub PAT (not saved)" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
-					<p class="text-[10px] mt-1" style="color: var(--text-secondary);"><i class="fas fa-shield-alt mr-1"></i>Your PAT will not be saved</p>
-				</div>
-
-				<div class="rounded-lg p-3" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
-					<p class="text-xs" style="color: var(--text-secondary);"><i class="fas fa-lightbulb mr-2"></i>Write clear, concise descriptions to help users understand your project.</p>
-				</div>
-
-				<div class="flex gap-2">
-					<button type="button" onclick="saveDescriptionChanges()" class="flex-1 btn btn-sm btn-success gap-2">
-						<i class="fas fa-check"></i> Save
-					</button>
-					<button type="button" onclick="switchToDescViewMode()" class="flex-1 btn btn-sm btn-outline gap-2">
-						<i class="fas fa-times"></i> Cancel
-					</button>
-				</div>
-			</div>
-
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
 	<!-- Create Repository Modal -->
 	<dialog id="create_repo_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-plus mr-2 text-green-400"></i>Create Repository</h3>
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-plus mr-2 text-green-400"></i>Create New Repository</h3>
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Repository Name *</label>
-					<input id="repo-name-input" type="text" placeholder="my-awesome-project" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input" required>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Repository Name</label>
+					<input id="repo-name-input" type="text" placeholder="my-awesome-project" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Description</label>
-					<textarea id="repo-desc-input" placeholder="Project description..." class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-20"></textarea>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Description</label>
+					<textarea id="repo-desc-input" placeholder="Brief description..." class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-16 mt-1"></textarea>
 				</div>
 				<div class="grid grid-cols-2 gap-4">
 					<div>
-						<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Visibility</label>
-						<select id="repo-visibility" class="w-full rounded px-3 py-2 text-sm search-input">
+						<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Visibility</label>
+						<select id="repo-visibility" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
 							<option value="public">Public</option>
 							<option value="private">Private</option>
 						</select>
 					</div>
 					<div>
-						<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">License</label>
-						<select id="repo-license" class="w-full rounded px-3 py-2 text-sm search-input">
+						<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">License</label>
+						<select id="repo-license" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
 							<option value="">None</option>
 							<option value="mit">MIT</option>
 							<option value="apache-2.0">Apache 2.0</option>
@@ -501,10 +512,6 @@
 				<div class="flex items-center gap-2">
 					<input type="checkbox" id="repo-readme" class="checkbox" checked>
 					<label for="repo-readme" class="text-sm">Initialize with README</label>
-				</div>
-				<div class="flex items-center gap-2">
-					<input type="checkbox" id="repo-gitignore" class="checkbox" checked>
-					<label for="repo-gitignore" class="text-sm">Add .gitignore</label>
 				</div>
 			</div>
 			<div class="modal-action">
@@ -517,23 +524,23 @@
 	<!-- Create File Modal -->
 	<dialog id="create_file_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-2xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-file-plus mr-2 text-blue-400"></i>Create File</h3>
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-file-circle-plus mr-2 text-blue-400"></i>Create File</h3>
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">File Name *</label>
-					<input id="file-name-input" type="text" placeholder="index.js" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input" required>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">File Name</label>
+					<input id="file-name-input" type="text" placeholder="index.js" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Path (optional)</label>
-					<input id="file-path-input" type="text" placeholder="src/components/" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">File Path (optional)</label>
+					<input id="file-path-input" type="text" placeholder="src/components/" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Content</label>
-					<textarea id="file-content-input" placeholder="// Your code..." class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32 font-mono" style="font-family: 'JetBrains Mono', monospace;"></textarea>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Content</label>
+					<textarea id="file-content-input" placeholder="// Code here..." class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input resize-none h-32 mt-1 font-mono"></textarea>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Commit Message</label>
-					<input id="file-commit-msg" type="text" placeholder="Create file" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Commit Message</label>
+					<input id="file-commit-msg" type="text" placeholder="Create file" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
 				</div>
 			</div>
 			<div class="modal-action">
@@ -549,15 +556,15 @@
 			<h3 class="font-bold text-lg mb-4"><i class="fas fa-folder-plus mr-2 text-yellow-400"></i>Create Folder</h3>
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Folder Name *</label>
-					<input id="folder-name-input" type="text" placeholder="my-folder" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input" required>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Folder Name</label>
+					<input id="folder-name-input" type="text" placeholder="my-folder" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Path (optional)</label>
-					<input id="folder-path-input" type="text" placeholder="src/" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Path (optional)</label>
+					<input id="folder-path-input" type="text" placeholder="src/" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1">
 				</div>
-				<div class="rounded-lg p-3" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
-					<p class="text-xs" style="color: var(--text-secondary);"><i class="fas fa-info-circle mr-2"></i>A .gitkeep file will be created.</p>
+				<div class="rounded p-3" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+					<p class="text-xs" style="color: var(--text-secondary);"><i class="fas fa-info-circle mr-2"></i>A .gitkeep file will be created automatically.</p>
 				</div>
 			</div>
 			<div class="modal-action">
@@ -567,85 +574,23 @@
 		</form>
 	</dialog>
 
-	<!-- Upload Modal -->
-	<dialog id="upload_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-cloud-upload mr-2"></i>Upload Files</h3>
-			<p class="py-4 text-sm" style="color: var(--text-secondary);">Upload to <span class="text-blue-400 font-bold" id="upload-path-label"></span></p>
-			<input type="file" id="file-picker" class="file-input file-input-bordered w-full rounded" style="background-color: var(--bg-tertiary); border-color: var(--border-color);" multiple>
-			<p class="text-xs mt-2" style="color: var(--text-secondary);"><i class="fas fa-info-circle mr-1"></i>Support for all file types. Max 100MB per file.</p>
-			<div id="upload-progress" class="hidden mt-4 space-y-2">
-				<div class="text-xs" style="color: var(--text-secondary);">Uploading: <span id="upload-current">0</span>/<span id="upload-total">0</span></div>
-				<progress id="upload-progress-bar" class="progress w-full" value="0" max="100"></progress>
-				<div id="upload-details" class="text-xs space-y-1" style="color: var(--text-secondary);"></div>
-			</div>
-			<div class="modal-action mt-4">
-				<button class="btn btn-sm">Cancel</button>
-				<button type="button" onclick="performUpload()" class="btn btn-sm btn-primary" id="upload-btn">Upload</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Branches, Releases, Tags Modal -->
-	<dialog id="releases_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-4xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-code-branch mr-2 text-purple-400"></i>Repository Management</h3>
-			<div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-				<button type="button" onclick="switchReleaseTab('branches')" class="btn btn-sm btn-primary" id="branches-tab">
-					<i class="fas fa-code-branch mr-1"></i>Branches
-				</button>
-				<button type="button" onclick="switchReleaseTab('releases')" class="btn btn-sm btn-outline-theme" id="releases-tab">
-					<i class="fas fa-tag mr-1"></i>Releases
-				</button>
-				<button type="button" onclick="switchReleaseTab('tags')" class="btn btn-sm btn-outline-theme" id="tags-tab">
-					<i class="fas fa-bookmark mr-1"></i>Tags
-				</button>
-				<button type="button" onclick="switchReleaseTab('commits')" class="btn btn-sm btn-outline-theme" id="commits-tab">
-					<i class="fas fa-code-commit mr-1"></i>Commits
-				</button>
-				<button type="button" onclick="switchReleaseTab('contributors')" class="btn btn-sm btn-outline-theme" id="contributors-tab">
-					<i class="fas fa-users mr-1"></i>Contributors
-				</button>
-			</div>
-
-			<div id="branches-content" class="py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
-			<div id="releases-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
-			<div id="tags-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
-			<div id="commits-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
-			<div id="contributors-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
-
-			<div class="flex gap-2 mt-4">
-				<button type="button" onclick="showCreateBranchModal()" class="btn btn-sm btn-success hidden" id="create-branch-btn">
-					<i class="fas fa-plus mr-1"></i>Create Branch
-				</button>
-				<button type="button" onclick="showCreateReleaseModal()" class="btn btn-sm btn-info hidden" id="create-release-btn">
-					<i class="fas fa-plus mr-1"></i>Create Release
-				</button>
-			</div>
-
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
 	<!-- Delete Repository Modal -->
 	<dialog id="delete_repo_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-lg">
-			<h3 class="font-bold text-lg mb-4 text-red-500"><i class="fas fa-trash mr-2"></i>Delete Repository</h3>
+			<h3 class="font-bold text-lg mb-4 text-red-500"><i class="fas fa-exclamation-triangle mr-2"></i>Delete Repository</h3>
 			<div class="space-y-4">
-				<div class="rounded-lg p-4" style="background-color: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3);">
-					<p class="text-sm text-red-400 font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>This action cannot be undone!</p>
-					<p class="text-xs" style="color: var(--text-secondary);">All code, issues, PRs, and releases will be permanently deleted.</p>
+				<div class="rounded p-4" style="background-color: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3);">
+					<p class="text-sm text-red-400 font-bold mb-2"><i class="fas fa-exclamation mr-2"></i>This action cannot be undone!</p>
+					<p class="text-xs" style="color: var(--text-secondary);">All code, issues, and releases will be permanently deleted.</p>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Confirm by typing repository name:</label>
-					<input id="delete-repo-confirm" type="text" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input" placeholder="">
+					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Confirm by typing the repo name:</label>
+					<input id="delete-repo-confirm" type="text" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
 				</div>
 			</div>
 			<div class="modal-action">
 				<button class="btn btn-sm">Cancel</button>
-				<button type="button" onclick="confirmDeleteRepository()" class="btn btn-sm text-white" style="background-color: #dc2626;">Delete</button>
+				<button type="button" onclick="confirmDeleteRepository()" class="btn btn-sm delete-btn-danger text-white">Delete</button>
 			</div>
 		</form>
 	</dialog>
@@ -656,17 +601,17 @@
 			<h3 class="font-bold text-lg mb-4"><i class="fas fa-pen-to-square mr-2 text-blue-400"></i>Rename File</h3>
 			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Current Name</label>
-					<input id="current-filename" type="text" readonly class="w-full rounded px-3 py-2 text-sm search-input opacity-60">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Current Name</label>
+					<input id="current-filename" type="text" readonly class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1 opacity-60" />
 				</div>
 				<div class="text-center" style="color: var(--text-secondary);"><i class="fas fa-arrow-down"></i></div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">New Name *</label>
-					<input id="new-filename" type="text" placeholder="new-filename.js" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input" required>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">New Name</label>
+					<input id="new-filename" type="text" placeholder="new-filename.js" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" required />
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Commit Message</label>
-					<input id="rename-commit-msg" type="text" placeholder="Rename file" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Commit Message</label>
+					<input id="rename-commit-msg" type="text" placeholder="Rename file" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input mt-1" />
 				</div>
 			</div>
 			<div class="modal-action">
@@ -676,24 +621,66 @@
 		</form>
 	</dialog>
 
-	<!-- Settings Modal -->
+	<!-- Upload Modal -->
+	<dialog id="upload_modal" class="modal">
+		<form method="dialog" class="modal-box">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-cloud-upload-alt mr-2"></i>Upload Files</h3>
+			<p class="py-4 text-sm" style="color: var(--text-secondary);">Upload to <span class="text-blue-400 font-bold" id="upload-path-label"></span></p>
+			<input type="file" id="file-picker" class="file-input file-input-bordered file-input-primary w-full" style="background-color: var(--bg-tertiary); border-color: var(--border-color);" multiple />
+			<p class="text-xs mt-2" style="color: var(--text-secondary);"><i class="fas fa-info-circle mr-2"></i>Select multiple files</p>
+			<div id="upload-progress" class="hidden mt-4">
+				<div class="text-xs mb-2" style="color: var(--text-secondary);">Uploading: <span id="upload-current">0</span>/<span id="upload-total">0</span></div>
+				<progress id="upload-progress-bar" class="progress progress-primary w-full" value="0" max="100"></progress>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Cancel</button>
+				<button type="button" onclick="performUpload()" class="btn btn-sm btn-primary" id="upload-btn">Upload</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- Releases & Branches Modal -->
+	<dialog id="releases_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-3xl">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-tag mr-2 text-green-400"></i>Releases & Branches</h3>
+			<div class="flex gap-2 mb-4">
+				<button type="button" onclick="switchReleaseTab('releases')" class="flex-1 btn btn-sm btn-primary" id="releases-tab">
+					<i class="fas fa-tag mr-1"></i>Releases
+				</button>
+				<button type="button" onclick="switchReleaseTab('branches')" class="flex-1 btn btn-sm btn-outline-theme" id="branches-tab">
+					<i class="fas fa-code-branch mr-1"></i>Branches
+				</button>
+				<button type="button" onclick="switchReleaseTab('tags')" class="flex-1 btn btn-sm btn-outline-theme" id="tags-tab">
+					<i class="fas fa-bookmark mr-1"></i>Tags
+				</button>
+			</div>
+			<div id="releases-content" class="py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
+			<div id="branches-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
+			<div id="tags-content" class="hidden py-4 max-h-96 overflow-y-auto custom-scrollbar space-y-2"></div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- Customization Modal -->
 	<dialog id="customization_modal" class="modal">
 		<form method="dialog" class="modal-box max-w-3xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-sliders-h mr-2"></i>Settings & Customization</h3>
+			<h3 class="font-bold text-lg mb-4">Customization & Settings</h3>
 			<div class="space-y-6 max-h-96 overflow-y-auto custom-scrollbar">
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Editor Font Size</label>
-					<div class="flex items-center gap-4">
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Editor Font Size</label>
+					<div class="flex items-center gap-4 mt-2">
 						<input id="editor-font-size" type="range" min="10" max="20" value="14" class="range range-sm flex-1" onchange="updateEditorSettings()">
-						<span id="font-size-display" class="text-sm font-bold w-12">14px</span>
+						<span id="font-size-display" class="text-sm font-bold">14px</span>
 					</div>
 				</div>
 				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Tab Size</label>
-					<div class="flex gap-2">
-						<button type="button" class="btn btn-sm btn-theme" onclick="setTabSize(2)">2 Spaces</button>
-						<button type="button" class="btn btn-sm btn-theme" onclick="setTabSize(4)">4 Spaces</button>
-						<button type="button" class="btn btn-sm btn-theme" onclick="setTabSize(8)">8 Spaces</button>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Tab Size</label>
+					<div class="flex gap-2 mt-2">
+						<button type="button" class="btn btn-sm" onclick="setTabSize(2)">2 Spaces</button>
+						<button type="button" class="btn btn-sm" onclick="setTabSize(4)">4 Spaces</button>
+						<button type="button" class="btn btn-sm" onclick="setTabSize(8)">8 Spaces</button>
 					</div>
 				</div>
 				<div class="flex items-center justify-between">
@@ -704,10 +691,6 @@
 					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Show Minimap</label>
 					<input type="checkbox" id="show-minimap" class="checkbox" onchange="toggleMinimap()" checked>
 				</div>
-				<div class="flex items-center justify-between">
-					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Auto-Save</label>
-					<input type="checkbox" id="auto-save" class="checkbox" checked>
-				</div>
 			</div>
 			<div class="modal-action">
 				<button class="btn btn-sm">Close</button>
@@ -715,255 +698,7 @@
 		</form>
 	</dialog>
 
-	<!-- Profile Modal -->
-	<dialog id="profile_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-3xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-user mr-2"></i>GitHub Profile</h3>
-			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
-				<div class="flex items-center gap-4 pb-4" style="border-bottom: 1px solid var(--border-color);">
-					<div class="relative">
-						<img id="modal-avatar" src="" class="w-24 h-24 rounded-full" style="border: 3px solid var(--accent);">
-						<button type="button" onclick="openAvatarUpload()" class="absolute bottom-0 right-0 btn btn-circle btn-xs btn-primary">
-							<i class="fas fa-camera text-xs"></i>
-						</button>
-					</div>
-					<div class="flex-1">
-						<h4 id="modal-name" class="font-bold text-lg"></h4>
-						<p id="modal-login" class="text-sm" style="color: var(--text-secondary);"></p>
-						<p id="modal-bio" class="text-xs mt-2" style="color: var(--text-secondary);"></p>
-						<div class="flex gap-2 mt-3">
-							<button type="button" onclick="toggleFollowUser()" class="btn btn-xs btn-primary" id="follow-btn">
-								<i class="fas fa-user-plus mr-1"></i>Follow
-							</button>
-							<button type="button" onclick="showUserActivity()" class="btn btn-xs btn-outline-theme">
-								<i class="fas fa-stream mr-1"></i>Activity
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="grid grid-cols-4 gap-3">
-					<div class="text-center p-3 rounded-lg transition hover:shadow-lg hover:shadow-blue-500/20" style="background-color: var(--bg-secondary);">
-						<div class="text-xl font-bold text-blue-400" id="profile-followers">0</div>
-						<div class="text-[10px]" style="color: var(--text-secondary);">Followers</div>
-					</div>
-					<div class="text-center p-3 rounded-lg transition hover:shadow-lg hover:shadow-purple-500/20" style="background-color: var(--bg-secondary);">
-						<div class="text-xl font-bold text-purple-400" id="profile-following">0</div>
-						<div class="text-[10px]" style="color: var(--text-secondary);">Following</div>
-					</div>
-					<div class="text-center p-3 rounded-lg transition hover:shadow-lg hover:shadow-green-500/20" style="background-color: var(--bg-secondary);">
-						<div class="text-xl font-bold text-green-400" id="profile-repos">0</div>
-						<div class="text-[10px]" style="color: var(--text-secondary);">Repos</div>
-					</div>
-					<div class="text-center p-3 rounded-lg transition hover:shadow-lg hover:shadow-yellow-500/20" style="background-color: var(--bg-secondary);">
-						<div class="text-xl font-bold text-yellow-400" id="profile-gists">0</div>
-						<div class="text-[10px]" style="color: var(--text-secondary);">Gists</div>
-					</div>
-				</div>
-
-				<div id="profile-editable" class="hidden space-y-3 p-4 rounded-lg" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div>
-						<label class="text-xs font-bold uppercase block mb-1" style="color: var(--text-secondary);">Status</label>
-						<input id="edit-status" type="text" placeholder="What's your status?" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
-					</div>
-					<div class="grid grid-cols-2 gap-3">
-						<div>
-							<label class="text-xs font-bold uppercase block mb-1" style="color: var(--text-secondary);">Location</label>
-							<input id="edit-location" type="text" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
-						</div>
-						<div>
-							<label class="text-xs font-bold uppercase block mb-1" style="color: var(--text-secondary);">Website</label>
-							<input id="edit-blog" type="url" class="w-full rounded px-3 py-2 text-sm focus:outline-none search-input">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- GitHub Insights Modal -->
-	<dialog id="insights_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-4xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-chart-bar mr-2 text-purple-400"></i>GitHub Insights</h3>
-			<div class="space-y-6 max-h-96 overflow-y-auto custom-scrollbar">
-				<div class="grid grid-cols-2 gap-4">
-					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-						<div class="text-sm font-bold mb-2"><i class="fas fa-star text-yellow-400 mr-2"></i>Stars</div>
-						<div class="text-2xl font-bold text-yellow-400" id="insights-stars">0</div>
-						<canvas id="stars-chart" height="60"></canvas>
-					</div>
-					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-						<div class="text-sm font-bold mb-2"><i class="fas fa-code-branch text-blue-400 mr-2"></i>Forks</div>
-						<div class="text-2xl font-bold text-blue-400" id="insights-forks">0</div>
-						<canvas id="forks-chart" height="60"></canvas>
-					</div>
-				</div>
-
-				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="text-sm font-bold mb-4"><i class="fas fa-chart-line mr-2"></i>Activity</div>
-					<canvas id="activity-chart" height="100"></canvas>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- NexusBot AI Modal -->
-	<dialog id="nexusbot_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-3xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-robot mr-2 text-cyan-400"></i>NexusBot AI Assistant</h3>
-			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
-				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 2px solid var(--accent);">
-					<div class="text-sm font-bold mb-2"><i class="fas fa-plug mr-2"></i>Connect Copilot</div>
-					<div class="text-xs mb-3" style="color: var(--text-secondary);">Enter your GitHub Copilot token</div>
-					<div class="flex gap-2">
-						<input id="copilot-token" type="password" placeholder="GitHub Copilot PAT" class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input">
-						<button type="button" onclick="connectCopilot()" class="btn btn-sm btn-primary"><i class="fas fa-plug mr-1"></i>Connect</button>
-					</div>
-				</div>
-
-				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<label class="text-sm font-bold block mb-2">Ask NexusBot</label>
-					<div class="flex gap-2">
-						<input id="copilot-prompt" type="text" placeholder="Explain code, fix bugs, optimize..." class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input">
-						<button type="button" onclick="askNexusBot()" class="btn btn-sm btn-info"><i class="fas fa-send"></i></button>
-					</div>
-				</div>
-
-				<div id="copilot-response" class="hidden rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="text-sm font-bold mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i>Response</div>
-					<div id="copilot-output" class="text-sm whitespace-pre-wrap" style="color: var(--text-primary);"></div>
-				</div>
-
-				<div class="grid grid-cols-2 gap-2">
-					<button type="button" onclick="quickCommand('explain')" class="btn btn-xs btn-theme"><i class="fas fa-comments mr-1"></i>Explain</button>
-					<button type="button" onclick="quickCommand('optimize')" class="btn btn-xs btn-theme"><i class="fas fa-bolt mr-1"></i>Optimize</button>
-					<button type="button" onclick="quickCommand('fix')" class="btn btn-xs btn-theme"><i class="fas fa-wrench mr-1"></i>Fix</button>
-					<button type="button" onclick="quickCommand('document')" class="btn btn-xs btn-theme"><i class="fas fa-file-alt mr-1"></i>Document</button>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Commits Viewer Modal -->
-	<dialog id="commits_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-4xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-code-commit mr-2"></i>Commits</h3>
-			<div id="commits-list" class="space-y-2 max-h-96 overflow-y-auto custom-scrollbar"></div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Terminal Modal -->
-	<dialog id="terminal_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-4xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-terminal mr-2"></i>Terminal & Codespaces</h3>
-			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Codespaces</label>
-					<button type="button" onclick="openInCodespaces()" class="btn btn-sm btn-primary w-full gap-2">
-						<i class="fas fa-code-branch"></i> Open in Codespaces
-					</button>
-				</div>
-
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Terminal Output</label>
-					<div id="terminal-output" class="terminal h-48 text-green-400 text-xs" style="overflow-y: auto;">
-<i class="fas fa-dollar-sign"></i> Ready for input...
-					</div>
-				</div>
-
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Command</label>
-					<div class="flex gap-2">
-						<input id="terminal-input" type="text" placeholder="Enter command..." class="flex-1 rounded px-3 py-2 text-sm search-input font-mono" onkeypress="if(event.key==='Enter') runTerminalCommand()">
-						<button type="button" onclick="runTerminalCommand()" class="btn btn-sm btn-success"><i class="fas fa-play"></i></button>
-					</div>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Notifications Modal -->
-	<dialog id="notifications_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-2xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-bell mr-2"></i>Notifications</h3>
-			<div id="notifications-list" class="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
-				<div class="rounded-lg p-4 text-sm text-center" style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color);">
-					<i class="fas fa-bell-slash text-2xl opacity-20 mb-2"></i>
-					<p>No notifications</p>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Music Player Modal -->
-	<dialog id="music_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-2xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-music text-blue-500 mr-2"></i>Music Player</h3>
-			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
-				<div>
-					<label class="text-xs font-bold uppercase block mb-2" style="color: var(--text-secondary);">Search</label>
-					<div class="flex gap-2">
-						<input id="music-search" type="text" placeholder="Song, artist, playlist..." class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input" onkeypress="if(event.key==='Enter') searchMusic()">
-						<button type="button" onclick="searchMusic()" class="btn btn-sm btn-primary"><i class="fas fa-search"></i></button>
-					</div>
-				</div>
-
-				<div id="music-results" class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar"></div>
-
-				<div id="now-playing" class="hidden rounded-lg p-4 text-white nexus-gradient">
-					<div class="flex items-center justify-between mb-3">
-						<div>
-							<div class="text-sm font-bold" id="now-playing-title">Not Playing</div>
-							<div class="text-xs opacity-80" id="now-playing-artist">Select a song</div>
-						</div>
-						<div class="text-2xl"><i class="fas fa-music animate-pulse-fast"></i></div>
-					</div>
-					<div class="flex gap-2">
-						<button type="button" class="flex-1 btn btn-sm btn-success" onclick="toggleMusicPlayback()">
-							<i class="fas fa-play"></i>
-						</button>
-						<button type="button" class="flex-1 btn btn-sm btn-outline text-white" onclick="stopMusic()">
-							<i class="fas fa-stop"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Activity Feed Modal -->
-	<dialog id="activity_modal" class="modal">
-		<form method="dialog" class="modal-box max-w-3xl">
-			<h3 class="font-bold text-lg mb-4"><i class="fas fa-stream mr-2"></i>Activity Feed</h3>
-			<div id="activity-feed" class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar"></div>
-			<div class="modal-action">
-				<button class="btn btn-sm">Close</button>
-			</div>
-		</form>
-	</dialog>
-
-	<!-- Sorting Menu -->
+	<!-- Sorting Menu Modal -->
 	<dialog id="sorting_modal" class="modal">
 		<form method="dialog" class="modal-box">
 			<h3 class="font-bold text-lg mb-4">Sort By</h3>
@@ -990,9 +725,195 @@
 		</form>
 	</dialog>
 
-	<!-- Main JavaScript -->
+	<!-- Profile Modal -->
+	<dialog id="profile_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-3xl">
+			<h3 class="font-bold text-lg mb-4">GitHub Profile</h3>
+			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
+				<div class="flex items-center gap-4 pb-4" style="border-color: var(--border-color); border-bottom: 1px solid;">
+					<div class="relative">
+						<img id="modal-avatar" src="" class="w-24 h-24 rounded-full border-4 hover-lift cursor-pointer" style="border-color: var(--border-color);">
+						<button type="button" onclick="openAvatarUpload()" class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">
+							<i class="fas fa-camera text-xs"></i>
+						</button>
+					</div>
+					<div class="flex-1">
+						<h4 id="modal-name" class="font-bold text-lg"></h4>
+						<p id="modal-login" class="text-sm" style="color: var(--text-secondary);"></p>
+						<p id="modal-bio" class="text-xs mt-1" style="color: var(--text-secondary);"></p>
+					</div>
+				</div>
+				<div class="grid grid-cols-4 gap-4">
+					<div class="text-center p-3 rounded-lg hover:bg-blue-500/20 transition" style="background-color: var(--bg-secondary);">
+						<div class="text-xl font-bold text-blue-400" id="profile-followers">0</div>
+						<div class="text-[10px]" style="color: var(--text-secondary);">Followers</div>
+					</div>
+					<div class="text-center p-3 rounded-lg hover:bg-purple-500/20 transition" style="background-color: var(--bg-secondary);">
+						<div class="text-xl font-bold text-purple-400" id="profile-following">0</div>
+						<div class="text-[10px]" style="color: var(--text-secondary);">Following</div>
+					</div>
+					<div class="text-center p-3 rounded-lg hover:bg-green-500/20 transition" style="background-color: var(--bg-secondary);">
+						<div class="text-xl font-bold text-green-400" id="profile-repos">0</div>
+						<div class="text-[10px]" style="color: var(--text-secondary);">Repos</div>
+					</div>
+					<div class="text-center p-3 rounded-lg hover:bg-yellow-500/20 transition" style="background-color: var(--bg-secondary);">
+						<div class="text-xl font-bold text-yellow-400" id="profile-gists">0</div>
+						<div class="text-[10px]" style="color: var(--text-secondary);">Gists</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- GitHub Insights Modal -->
+	<dialog id="insights_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-4xl">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-chart-bar mr-2 text-purple-400"></i>GitHub Insights & Analytics</h3>
+			<div class="space-y-6 max-h-96 overflow-y-auto custom-scrollbar">
+				<div class="grid grid-cols-2 gap-4">
+					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+						<div class="text-sm font-bold mb-2"><i class="fas fa-star text-yellow-400 mr-2"></i>Stargazers</div>
+						<div class="text-2xl font-bold text-yellow-400" id="insights-stars">0</div>
+						<canvas id="stars-chart" class="mt-4" height="80"></canvas>
+					</div>
+					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+						<div class="text-sm font-bold mb-2"><i class="fas fa-code-branch text-blue-400 mr-2"></i>Forks</div>
+						<div class="text-2xl font-bold text-blue-400" id="insights-forks">0</div>
+						<canvas id="forks-chart" class="mt-4" height="80"></canvas>
+					</div>
+					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+						<div class="text-sm font-bold mb-2"><i class="fas fa-eye text-green-400 mr-2"></i>Watchers</div>
+						<div class="text-2xl font-bold text-green-400" id="insights-watchers">0</div>
+					</div>
+					<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+						<div class="text-sm font-bold mb-2"><i class="fas fa-code-pull-request text-pink-400 mr-2"></i>Open PRs</div>
+						<div class="text-2xl font-bold text-pink-400" id="insights-prs">0</div>
+					</div>
+				</div>
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					<div class="text-sm font-bold mb-4"><i class="fas fa-chart-line mr-2"></i>Activity Over Time</div>
+					<canvas id="activity-chart" height="100"></canvas>
+				</div>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- NexusBot AI Modal -->
+	<dialog id="nexusbot_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-4xl">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-robot mr-2 text-cyan-400"></i>NexusBot AI Code Assistant</h3>
+			<div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 2px solid var(--accent-color);">
+					<div class="text-sm font-bold mb-2"><i class="fas fa-info-circle mr-2"></i>Connect Your GitHub Copilot</div>
+					<div class="text-xs mb-3" style="color: var(--text-secondary);">Enter your GitHub Copilot PAT token to enable AI code suggestions</div>
+					<div class="flex gap-2">
+						<input id="copilot-token" type="password" placeholder="Enter GitHub Copilot PAT" class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input">
+						<button type="button" onclick="connectCopilot()" class="btn btn-sm btn-primary"><i class="fas fa-plug mr-1"></i>Connect</button>
+					</div>
+				</div>
+
+				<div id="copilot-status" class="hidden rounded-lg p-4" style="background-color: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);">
+					<div class="text-sm font-bold text-green-400"><i class="fas fa-check-circle mr-2"></i>NexusBot Connected!</div>
+					<p class="text-xs mt-1" style="color: var(--text-secondary);">AI features are now enabled. Start coding and get suggestions!</p>
+				</div>
+
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					<label class="text-sm font-bold block mb-2">Ask NexusBot</label>
+					<div class="flex gap-2">
+						<input id="copilot-prompt" type="text" placeholder="Explain this code... Fix this bug... Optimize performance..." class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input">
+						<button type="button" onclick="askNexusBot()" class="btn btn-sm btn-info"><i class="fas fa-send mr-1"></i>Ask</button>
+					</div>
+				</div>
+
+				<div id="copilot-response" class="hidden rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					<div class="text-sm font-bold mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i>NexusBot Response</div>
+					<div id="copilot-output" class="text-sm whitespace-pre-wrap" style="color: var(--text-primary);"></div>
+				</div>
+
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					<div class="text-sm font-bold mb-3"><i class="fas fa-sparkles mr-2"></i>Quick Commands</div>
+					<div class="grid grid-cols-2 gap-2">
+						<button type="button" onclick="quickCommand('explain')" class="btn btn-xs btn-outline-theme"><i class="fas fa-comments mr-1"></i>Explain Code</button>
+						<button type="button" onclick="quickCommand('optimize')" class="btn btn-xs btn-outline-theme"><i class="fas fa-bolt mr-1"></i>Optimize</button>
+						<button type="button" onclick="quickCommand('fix')" class="btn btn-xs btn-outline-theme"><i class="fas fa-wrench mr-1"></i>Fix Bugs</button>
+						<button type="button" onclick="quickCommand('document')" class="btn btn-xs btn-outline-theme"><i class="fas fa-file-alt mr-1"></i>Document</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- Notifications Modal -->
+	<dialog id="notifications_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-2xl">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-bell mr-2"></i>Notifications</h3>
+			<div id="notifications-list" class="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
+				<div class="rounded-lg p-4 text-sm text-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary);">
+					<i class="fas fa-bell-slash text-2xl opacity-20 mb-2"></i>
+					No notifications
+				</div>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
+	<!-- Music Player Modal -->
+	<dialog id="music_modal" class="modal">
+		<form method="dialog" class="modal-box max-w-2xl">
+			<h3 class="font-bold text-lg mb-4"><i class="fas fa-music text-blue-500 mr-2"></i>Music Player</h3>
+			<div class="space-y-4">
+				<div>
+					<label class="text-xs font-bold uppercase" style="color: var(--text-secondary);">Search Music</label>
+					<div class="flex gap-2 mt-2">
+						<input id="music-search" type="text" placeholder="Artist, Song, or Playlist..." class="flex-1 rounded px-3 py-2 text-sm focus:outline-none search-input" onkeypress="if(event.key==='Enter')searchMusic()">
+						<button type="button" onclick="searchMusic()" class="btn btn-sm btn-primary"><i class="fas fa-search"></i></button>
+					</div>
+				</div>
+				<div class="flex gap-2">
+					<button type="button" onclick="setMusicSource('spotify')" class="flex-1 btn btn-sm btn-outline-theme" id="spotify-btn">
+						<i class="fab fa-spotify mr-2"></i>Spotify
+					</button>
+					<button type="button" onclick="setMusicSource('youtube')" class="flex-1 btn btn-sm btn-outline-theme" id="youtube-btn">
+						<i class="fab fa-youtube mr-2"></i>YouTube
+					</button>
+				</div>
+				<div id="music-results" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar"></div>
+				<div id="now-playing" class="hidden rounded-lg p-4 text-white" style="background: linear-gradient(135deg, #1f6feb 0%, #8957e5 100%);">
+					<div class="flex items-center justify-between mb-2">
+						<div>
+							<div class="text-sm font-bold" id="now-playing-title">Not Playing</div>
+							<div class="text-xs opacity-80" id="now-playing-artist">Select a song</div>
+						</div>
+						<div class="text-2xl"><i class="fas fa-music"></i></div>
+					</div>
+					<div class="flex gap-2">
+						<button type="button" class="flex-1 btn btn-sm btn-primary" onclick="toggleMusicPlayback()">
+							<i class="fas fa-play"></i>
+						</button>
+						<button type="button" class="flex-1 btn btn-sm btn-warning" onclick="stopMusic()">
+							<i class="fas fa-stop"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-action">
+				<button class="btn btn-sm">Close</button>
+			</div>
+		</form>
+	</dialog>
+
 	<script>
-		// Global State
 		const state = {
 			token: '',
 			currentUser: 'octocat',
@@ -1008,8 +929,6 @@
 			branches: [],
 			releases: [],
 			tags: [],
-			commits: [],
-			contributors: [],
 			monacoEditor: null,
 			filteredRepos: [],
 			filteredFiles: [],
@@ -1020,33 +939,28 @@
 			isLoading: false,
 			copilotConnected: false,
 			notifications: [],
-			activityFeed: [],
-			userFollowing: false,
 			editorSettings: {
 				fontSize: 14,
 				tabSize: 4,
 				wordWrap: true,
-				minimap: true,
-				autoSave: true
+				minimap: true
 			}
 		};
 
 		const GITHUB_API = "https://api.github.com";
-		let searchHistory = [];
 		let sidebarSearchTerm = '';
+		let searchHistory = [];
 		let searchDebounceTimer;
-		let chartsInitialized = {};
 
-		// Monaco Configuration
 		require.config({
 			paths: {
-				vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.50.0/min/vs'
+				vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs'
 			}
 		});
 
 		require(['vs/editor/editor.main'], function() {
 			state.monacoEditor = monaco.editor.create(document.getElementById('editor-viewport'), {
-				value: '// Welcome to GitNexus IDE\n// Select a file to begin editing',
+				value: '',
 				language: 'javascript',
 				theme: 'vs-dark',
 				fontSize: state.editorSettings.fontSize,
@@ -1056,10 +970,7 @@
 				wordWrap: state.editorSettings.wordWrap ? 'on' : 'off',
 				padding: { top: 20 },
 				tabSize: state.editorSettings.tabSize,
-				readOnly: false,
-				smoothScrolling: true,
-				cursorBlinking: 'blink',
-				formatOnPaste: true
+				readOnly: false
 			});
 
 			state.monacoEditor.onDidChangeCursorPosition(e => {
@@ -1069,10 +980,9 @@
 				}
 			});
 
-			console.log('✓ Monaco Editor initialized');
+			console.log('✅ Monaco Editor initialized');
 		});
 
-		// API Helper
 		async function fetchGH(endpoint, options = {}) {
 			const headers = new Headers({
 				'Accept': 'application/vnd.github.v3+json',
@@ -1096,27 +1006,42 @@
 				});
 
 				if(!response.ok) {
-					let errorMessage = `HTTP ${response.status}`;
-					if(response.status === 404) errorMessage = 'Resource not found';
-					else if(response.status === 403) errorMessage = 'Rate limited or permission denied';
-					else if(response.status === 401) errorMessage = 'Invalid authentication token';
+					let errorMessage = `HTTP Error: ${response.status}`;
+
+					if(response.status === 404) {
+						errorMessage = 'Resource not found';
+					} else if(response.status === 403) {
+						errorMessage = 'Rate limited or insufficient permissions';
+					} else if(response.status === 401) {
+						errorMessage = 'Invalid authentication token';
+					} else if(response.status === 422) {
+						try {
+							const errorData = await response.json();
+							if(errorData.message) {
+								errorMessage = `GitHub API: ${errorData.message}`;
+							}
+							if(errorData.errors && errorData.errors.length > 0) {
+								errorMessage = `GitHub API: ${errorData.errors[0].message}`;
+							}
+						} catch(e) {
+							errorMessage = 'Validation error';
+						}
+					}
 
 					throw new Error(errorMessage);
 				}
 
-				const contentType = response.headers.get('content-type');
-				if(!contentType || !contentType.includes('application/json')) {
+				try {
+					return await response.json();
+				} catch(e) {
 					return null;
 				}
-				
-				return await response.json();
 			} catch(err) {
 				console.error('API Error:', err);
 				throw err;
 			}
 		}
 
-		// Utility Functions
 		function escapeHtml(text) {
 			if(!text) return '';
 			const div = document.createElement('div');
@@ -1124,46 +1049,6 @@
 			return div.innerHTML;
 		}
 
-		function showNotification(message) {
-			const notif = document.createElement('div');
-			notif.className = 'fixed bottom-24 right-8 text-white p-4 rounded-lg shadow-xl animate-slide-up z-50 max-w-xs';
-			notif.style.background = 'linear-gradient(135deg, #1f6feb 0%, #8957e5 100%)';
-			notif.innerHTML = message;
-			document.body.appendChild(notif);
-
-			setTimeout(() => {
-				if(notif.parentElement) notif.remove();
-			}, 3000);
-		}
-
-		function addNotification(message, title = 'GitNexus') {
-			state.notifications.push({
-				title,
-				message,
-				timestamp: new Date().toISOString(),
-				icon: 'fas fa-info-circle'
-			});
-
-			const badge = document.getElementById('notification-badge');
-			if(badge) {
-				badge.classList.remove('hidden');
-				badge.innerText = Math.min(state.notifications.length, 9) + (state.notifications.length > 9 ? '+' : '');
-			}
-
-			if(state.notifications.length > 100) {
-				state.notifications = state.notifications.slice(-100);
-			}
-		}
-
-		function setLoadingState(isLoading) {
-			state.isLoading = isLoading;
-			const spinner = document.querySelector('.animate-spin-fast');
-			if(spinner) {
-				spinner.style.opacity = isLoading ? '1' : '0.5';
-			}
-		}
-
-		// Auth Management
 		function updateAuthStatus() {
 			state.token = document.getElementById('pat-token').value.trim();
 			const badge = document.getElementById('auth-badge');
@@ -1171,18 +1056,16 @@
 			if(state.token && state.token.length > 0) {
 				sessionStorage.setItem('gh_token', state.token);
 				
-				badge.className = "badge gap-2 text-[10px] uppercase font-bold animate-pulse-fast";
-				badge.style.cssText = 'background-color: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3);';
-				badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-green-500"></span> Authenticated';
+				badge.className = "badge badge-success gap-2 text-[10px] uppercase font-bold text-white";
+				badge.innerHTML = '<i class="fas fa-unlock"></i> Authenticated';
 
 				if(state.currentUser && state.currentUser !== 'octocat') {
 					toggleEditButtons();
 				}
 			} else {
 				sessionStorage.removeItem('gh_token');
-				badge.className = "badge gap-2 text-[10px] uppercase font-bold animate-pulse-fast";
-				badge.style.cssText = 'background-color: rgba(220, 38, 38, 0.2); color: #ef4444; border: 1px solid rgba(220, 38, 38, 0.3);';
-				badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-red-500"></span> Read Only';
+				badge.className = "badge badge-error gap-2 text-[10px] uppercase font-bold";
+				badge.innerHTML = '<i class="fas fa-lock"></i> Read Only';
 				state.isOwner = false;
 				toggleEditButtons();
 			}
@@ -1194,7 +1077,6 @@
 			}
 		}
 
-		// User Search
 		async function searchUser() {
 			const username = document.getElementById('user-search').value.trim();
 			if(!username) {
@@ -1226,7 +1108,6 @@
 
 				await loadRepositories();
 				addToSearchHistory(username);
-				showNotification(`<i class="fas fa-check-circle"></i> User ${username} loaded!`);
 			} catch(err) {
 				showNotification(`<i class="fas fa-exclamation-circle"></i> ${err.message}`);
 				state.isOwner = false;
@@ -1268,12 +1149,12 @@
 			}
 
 			suggestionsContainer.innerHTML = suggestions.map(suggestion => `
-				<div class="suggestion-item p-3 cursor-pointer hover:bg-[var(--bg-tertiary)] transition rounded" style="border-bottom: 1px solid var(--border-color);">
-					<div onclick="selectSuggestion('${escapeHtml(suggestion)}')" class="flex items-center gap-2 flex-1">
-						<i class="fas fa-history text-xs" style="color: var(--text-secondary);"></i>
-						<span class="text-sm">${escapeHtml(suggestion)}</span>
+				<div class="suggestion-item">
+					<div onclick="selectSuggestion('${escapeHtml(suggestion)}')" class="flex items-center gap-2 flex-1 cursor-pointer">
+						<i class="fas fa-history mr-2 text-xs"></i>
+						${escapeHtml(suggestion)}
 					</div>
-					<button type="button" onclick="deleteSuggestion('${escapeHtml(suggestion)}', event)" class="text-red-500 hover:text-red-400 text-xs ml-auto">
+					<button type="button" onclick="deleteSuggestion('${escapeHtml(suggestion)}', event)" class="suggestion-delete-btn text-red-500 hover:text-red-400 text-xs">
 						<i class="fas fa-trash-alt"></i>
 					</button>
 				</div>
@@ -1296,7 +1177,6 @@
 			showNotification(`<i class="fas fa-trash"></i> Suggestion deleted`);
 		}
 
-		// Repository Management
 		async function loadRepositories() {
 			setLoadingState(true);
 			try {
@@ -1373,15 +1253,19 @@
 
 			if(state.isOwner && state.token) {
 				html += `
-					<div class="mb-2 p-3 rounded-lg border-2 border-dashed text-center cursor-pointer transition hover:shadow-lg hover:shadow-green-500/20" style="border-color: var(--accent); background-color: rgba(31, 111, 235, 0.05);" onclick="showCreateRepoModal()">
-						<i class="fas fa-plus text-2xl text-green-400 mb-1"></i>
-						<div class="text-xs font-bold">Create Repo</div>
+										<div class="repo-creation-card mb-2" onclick="showCreateRepoModal()">
+						<i class="fas fa-plus text-2xl text-green-400 mb-2"></i>
+						<div class="text-xs font-bold">Create Repository</div>
+						<div class="text-[10px] text-gray-500">New project</div>
 					</div>
 				`;
 			}
 
 			if(repos.length === 0) {
-				container.innerHTML = html + '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">No repositories</p></div>';
+				container.innerHTML = html + 
+										'<div class="text-center text-gray-600 p-4 mt-10">' +
+					'<i class="fas fa-inbox text-3xl opacity-20 mb-2"></i>' +
+					'<p class="text-sm">No repositories found</p></div>';
 				return;
 			}
 
@@ -1389,27 +1273,25 @@
 				const safeRepoName = escapeHtml(repo.name);
 				const safeDesc = escapeHtml(repo.description || 'No description');
 				return `
-					<div onclick="selectRepo('${repo.name}')" class="p-3 mb-2 rounded-lg repo-card" style="background-color: var(--bg-secondary);">
+					<div onclick="selectRepo('${repo.name}')" class="p-3 mb-2 rounded-lg border cursor-pointer transition group repo-card" style="background-color: #161b22; border-color: var(--border-color);">
 						<div class="flex justify-between items-start mb-1">
 							<div class="flex-1">
-								<span class="text-sm font-bold text-[var(--accent)] block truncate">${safeRepoName}</span>
-								<button onclick="openDescriptionModal('${repo.name}', '${escapeHtml(repo.description || '')}', '${repo.owner.login}'); event.stopPropagation();" class="text-[9px] hover:text-[var(--accent)] transition mt-0.5">
-									<i class="fas fa-edit mr-1"></i>Edit
-								</button>
+								<span class="text-sm font-bold text-blue-400 truncate block">${safeRepoName}</span>
 								<div class="text-[9px] mt-1" style="color: var(--text-secondary);">
-									<i class="fas fa-files mr-1"></i><span id="file-count-${repo.name}">--</span>
+									<i class="fas fa-file-code mr-1"></i><span id="file-count-${repo.name}">--</span> files
 								</div>
 							</div>
-							<div class="flex gap-1 opacity-0 hover:opacity-100 transition">
-								<i class="fas fa-external-link-alt text-[10px] cursor-pointer hover:text-[var(--accent)]" onclick="window.open('https://github.com/${escapeHtml(repo.owner.login)}/${repo.name}', '_blank'); event.stopPropagation();"></i>
-								${state.isOwner ? `<i class="fas fa-trash text-[10px] text-red-500 cursor-pointer hover:text-red-400" onclick="showDeleteRepoModal('${repo.name}'); event.stopPropagation();"></i>` : `<i class="fas fa-code-branch text-[10px] cursor-pointer hover:text-[var(--accent)]" onclick="forkRepository('${repo.name}'); event.stopPropagation();"></i>`}
+							<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+								<i class="fas fa-external-link-alt text-[10px] cursor-pointer hover:text-blue-400" onclick="window.open('https://github.com/${escapeHtml(repo.owner.login)}/${repo.name}', '_blank'); event.stopPropagation();"></i>
+								${state.isOwner ? `<i class="fas fa-trash text-[10px] text-red-500 cursor-pointer hover:text-red-400" onclick="showDeleteRepoModal('${repo.name}'); event.stopPropagation();"></i>` : `<i class="fas fa-code-branch text-[10px] text-purple-500 cursor-pointer hover:text-purple-400" onclick="forkRepository('${repo.name}'); event.stopPropagation();"></i>`}
 							</div>
 						</div>
-						<p class="text-[10px]" style="color: var(--text-secondary);">${safeDesc.substring(0, 60)}${safeDesc.length > 60 ? '...' : ''}</p>
-						<div class="flex items-center gap-2 mt-2 text-[9px]" style="color: var(--text-secondary);">
-							<span><i class="fas fa-circle text-orange-500 mr-1"></i>${escapeHtml(repo.language || 'None')}</span>
+						<p class="text-[10px]" style="color: var(--text-secondary); line-height: 1.2;">${safeDesc.substring(0, 60)}${safeDesc.length > 60 ? '...' : ''}</p>
+						<div class="flex items-center gap-3 mt-2 text-[9px] uppercase tracking-tighter" style="color: var(--text-secondary);">
+							<span><i class="fas fa-circle text-orange-500 mr-1"></i>${escapeHtml(repo.language || 'Plain')}</span>
 							<span><i class="fas fa-star mr-1"></i>${repo.stargazers_count}</span>
 							<span><i class="fas fa-code-branch mr-1"></i>${repo.forks_count}</span>
+							<span><i class="fas fa-database mr-1"></i>${(repo.size / 1024).toFixed(1)}MB</span>
 						</div>
 					</div>
 				`;
@@ -1418,120 +1300,11 @@
 			container.innerHTML = html;
 		}
 
-		// Description Editor
-		function openDescriptionModal(repoName, description, ownerLogin) {
-			const isOwner = state.currentUser.toLowerCase() === ownerLogin.toLowerCase() && state.isOwner && state.token;
-			
-			document.getElementById('desc-repo-name').innerText = repoName;
-			
-			const contentDisplay = document.getElementById('desc-content-display');
-			if(contentDisplay) {
-				contentDisplay.innerText = description || 'No description provided.';
-			}
-			
-			const textarea = document.getElementById('desc-textarea');
-			if(textarea) textarea.value = description || '';
-			
-			const editBtn = document.getElementById('desc-edit-btn');
-			const viewNote = document.getElementById('desc-view-note');
-			if(editBtn) {
-				editBtn.style.display = isOwner ? 'flex' : 'none';
-			}
-			if(viewNote) {
-				viewNote.style.display = isOwner ? 'none' : 'block';
-			}
-			
-			if(window.desc_editor_modal) {
-				window.desc_editor_modal.dataset.repoName = repoName;
-				window.desc_editor_modal.showModal();
-			}
-		}
-
-		function switchToDescEditMode() {
-			const descView = document.getElementById('desc-view');
-			const descEdit = document.getElementById('desc-edit');
-			
-			if(descView) descView.classList.add('hidden');
-			if(descEdit) descEdit.classList.remove('hidden');
-			
-			const patInput = document.getElementById('desc-pat-input');
-			if(patInput) patInput.value = '';
-		}
-
-		function switchToDescViewMode() {
-			const descView = document.getElementById('desc-view');
-			const descEdit = document.getElementById('desc-edit');
-			
-			if(descView) descView.classList.remove('hidden');
-			if(descEdit) descEdit.classList.add('hidden');
-			
-			const patInput = document.getElementById('desc-pat-input');
-			if(patInput) patInput.value = '';
-		}
-
-		async function saveDescriptionChanges() {
-			const modal = window.desc_editor_modal;
-			const repoName = modal.dataset.repoName;
-			const textarea = document.getElementById('desc-textarea');
-			const patInput = document.getElementById('desc-pat-input');
-			
-			const newDescription = textarea.value.trim();
-			const pat = patInput.value;
-
-			if(!pat) {
-				alert('Please enter your PAT token');
-				return;
-			}
-
-			if(newDescription.length > 300) {
-				alert('Description must be 300 characters or less');
-				return;
-			}
-
-			setLoadingState(true);
-			try {
-				const response = await fetch(`${GITHUB_API}/repos/${state.currentUser}/${repoName}`, {
-					method: 'PATCH',
-					headers: {
-						'Authorization': `token ${pat}`,
-						'Accept': 'application/vnd.github.v3+json',
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ description: newDescription })
-				});
-
-				if(!response.ok) {
-					if(response.status === 401) throw new Error('Invalid PAT token');
-					if(response.status === 403) throw new Error('Permission denied');
-					if(response.status === 404) throw new Error('Repository not found');
-					throw new Error(`HTTP ${response.status}`);
-				}
-
-				const repoIndex = state.repos.findIndex(r => r.name === repoName);
-				if(repoIndex !== -1) {
-					state.repos[repoIndex].description = newDescription;
-					state.filteredRepos = [...state.repos];
-				}
-
-				const contentDisplay = document.getElementById('desc-content-display');
-				if(contentDisplay) contentDisplay.innerText = newDescription || 'No description provided.';
-
-				switchToDescViewMode();
-				renderRepoList();
-				showNotification(`<i class="fas fa-check-circle"></i> Description updated!`);
-				addNotification(`Updated description for "${repoName}"`);
-			} catch(err) {
-				alert(`Failed: ${err.message}`);
-			} finally {
-				setLoadingState(false);
-			}
-		}
-
 		function showDeleteRepoModal(repoName) {
 			const confirmInput = document.getElementById('delete-repo-confirm');
 			if(confirmInput) {
 				confirmInput.value = '';
-				confirmInput.placeholder = `Type "${repoName}" to confirm`;
+				confirmInput.placeholder = repoName;
 			}
 			if(window.delete_repo_modal) {
 				window.delete_repo_modal.showModal();
@@ -1562,7 +1335,6 @@
 
 				modal.close();
 				showNotification(`<i class="fas fa-trash"></i> Repository deleted!`);
-				addNotification(`Repository "${repoName}" deleted`);
 				await loadRepositories();
 			} catch(err) {
 				alert(`Failed to delete: ${err.message}`);
@@ -1586,9 +1358,11 @@
 		async function createNewRepository() {
 			const name = document.getElementById('repo-name-input').value.trim();
 			const description = document.getElementById('repo-desc-input').value;
-			const visibility = document.getElementById('repo-visibility')?.value === 'private';
-			const readme = document.getElementById('repo-readme')?.checked ?? true;
-			const gitignore = document.getElementById('repo-gitignore')?.checked ?? true;
+			const visibilitySelect = document.getElementById('repo-visibility');
+			const readmeCheckbox = document.getElementById('repo-readme');
+
+			const isPrivate = visibilitySelect?.value === 'private';
+			const includeReadme = readmeCheckbox?.checked ?? true;
 
 			if(!name) {
 				alert('Please enter a repository name');
@@ -1597,22 +1371,23 @@
 
 			setLoadingState(true);
 			try {
+				const repoData = {
+					name,
+					description,
+					private: isPrivate,
+					auto_init: includeReadme
+				};
+
 				await fetchGH('/user/repos', {
 					method: 'POST',
-					body: JSON.stringify({
-						name,
-						description,
-						private: visibility,
-						auto_init: readme
-					})
+					body: JSON.stringify(repoData)
 				});
 
-				if(window.create_repo_modal) window.create_repo_modal.close();
-				if(document.getElementById('repo-name-input')) document.getElementById('repo-name-input').value = '';
-				if(document.getElementById('repo-desc-input')) document.getElementById('repo-desc-input').value = '';
+				if(window.create_repo_modal) {
+					window.create_repo_modal.close();
+				}
 
 				showNotification(`<i class="fas fa-check-circle"></i> Repository created!`);
-				addNotification(`New repository "${name}" created`);
 				await loadRepositories();
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
@@ -1633,8 +1408,7 @@
 					method: 'POST'
 				});
 
-				showNotification(`<i class="fas fa-code-branch"></i> Repository forked!`);
-				addNotification(`Repository forked successfully`);
+				showNotification(`<i class="fas fa-code-branch"></i> Repository forked successfully!`);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
 			} finally {
@@ -1656,11 +1430,9 @@
 				await loadReleases();
 				await loadBranches();
 				await loadTags();
-				await loadCommits();
 				await loadContributors();
 				toggleEditButtons();
 				updateRepoStats();
-				addNotification(`Repository loaded: ${repoName}`);
 			} catch(err) {
 				showNotification(`<i class="fas fa-exclamation-circle"></i> Failed to load repository`);
 			} finally {
@@ -1684,7 +1456,6 @@
 					method: 'PUT'
 				});
 				showNotification(`<i class="fas fa-star"></i> Repository starred!`);
-				addNotification(`Starred ${state.currentRepo}`);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
 			} finally {
@@ -1692,7 +1463,6 @@
 			}
 		}
 
-		// File Management
 		async function loadFiles(path) {
 			setLoadingState(true);
 			try {
@@ -1737,28 +1507,28 @@
 
 			if(state.isOwner && state.token && state.currentRepo) {
 				html += `
-					<div class="p-2 rounded-lg border-2 border-dashed text-center cursor-pointer transition hover:shadow-lg hover:shadow-blue-500/20 mb-2" style="border-color: var(--accent); background-color: rgba(31, 111, 235, 0.05);" onclick="showCreateFileModal()">
-						<i class="fas fa-file-plus text-lg text-blue-400 mb-1"></i>
-						<div class="text-xs font-bold">New File</div>
+										<div class="file-creation-card" onclick="showCreateFileModal()">
+						<i class="fas fa-file-circle-plus text-xl text-blue-400 mb-1"></i>
+						<div class="text-xs font-bold">Create File</div>
 					</div>
-					<div class="p-2 rounded-lg border-2 border-dashed text-center cursor-pointer transition hover:shadow-lg hover:shadow-yellow-500/20 mb-2" style="border-color: var(--accent); background-color: rgba(31, 111, 235, 0.05);" onclick="showCreateFolderModal()">
-						<i class="fas fa-folder-plus text-lg text-yellow-400 mb-1"></i>
-						<div class="text-xs font-bold">New Folder</div>
+					<div class="file-creation-card" onclick="showCreateFolderModal()">
+						<i class="fas fa-folder-plus text-xl text-yellow-400 mb-1"></i>
+						<div class="text-xs font-bold">Create Folder</div>
 					</div>
 				`;
 			}
 
 			if(state.currentPath !== '') {
 				html += `
-					<div onclick="navigateUp()" class="flex items-center gap-2 p-2 rounded cursor-pointer text-xs file-item transition" style="background-color: rgba(31, 111, 235, 0.05);">
-						<i class="fas fa-level-up-alt"></i> <span class="text-[var(--accent)]">.. /</span>
+					<div onclick="navigateUp()" class="flex items-center gap-2 p-2 rounded cursor-pointer text-xs text-blue-400 file-item transition-all" style="background-color: rgba(31, 111, 235, 0.05);">
+						<i class="fas fa-level-up-alt"></i> .. /
 					</div>
 				`;
 			}
 
 			if(files.length === 0 && state.currentPath === '') {
-				html += '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">Empty</p></div>';
-				html += '</div>';
+
+				html += '<div class="text-center text-gray-600 p-4 mt-10"><i class="fas fa-inbox text-3xl opacity-20 mb-2"></i><p class="text-sm">Empty Repository</p></div>';				html += '</div>';
 				container.innerHTML = html;
 				return;
 			}
@@ -1768,18 +1538,20 @@
 			);
 
 			html += sorted.map(file => {
-				const icon = file.type === 'dir' ? 'fa-folder text-yellow-400' : getFileIcon(file.name);
+				const icon = file.type === 'dir' ? 'fa-folder text-yellow-500' : getFileIcon(file.name);
+				const fileCount = file.type === 'dir' ? `<span class="text-[8px]" style="color: var(--text-secondary); margin-left: 4px;">(?)</span>` : '';
 
 				return `
-					<div class="flex items-center justify-between p-2 rounded group file-item transition" style="background-color: transparent;">
+					<div class="flex items-center justify-between p-2 rounded group file-item" style="background-color: rgba(31, 111, 235, 0); border: none;" data-path="${escapeHtml(file.path)}" data-type="${file.type}" data-sha="${file.sha}">
 						<div onclick="${file.type === 'dir' ? `loadFiles('${file.path}')` : `openFile('${btoa(file.path)}', '${btoa(file.sha)}')`}" class="flex items-center gap-2 overflow-hidden flex-1 cursor-pointer">
 							<i class="fas ${icon} w-4 text-center flex-shrink-0"></i>
 							<span class="text-xs truncate">${escapeHtml(file.name)}</span>
+							${fileCount}
 						</div>
 						<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition">
-							${file.type === 'file' && state.isOwner ? `<i class="fas fa-pen-to-square text-[10px] text-blue-400 hover:text-blue-300 cursor-pointer" onclick="showEditFileNameModal('${escapeHtml(file.path)}'); event.stopPropagation();"></i>` : ''}
-							${state.isOwner ? `<i class="fas fa-trash-alt text-[10px] text-red-500 hover:text-red-400 cursor-pointer" onclick="refreshAndDelete('${escapeHtml(file.path)}', '${file.sha}', event)"></i>` : ''}
-							<i class="fas fa-arrow-up-right-from-square text-[10px] cursor-pointer hover:text-[var(--accent)]" onclick="window.open('${escapeHtml(file.html_url)}', '_blank'); event.stopPropagation();"></i>
+							${file.type === 'file' && state.isOwner ? `<i class="fas fa-pen-to-square text-[10px] text-blue-400 hover:scale-110 cursor-pointer action-button" onclick="showEditFileNameModal('${escapeHtml(file.path)}'); event.stopPropagation();"></i>` : ''}
+							${state.isOwner ? `<i class="fas fa-trash-alt text-[10px] text-red-500 hover:scale-110 cursor-pointer action-button" onclick="refreshAndDelete('${escapeHtml(file.path)}', '${file.sha}', event)"></i>` : ''}
+							<i class="fas fa-external-link-square-alt text-[10px] text-gray-500 hover:text-white cursor-pointer action-button" onclick="window.open('${escapeHtml(file.html_url)}', '_blank'); event.stopPropagation();"></i>
 						</div>
 					</div>
 				`;
@@ -1816,7 +1588,7 @@
 				const copyBtn = document.getElementById('copy-code-btn');
 				if(copyBtn) copyBtn.classList.remove('hidden');
 				const previewBtn = document.getElementById('preview-btn');
-				if(previewBtn && /\.(html|md|markdown)$/i.test(path)) previewBtn.classList.remove('hidden');
+				if(previewBtn && /\.(html|md)$/i.test(path)) previewBtn.classList.remove('hidden');
 			}
 
 			toggleEditButtons();
@@ -1825,7 +1597,7 @@
 		async function showEditor(url, path) {
 			document.getElementById('image-viewport').classList.add('hidden');
 			document.getElementById('preview-viewport').classList.add('hidden');
-			document.getElementById('editor-viewport').parentElement.style.display = 'block';
+			document.getElementById('editor-viewport').parentElement.classList.remove('hidden');
 
 			try {
 				const response = await fetch(url);
@@ -1838,7 +1610,7 @@
 				const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 				if(size > MAX_FILE_SIZE) {
-					state.monacoEditor.setValue(`File too large to edit\n${(size / 1024 / 1024).toFixed(2)}MB > 5MB limit`);
+					state.monacoEditor.setValue(`File too large (${(size / 1024 / 1024).toFixed(2)}MB > 5MB limit)`);
 					state.monacoEditor.updateOptions({ readOnly: true });
 					return;
 				}
@@ -1855,13 +1627,13 @@
 				});
 			} catch(err) {
 				console.error('Error loading file:', err);
-				state.monacoEditor.setValue(`Error loading file:\n${err.message}`);
+				state.monacoEditor.setValue(`Error loading file: ${err.message}`);
 				state.monacoEditor.updateOptions({ readOnly: true });
 			}
 		}
 
 		function showImage(url) {
-			document.getElementById('editor-viewport').parentElement.style.display = 'none';
+			document.getElementById('editor-viewport').parentElement.classList.add('hidden');
 			document.getElementById('preview-viewport').classList.add('hidden');
 			const imgViewport = document.getElementById('image-viewport');
 			imgViewport.classList.remove('hidden');
@@ -1910,7 +1682,9 @@
 		}
 
 		async function deleteFileWithValidation(path, expectedSha, event) {
-			if(event) event.stopPropagation();
+			if(event) {
+				event.stopPropagation();
+			}
 			
 			const fileName = path.split('/').pop();
 			if(!confirm(`Delete "${fileName}"?`)) return;
@@ -1935,8 +1709,12 @@
 				}
 
 				if(expectedSha && fileData.sha !== expectedSha) {
-					const confirmOverride = confirm('File modified. Delete anyway?');
-					if(!confirmOverride) throw new Error('Delete cancelled');
+					const confirmOverride = confirm(
+						'File has been modified. Delete anyway?'
+					);
+					if(!confirmOverride) {
+						throw new Error('Delete cancelled');
+					}
 				}
 
 				await fetchGH(
@@ -1945,7 +1723,11 @@
 						method: 'DELETE',
 						body: JSON.stringify({
 							message: `Delete ${fileName}`,
-							sha: fileData.sha
+							sha: fileData.sha,
+							committer: {
+								name: 'GitNexus',
+								email: 'gitnexus@app.local'
+							}
 						})
 					}
 				);
@@ -1988,9 +1770,13 @@
 			}
 
 			const currentName = filePath.split('/').pop();
-			if(document.getElementById('current-filename')) document.getElementById('current-filename').value = currentName;
-			if(document.getElementById('new-filename')) document.getElementById('new-filename').value = '';
-			if(document.getElementById('rename-commit-msg')) document.getElementById('rename-commit-msg').value = `Rename ${currentName}`;
+			const currentFilenameInput = document.getElementById('current-filename');
+			const newFilenameInput = document.getElementById('new-filename');
+			const commitMsgInput = document.getElementById('rename-commit-msg');
+
+			if(currentFilenameInput) currentFilenameInput.value = currentName;
+			if(newFilenameInput) newFilenameInput.value = '';
+			if(commitMsgInput) commitMsgInput.value = `Rename ${currentName}`;
 
 			if(window.edit_filename_modal) {
 				window.edit_filename_modal.dataset.originalPath = filePath;
@@ -2048,7 +1834,7 @@
 
 				modal.close();
 				showNotification(`<i class="fas fa-check-circle"></i> File renamed!`);
-				addNotification(`File renamed: ${originalPath.split('/').pop()} → ${newFilename}`);
+				addNotification(`File renamed: ${originalPath} → ${newPath}`);
 				await loadFiles(state.currentPath);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
@@ -2057,7 +1843,6 @@
 			}
 		}
 
-		// Branches, Releases, Tags, Commits, Contributors
 		async function loadBranches() {
 			try {
 				const branches = await fetchGH(
@@ -2075,37 +1860,33 @@
 			if(!container) return;
 
 			if(branches.length === 0) {
-				container.innerHTML = '<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-code-branch text-2xl opacity-20 mb-2"></i><p class="text-sm">No branches</p></div>';
+				container.innerHTML = 
+					'<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-code-branch text-2xl opacity-20 mb-2"></i><p class="text-sm">No branches found</p></div>';
 				return;
 			}
 
-			const editBtn = document.getElementById('create-branch-btn');
-			if(editBtn && state.isOwner && state.token) {
-				editBtn.classList.remove('hidden');
-			}
-
 			container.innerHTML = branches.map(branch => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px;">
 					<div class="flex justify-between items-start mb-2">
 						<div class="flex-1">
 							<div class="flex items-center gap-2 mb-1">
-								<i class="fas fa-code-branch text-[var(--accent)]"></i>
-								<span class="font-bold text-sm">${escapeHtml(branch.name)}</span>
-								${branch.protected ? '<span class="badge badge-error text-xs text-white">Protected</span>' : ''}
+								<i class="fas fa-code-branch text-purple-400"></i>
+								<h4 class="font-bold text-sm">${escapeHtml(branch.name)}</h4>
+								${branch.protected ? '<span class="badge badge-error text-xs">Protected</span>' : ''}
 							</div>
-							<p class="text-xs" style="color: var(--text-secondary);">SHA: ${escapeHtml(branch.commit.sha.substring(0, 7))}</p>
+							<p class="text-xs" style="color: var(--text-secondary);">Commit: ${escapeHtml(branch.commit.sha.substring(0, 7))}</p>
 						</div>
-						<button type="button" onclick="copyToClipboard('${branch.name}', 'branch-${escapeHtml(branch.name)}')" class="btn btn-xs btn-theme" id="branch-${escapeHtml(branch.name)}">
-							<i class="fas fa-copy text-xs"></i>
+						<button type="button" onclick="copyToClipboard('${branch.name}', 'branch-${escapeHtml(branch.name)}')" class="btn btn-xs btn-outline-theme gap-1" id="branch-${escapeHtml(branch.name)}">
+							<i class="fas fa-copy text-xs"></i> Copy
 						</button>
 					</div>
-					<div class="flex gap-2 mt-2">
-						<a href="https://github.com/${escapeHtml(state.currentUser)}/${escapeHtml(state.currentRepo)}/tree/${escapeHtml(branch.name)}" target="_blank" class="flex-1 btn btn-xs btn-outline-theme gap-1">
-							<i class="fas fa-arrow-up-right-from-square text-xs"></i> Open
+					<div class="flex gap-2 mt-3">
+						<a href="https://github.com/${escapeHtml(state.currentUser)}/${escapeHtml(state.currentRepo)}/tree/${escapeHtml(branch.name)}" target="_blank" class="flex-1 btn btn-xs btn-ghost gap-1">
+							<i class="fas fa-external-link-alt text-xs"></i> View
 						</a>
 						${state.isOwner && state.token && branch.name !== 'main' && branch.name !== 'master' ? `
-							<button type="button" onclick="deleteBranch('${escapeHtml(branch.name)}')" class="flex-1 btn btn-xs btn-error text-white gap-1">
-								<i class="fas fa-trash text-xs"></i> Delete
+							<button type="button" onclick="deleteBranch('${escapeHtml(branch.name)}')" class="flex-1 btn btn-xs btn-outline-theme btn-error gap-1">
+								<i class="fas fa-trash-alt text-xs"></i> Delete
 							</button>
 						` : ''}
 					</div>
@@ -2113,10 +1894,36 @@
 			`).join('');
 		}
 
+		function showTab(tab) {
+			state.activeTab = tab;
+			const tabRepos = document.getElementById('tab-repos');
+			const tabFiles = document.getElementById('tab-files');
+			const tabBranches = document.getElementById('tab-branches');
+
+			if(tabRepos) {
+				tabRepos.className = `flex-1 py-2 border-b-2 ${tab === 'repos' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+			}
+			if(tabFiles) {
+				tabFiles.className = `flex-1 py-2 border-b-2 ${tab === 'files' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+			}
+			if(tabBranches) {
+				tabBranches.className = `flex-1 py-2 border-b-2 ${tab === 'branches' ? 'border-blue-500 bg-[var(--bg-primary)]' : 'border-transparent hover:bg-[var(--bg-secondary)]'}`;
+			}
+
+			if(tab === 'repos') renderRepoList();
+			else if(tab === 'files') renderFileList();
+			else if(tab === 'branches') {
+				if(window.releases_modal && state.currentRepo) {
+					window.releases_modal.showModal();
+					switchReleaseTab('branches');
+				}
+			}
+		}
+
 		async function loadReleases() {
 			try {
 				const releases = await fetchGH(
-					`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=20`
+					`/repos/${state.currentUser}/${state.currentRepo}/releases?per_page=10`
 				);
 				state.releases = releases || [];
 				renderReleases(state.releases);
@@ -2130,23 +1937,19 @@
 			if(!container) return;
 
 			if(releases.length === 0) {
-				container.innerHTML = '<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-inbox text-2xl opacity-20 mb-2"></i><p class="text-sm">No releases</p></div>';
+				container.innerHTML = 
+					'<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-inbox text-2xl opacity-20 mb-2"></i><p class="text-sm">No releases</p></div>';
 				return;
 			}
 
-			const editBtn = document.getElementById('create-release-btn');
-			if(editBtn && state.isOwner && state.token) {
-				editBtn.classList.remove('hidden');
-			}
-
 			container.innerHTML = releases.map(release => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
 					<div class="flex justify-between items-start mb-2">
 						<div class="flex-1">
 							<div class="flex items-center gap-2 mb-1">
 								<i class="fas fa-tag text-green-400"></i>
-								<span class="font-bold text-sm">${escapeHtml(release.name || release.tag_name)}</span>
-								${release.prerelease ? '<span class="badge badge-warning text-xs text-white">Pre</span>' : '<span class="badge badge-success text-xs text-white">Release</span>'}
+								<h4 class="font-bold text-sm">${escapeHtml(release.name || release.tag_name)}</h4>
+								${release.prerelease ? '<span class="badge badge-warning text-xs">Pre-release</span>' : '<span class="badge badge-success text-xs">Release</span>'}
 							</div>
 							<p class="text-xs" style="color: var(--text-secondary);">${new Date(release.published_at).toLocaleDateString()}</p>
 						</div>
@@ -2156,21 +1959,21 @@
 					</div>
 					
 					${release.assets.length > 0 ? `
-						<div class="mb-2">
-							<div class="flex flex-wrap gap-1">
-								${release.assets.slice(0, 3).map(asset => `
-									<a href="${escapeHtml(asset.browser_download_url)}" download class="btn btn-xs btn-outline-theme gap-1">
-										<i class="fas fa-download text-xs"></i> ${escapeHtml(asset.name.substring(0, 20))}
+						<div class="mb-3">
+							<p class="text-xs font-bold mb-2" style="color: var(--text-secondary);">Downloads:</p>
+							<div class="flex flex-wrap gap-2">
+								${release.assets.map(asset => `
+									<a href="${escapeHtml(asset.browser_download_url)}" download class="btn btn-xs btn-outline-theme gap-1 hover:btn-primary">
+										<i class="fas fa-download text-xs"></i> ${escapeHtml(asset.name.length > 20 ? asset.name.substring(0, 17) + '...' : asset.name)}
 									</a>
 								`).join('')}
-								${release.assets.length > 3 ? `<span class="text-xs">+${release.assets.length - 3} more</span>` : ''}
 							</div>
 						</div>
 					` : ''}
 
 					<div class="flex gap-2 pt-2" style="border-top: 1px solid var(--border-color);">
-						<a href="https://github.com/${escapeHtml(state.currentUser)}/${escapeHtml(state.currentRepo)}/releases/tag/${escapeHtml(release.tag_name)}" target="_blank" class="flex-1 btn btn-xs btn-outline-theme gap-1">
-							<i class="fas fa-arrow-up-right-from-square text-xs"></i> View
+						<a href="https://github.com/${escapeHtml(state.currentUser)}/${escapeHtml(state.currentRepo)}/releases/tag/${escapeHtml(release.tag_name)}" target="_blank" class="flex-1 btn btn-xs btn-ghost gap-1">
+							<i class="fas fa-external-link-alt text-xs"></i> View
 						</a>
 					</div>
 				</div>
@@ -2180,7 +1983,7 @@
 		async function loadTags() {
 			try {
 				const tags = await fetchGH(
-					`/repos/${state.currentUser}/${state.currentRepo}/tags?per_page=20`
+					`/repos/${state.currentUser}/${state.currentRepo}/tags?per_page=10`
 				);
 				state.tags = tags || [];
 				renderTags(state.tags);
@@ -2194,7 +1997,8 @@
 			if(!container) return;
 
 			if(tags.length === 0) {
-				container.innerHTML = '<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-bookmark text-2xl opacity-20 mb-2"></i><p class="text-sm">No tags</p></div>';
+				container.innerHTML = 
+					'<div class="text-center p-4" style="color: var(--text-secondary);"><i class="fas fa-bookmark text-2xl opacity-20 mb-2"></i><p class="text-sm">No tags</p></div>';
 				return;
 			}
 
@@ -2204,76 +2008,7 @@
 						<i class="fas fa-bookmark text-cyan-400"></i>
 						<span class="font-bold text-sm">${escapeHtml(tag.name)}</span>
 					</div>
-					<p class="text-xs" style="color: var(--text-secondary); margin-left: 24px;">SHA: ${escapeHtml(tag.commit.sha.substring(0, 7))}</p>
-				</div>
-			`).join('');
-		}
-
-		async function loadCommits() {
-			try {
-				const commits = await fetchGH(
-					`/repos/${state.currentUser}/${state.currentRepo}/commits?per_page=10`
-				);
-				state.commits = commits || [];
-				renderCommitsPreview();
-			} catch(err) {
-				console.log('No commits found');
-			}
-		}
-
-		function renderCommitsPreview() {
-			const container = document.getElementById('commits-content');
-			if(!container) return;
-
-			if(state.commits.length === 0) {
-				container.innerHTML = '<div class="text-center p-4"><p class="text-sm" style="color: var(--text-secondary);">No commits</p></div>';
-				return;
-			}
-
-			container.innerHTML = state.commits.slice(0, 5).map(commit => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="flex items-start justify-between mb-1">
-						<div class="flex-1">
-							<p class="text-sm font-mono">${escapeHtml(commit.commit.message.split('\n')[0])}</p>
-							<p class="text-xs" style="color: var(--text-secondary);">by ${escapeHtml(commit.commit.author.name)}</p>
-						</div>
-						<span class="text-xs branch-badge">${escapeHtml(commit.sha.substring(0, 7))}</span>
-					</div>
-					<p class="text-[10px]" style="color: var(--text-secondary);">${new Date(commit.commit.author.date).toLocaleString()}</p>
-				</div>
-			`).join('');
-		}
-
-		async function loadContributors() {
-			try {
-				const contributors = await fetchGH(
-					`/repos/${state.currentUser}/${state.currentRepo}/contributors?per_page=20`
-				);
-				state.contributors = contributors || [];
-			} catch(err) {
-				console.log('Could not load contributors');
-			}
-		}
-
-		function renderContributors() {
-			const container = document.getElementById('contributors-content');
-			if(!container) return;
-
-			if(state.contributors.length === 0) {
-				container.innerHTML = '<div class="text-center p-4"><p class="text-sm" style="color: var(--text-secondary);">No contributors data</p></div>';
-				return;
-			}
-
-			container.innerHTML = state.contributors.slice(0, 10).map(contributor => `
-				<div class="flex items-center gap-3 p-3 rounded-lg" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<img src="${escapeHtml(contributor.avatar_url)}" class="w-10 h-10 rounded-full" alt="${escapeHtml(contributor.login)}">
-					<div class="flex-1">
-						<a href="https://github.com/${escapeHtml(contributor.login)}" target="_blank" class="text-sm font-bold text-[var(--accent)] hover:underline">
-							${escapeHtml(contributor.login)}
-						</a>
-						<p class="text-xs" style="color: var(--text-secondary);">${contributor.contributions} contribution${contributor.contributions > 1 ? 's' : ''}</p>
-					</div>
-					${state.userFollowing && contributor.login === state.currentUser ? '<span class="badge badge-primary text-xs text-white">You</span>' : ''}
+					<p class="text-xs" style="color: var(--text-secondary); margin-left: 24px;">Commit: ${escapeHtml(tag.commit.sha.substring(0, 7))}</p>
 				</div>
 			`).join('');
 		}
@@ -2292,8 +2027,7 @@
 					`/repos/${state.currentUser}/${state.currentRepo}/git/refs/heads/${branchName}`,
 					{ method: 'DELETE' }
 				);
-				showNotification(`<i class="fas fa-trash"></i> Branch deleted!`);
-				addNotification(`Branch deleted: ${branchName}`);
+				showNotification(`<i class="fas fa-check-circle"></i> Branch deleted!`);
 				await loadBranches();
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
@@ -2303,27 +2037,47 @@
 		}
 
 		function switchReleaseTab(tab) {
-			const tabs = {
-				'branches': { content: 'branches-content', btn: 'branches-tab' },
-				'releases': { content: 'releases-content', btn: 'releases-tab' },
-				'tags': { content: 'tags-content', btn: 'tags-tab' },
-				'commits': { content: 'commits-content', btn: 'commits-tab' },
-				'contributors': { content: 'contributors-content', btn: 'contributors-tab' }
-			};
+			const releasesTab = document.getElementById('releases-tab');
+			const branchesTab = document.getElementById('branches-tab');
+			const tagsTab = document.getElementById('tags-tab');
+			const releasesContent = document.getElementById('releases-content');
+			const branchesContent = document.getElementById('branches-content');
+			const tagsContent = document.getElementById('tags-content');
 
-			Object.entries(tabs).forEach(([key, ids]) => {
-				const content = document.getElementById(ids.content);
-				const btn = document.getElementById(ids.btn);
-				
-				if(key === tab) {
-					if(content) content.classList.remove('hidden');
-					if(btn) btn.className = 'btn btn-sm btn-primary';
-					if(tab === 'contributors') renderContributors();
-				} else {
-					if(content) content.classList.add('hidden');
-					if(btn) btn.className = 'btn btn-sm btn-outline-theme';
-				}
-			});
+			if(tab === 'releases') {
+				if(releasesTab) releasesTab.className = 'flex-1 btn btn-sm btn-primary';
+				if(branchesTab) branchesTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(tagsTab) tagsTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(releasesContent) releasesContent.classList.remove('hidden');
+				if(branchesContent) branchesContent.classList.add('hidden');
+				if(tagsContent) tagsContent.classList.add('hidden');
+			} else if(tab === 'branches') {
+				if(releasesTab) releasesTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(branchesTab) branchesTab.className = 'flex-1 btn btn-sm btn-primary';
+				if(tagsTab) tagsTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(releasesContent) releasesContent.classList.add('hidden');
+				if(branchesContent) branchesContent.classList.remove('hidden');
+				if(tagsContent) tagsContent.classList.add('hidden');
+				loadBranches();
+			} else if(tab === 'tags') {
+				if(releasesTab) releasesTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(branchesTab) branchesTab.className = 'flex-1 btn btn-sm btn-outline-theme';
+				if(tagsTab) tagsTab.className = 'flex-1 btn btn-sm btn-primary';
+				if(releasesContent) releasesContent.classList.add('hidden');
+				if(branchesContent) branchesContent.classList.add('hidden');
+				if(tagsContent) tagsContent.classList.remove('hidden');
+			}
+		}
+
+		async function loadContributors() {
+			try {
+				const contributors = await fetchGH(
+					`/repos/${state.currentUser}/${state.currentRepo}/contributors?per_page=10`
+				);
+				console.log('Contributors:', contributors);
+			} catch(err) {
+				console.log('Could not load contributors');
+			}
 		}
 
 		function copyToClipboard(text, elementId) {
@@ -2338,21 +2092,25 @@
 			}
 		}
 
-		// File Creation
 		function showCreateFileModal() {
 			if(!state.token) {
 				alert('PAT token required');
 				return;
 			}
 			if(!state.currentRepo) {
-				alert('Select a repository first');
+				alert('Please select a repository first');
 				return;
 			}
 
-			if(document.getElementById('file-name-input')) document.getElementById('file-name-input').value = '';
-			if(document.getElementById('file-path-input')) document.getElementById('file-path-input').value = state.currentPath ? state.currentPath + '/' : '';
-			if(document.getElementById('file-content-input')) document.getElementById('file-content-input').value = '';
-			if(document.getElementById('file-commit-msg')) document.getElementById('file-commit-msg').value = 'Create new file';
+			const nameInput = document.getElementById('file-name-input');
+			const pathInput = document.getElementById('file-path-input');
+			const contentInput = document.getElementById('file-content-input');
+			const commitMsg = document.getElementById('file-commit-msg');
+
+			if(nameInput) nameInput.value = '';
+			if(pathInput) pathInput.value = state.currentPath ? state.currentPath + '/' : '';
+			if(contentInput) contentInput.value = '';
+			if(commitMsg) commitMsg.value = 'Create new file';
 
 			if(window.create_file_modal) window.create_file_modal.showModal();
 		}
@@ -2391,7 +2149,7 @@
 				if(document.getElementById('file-content-input')) document.getElementById('file-content-input').value = '';
 
 				showNotification(`<i class="fas fa-check-circle"></i> File created!`);
-				addNotification(`New file: ${fullPath}`);
+				addNotification(`File created: ${fullPath}`);
 				await loadFiles(filePath);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
@@ -2406,12 +2164,15 @@
 				return;
 			}
 			if(!state.currentRepo) {
-				alert('Select a repository first');
+				alert('Please select a repository first');
 				return;
 			}
 
-			if(document.getElementById('folder-name-input')) document.getElementById('folder-name-input').value = '';
-			if(document.getElementById('folder-path-input')) document.getElementById('folder-path-input').value = state.currentPath ? state.currentPath + '/' : '';
+			const nameInput = document.getElementById('folder-name-input');
+			const pathInput = document.getElementById('folder-path-input');
+
+			if(nameInput) nameInput.value = '';
+			if(pathInput) pathInput.value = state.currentPath ? state.currentPath + '/' : '';
 
 			if(window.create_folder_modal) window.create_folder_modal.showModal();
 		}
@@ -2436,7 +2197,7 @@
 				await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/contents/${gitkeepPath}`, {
 					method: 'PUT',
 					body: JSON.stringify({
-						message: `Create folder: ${folderName}`,
+						message: `Create folder ${folderName}`,
 						content: btoa('')
 					})
 				});
@@ -2446,7 +2207,7 @@
 				if(document.getElementById('folder-path-input')) document.getElementById('folder-path-input').value = '';
 
 				showNotification(`<i class="fas fa-check-circle"></i> Folder created!`);
-				addNotification(`New folder: ${fullPath}`);
+				addNotification(`Folder created: ${fullPath}`);
 				await loadFiles(folderPath);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
@@ -2455,15 +2216,17 @@
 			}
 		}
 
-		// Upload
 		function openUploadModal() {
 			const pathLabel = document.getElementById('upload-path-label');
 			if(pathLabel) {
 				pathLabel.innerText = `${state.currentRepo}/${state.currentPath || 'root'}`;
 			}
 			
-			if(document.getElementById('file-picker')) document.getElementById('file-picker').value = '';
-			if(document.getElementById('upload-progress')) document.getElementById('upload-progress').classList.add('hidden');
+			const filePicker = document.getElementById('file-picker');
+			if(filePicker) filePicker.value = '';
+			
+			const progress = document.getElementById('upload-progress');
+			if(progress) progress.classList.add('hidden');
 
 			if(window.upload_modal) window.upload_modal.showModal();
 		}
@@ -2473,7 +2236,7 @@
 			const files = fileInput.files;
 
 			if(files.length === 0) {
-				alert('Please select files');
+				alert('Please select at least one file');
 				return;
 			}
 
@@ -2481,27 +2244,26 @@
 			if(uploadBtn) uploadBtn.disabled = true;
 
 			document.getElementById('upload-progress').classList.remove('hidden');
-			if(document.getElementById('upload-total')) document.getElementById('upload-total').innerText = files.length;
+			const uploadTotal = document.getElementById('upload-total');
+			if(uploadTotal) uploadTotal.innerText = files.length;
 
 			let uploadedCount = 0;
 			const MAX_FILE_SIZE = 100 * 1024 * 1024;
-			const details = document.getElementById('upload-details');
 
 			for(const file of files) {
 				try {
 					if(file.size > MAX_FILE_SIZE) {
-						showNotification(`<i class="fas fa-exclamation-triangle"></i> ${file.name} exceeds limit`);
+						showNotification(`<i class="fas fa-exclamation-triangle"></i> File ${file.name} exceeds limit`);
 						continue;
 					}
 
-					if(details) details.innerHTML += `<div>↳ ${escapeHtml(file.name)}...</div>`;
 					await uploadFile(file);
 					uploadedCount++;
-					if(document.getElementById('upload-current')) document.getElementById('upload-current').innerText = uploadedCount;
-					if(details) details.innerHTML += `<div style="color: #22c55e;">✓ ${escapeHtml(file.name)}</div>`;
+					const uploadCurrent = document.getElementById('upload-current');
+					if(uploadCurrent) uploadCurrent.innerText = uploadedCount;
 				} catch(err) {
 					console.error(`Upload failed for ${file.name}:`, err);
-					if(details) details.innerHTML += `<div style="color: #ef4444;">✗ ${escapeHtml(file.name)}</div>`;
+					showNotification(`<i class="fas fa-exclamation-circle"></i> Failed to upload ${file.name}`);
 				}
 			}
 
@@ -2509,8 +2271,8 @@
 			fileInput.value = '';
 			if(uploadBtn) uploadBtn.disabled = false;
 			await loadFiles(state.currentPath);
-			showNotification(`<i class="fas fa-check-circle"></i> ${uploadedCount}/${files.length} uploaded!`);
-			addNotification(`${uploadedCount} files uploaded`);
+			showNotification(`<i class="fas fa-check-circle"></i> ${uploadedCount}/${files.length} files uploaded!`);
+			addNotification(`${uploadedCount} files uploaded to ${state.currentRepo}`);
 		}
 
 		async function uploadFile(file) {
@@ -2541,9 +2303,8 @@
 			});
 		}
 
-		// Preview
 		function togglePreview() {
-			const isMarkdown = /\.(md|markdown)$/i.test(state.currentPath);
+			const isMarkdown = /\.md$/i.test(state.currentPath);
 			const isHtml = /\.html$/i.test(state.currentPath);
 
 			if(isMarkdown) {
@@ -2557,34 +2318,27 @@
 			const markdown = state.monacoEditor.getValue();
 			const previewViewport = document.getElementById('preview-viewport');
 			
-			try {
-				const html = marked(markdown);
-				const sanitized = DOMPurify.sanitize(html);
-				previewViewport.innerHTML = `<div class="prose max-w-none">${sanitized}</div>`;
-				previewViewport.classList.remove('hidden');
-				document.getElementById('editor-viewport').parentElement.style.display = 'none';
-			} catch(err) {
-				previewViewport.innerHTML = '<p style="color: var(--text-secondary); padding: 20px;">Error rendering markdown</p>';
-				previewViewport.classList.remove('hidden');
-			}
+			let html = markdown
+				.replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+				.replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+				.replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+				.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+				.replace(/\*(.*?)\*/g, '<em>$1</em>')
+				.replace(/\n/g, '<br>');
+
+			previewViewport.innerHTML = `<div style="padding: 20px; font-size: 14px; line-height: 1.6;">${html}</div>`;
+			previewViewport.classList.remove('hidden');
+			document.getElementById('editor-viewport').parentElement.classList.add('hidden');
 		}
 
 		function showHtmlPreview() {
 			const html = state.monacoEditor.getValue();
 			const previewViewport = document.getElementById('preview-viewport');
-			
-			try {
-				const sanitized = DOMPurify.sanitize(html);
-				previewViewport.innerHTML = sanitized;
-				previewViewport.classList.remove('hidden');
-				document.getElementById('editor-viewport').parentElement.style.display = 'none';
-			} catch(err) {
-				previewViewport.innerHTML = '<p style="color: var(--text-secondary); padding: 20px;">Error rendering HTML</p>';
-				previewViewport.classList.remove('hidden');
-			}
+			previewViewport.innerHTML = html;
+			previewViewport.classList.remove('hidden');
+			document.getElementById('editor-viewport').parentElement.classList.add('hidden');
 		}
 
-		// Breadcrumbs
 		function updateBreadcrumbs(path) {
 			const container = document.getElementById('breadcrumb-container');
 			if(!container) return;
@@ -2592,7 +2346,7 @@
 			const parts = path.split('/').filter(p => p);
 
 			let html = `
-				<span onclick="loadFiles('')" class="hover:text-[var(--accent)] cursor-pointer transition">
+				<span onclick="loadFiles('')" class="hover:text-blue-400 cursor-pointer code-link">
 					<i class="fas fa-folder-open mr-1"></i>${escapeHtml(state.currentRepo || 'Repository')}
 				</span>
 			`;
@@ -2602,7 +2356,7 @@
 				currentPathBuild += (index === 0 ? '' : '/') + part;
 				html += `
 					<i class="fas fa-chevron-right text-[8px]" style="color: var(--text-secondary);"></i>
-					<span onclick="loadFiles('${currentPathBuild}')" class="hover:text-[var(--accent)] cursor-pointer transition">${escapeHtml(part)}</span>
+					<span onclick="loadFiles('${currentPathBuild}')" class="hover:text-blue-400 cursor-pointer code-link">${escapeHtml(part)}</span>
 				`;
 			});
 
@@ -2615,49 +2369,26 @@
 			loadFiles(parts.join('/'));
 		}
 
-		// Tabs & Sidebar
-		function showTab(tab) {
-			state.activeTab = tab;
-			const tabRepos = document.getElementById('tab-repos');
-			const tabFiles = document.getElementById('tab-files');
-			const tabBranches = document.getElementById('tab-branches');
-
-			[tabRepos, tabFiles, tabBranches].forEach(btn => {
-				if(btn) btn.style.borderBottomColor = 'transparent';
-			});
-
-			if(tab === 'repos') {
-				if(tabRepos) tabRepos.style.borderBottomColor = 'var(--accent)';
-				renderRepoList();
-			} else if(tab === 'files') {
-				if(tabFiles) tabFiles.style.borderBottomColor = 'var(--accent)';
-				renderFileList();
-			} else if(tab === 'branches') {
-				if(tabBranches) tabBranches.style.borderBottomColor = 'var(--accent)';
-				if(state.currentRepo && window.releases_modal) {
-					window.releases_modal.showModal();
-					switchReleaseTab('branches');
-				}
-			}
-		}
-
 		function filterSidebarContent() {
-			const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
-			sidebarSearchTerm = searchTerm;
+			clearTimeout(searchDebounceTimer);
+			searchDebounceTimer = setTimeout(() => {
+				const searchTerm = document.getElementById('sidebar-search').value.toLowerCase();
+				sidebarSearchTerm = searchTerm;
 
-			if(state.activeTab === 'repos') {
-				state.filteredRepos = state.repos.filter(repo => 
-					repo.name.toLowerCase().includes(searchTerm) || 
-					(repo.description && repo.description.toLowerCase().includes(searchTerm))
-				);
-			} else if(state.activeTab === 'files') {
-				state.filteredFiles = state.files.filter(file => 
-					file.name.toLowerCase().includes(searchTerm)
-				);
-			}
+				if(state.activeTab === 'repos') {
+					state.filteredRepos = state.repos.filter(repo => 
+						repo.name.toLowerCase().includes(searchTerm) || 
+						(repo.description && repo.description.toLowerCase().includes(searchTerm))
+					);
+				} else if(state.activeTab === 'files') {
+					state.filteredFiles = state.files.filter(file => 
+						file.name.toLowerCase().includes(searchTerm)
+					);
+				}
 
-			if(state.activeTab === 'repos') renderRepoList();
-			else if(state.activeTab === 'files') renderFileList();
+				if(state.activeTab === 'repos') renderRepoList();
+				else if(state.activeTab === 'files') renderFileList();
+			}, 300);
 		}
 
 		function handleSidebarSearch(event) {
@@ -2666,7 +2397,6 @@
 			}
 		}
 
-		// Themes
 		function setTheme(theme) {
 			state.theme = theme;
 			document.documentElement.className = theme;
@@ -2685,20 +2415,48 @@
 			showNotification(`<i class="fas fa-palette"></i> Theme: ${theme}`);
 		}
 
+		function setTheme(theme) {
+			state.theme = theme;
+			document.documentElement.className = theme;
+
+			const themeMap = {
+				'dark': 'vs-dark',
+				'light': 'vs',
+				'high-contrast': 'hc-black',
+				'nord': 'vs-dark',
+				'dracula': 'vs-dark',
+				'gruvbox': 'vs-dark',
+				'monokai': 'vs-dark',
+				'solarized-dark': 'vs-dark'
+			};
+
+			if(state.monacoEditor) {
+				monaco.editor.setTheme(themeMap[theme] || 'vs-dark');
+			}
+
+			localStorage.setItem('gitnexus-theme', theme);
+			showNotification(`🎨 Theme: ${theme}`);
+		}
+
 		function showThemeMenu() {
-			const themes = ['dark', 'light'];
+			const themes = ['dark', 'light', 'high-contrast', 'nord', 'dracula', 'gruvbox', 'monokai', 'solarized-dark'];
 
 			const menu = document.createElement('div');
-			menu.className = 'dropdown-content menu p-2 shadow rounded-box w-40 fixed z-[100] animate-fade-in';
-			menu.style.cssText = `background-color: var(--bg-secondary); border: 1px solid var(--border-color); top: auto; bottom: 70px; right: 20px;`;
+			menu.className = 'dropdown-content menu p-2 shadow bg-[var(--bg-secondary)] rounded-box w-52 border sidebar-border fixed z-[100]';
 
 			menu.innerHTML = themes.map(t => `
-				<ul class="menu menu-sm">
+				<ul class="menu menu-sm bg-[var(--bg-secondary)] animate-fade-in">
 					<li><a onclick="setTheme('${t}'); this.closest('.dropdown-content').remove()">
-						<i class="fas fa-palette mr-2"></i>${t.charAt(0).toUpperCase() + t.slice(1)}
+						<i class="fas fa-paint-brush mr-2"></i>${t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}
 					</a></li>
 				</ul>
 			`).join('');
+
+			const avatarBtn = document.querySelector('.avatar');
+			const pos = avatarBtn.getBoundingClientRect();
+			
+			menu.style.top = (pos.bottom + 8) + 'px';
+			menu.style.right = '20px';
 
 			document.body.appendChild(menu);
 
@@ -2707,7 +2465,6 @@
 			}, 5000);
 		}
 
-		// Settings
 		function showSettingsModal() {
 			if(window.customization_modal) {
 				window.customization_modal.showModal();
@@ -2719,9 +2476,8 @@
 			const fontSize = parseInt(fontSizeInput.value);
 			state.editorSettings.fontSize = fontSize;
 
-			if(document.getElementById('font-size-display')) {
-				document.getElementById('font-size-display').innerText = fontSize + 'px';
-			}
+			const fontSizeDisplay = document.getElementById('font-size-display');
+			if(fontSizeDisplay) fontSizeDisplay.innerText = fontSize + 'px';
 
 			if(state.monacoEditor) {
 				state.monacoEditor.updateOptions({ fontSize });
@@ -2766,10 +2522,9 @@
 			if(window.sorting_modal) window.sorting_modal.showModal();
 		}
 
-		// Profile
 		async function showProfileModal() {
 			if(!state.token) {
-				alert('Enter PAT first');
+				alert('Please enter your PAT token first');
 				return;
 			}
 
@@ -2786,28 +2541,23 @@
 		}
 
 		function populateProfileModal(profile) {
-			if(document.getElementById('modal-avatar')) document.getElementById('modal-avatar').src = profile.avatar_url;
-			if(document.getElementById('modal-name')) document.getElementById('modal-name').innerText = profile.name || profile.login;
-			if(document.getElementById('modal-login')) document.getElementById('modal-login').innerText = `@${profile.login}`;
-			if(document.getElementById('modal-bio')) document.getElementById('modal-bio').innerText = profile.bio || 'No bio';
-			if(document.getElementById('profile-followers')) document.getElementById('profile-followers').innerText = profile.followers;
-			if(document.getElementById('profile-following')) document.getElementById('profile-following').innerText = profile.following;
-			if(document.getElementById('profile-repos')) document.getElementById('profile-repos').innerText = profile.public_repos;
-			if(document.getElementById('profile-gists')) document.getElementById('profile-gists').innerText = profile.public_gists;
-		}
+			const avatar = document.getElementById('modal-avatar');
+			const name = document.getElementById('modal-name');
+			const login = document.getElementById('modal-login');
+			const bio = document.getElementById('modal-bio');
+			const followers = document.getElementById('profile-followers');
+			const following = document.getElementById('profile-following');
+			const repos = document.getElementById('profile-repos');
+			const gists = document.getElementById('profile-gists');
 
-		function toggleFollowUser() {
-			state.userFollowing = !state.userFollowing;
-			const btn = document.getElementById('follow-btn');
-			if(btn) {
-				btn.innerHTML = state.userFollowing ? '<i class="fas fa-user-check mr-1"></i>Following' : '<i class="fas fa-user-plus mr-1"></i>Follow';
-			}
-			showNotification(`<i class="fas fa-user"></i> ${state.userFollowing ? 'Following' : 'Unfollowed'} ${state.currentUser}`);
-			addNotification(`${state.userFollowing ? 'Now following' : 'Unfollowed'} ${state.currentUser}`);
-		}
-
-		function showUserActivity() {
-			showActivityFeed();
+			if(avatar) avatar.src = profile.avatar_url;
+			if(name) name.innerText = profile.name || profile.login;
+			if(login) login.innerText = `@${profile.login}`;
+			if(bio) bio.innerText = profile.bio || 'No bio';
+			if(followers) followers.innerText = profile.followers;
+			if(following) following.innerText = profile.following;
+			if(repos) repos.innerText = profile.public_repos;
+			if(gists) gists.innerText = profile.public_gists;
 		}
 
 		function openAvatarUpload() {
@@ -2819,9 +2569,8 @@
 				if(file) {
 					const reader = new FileReader();
 					reader.onload = (event) => {
-						if(document.getElementById('modal-avatar')) {
-							document.getElementById('modal-avatar').src = event.target.result;
-						}
+						const avatar = document.getElementById('modal-avatar');
+						if(avatar) avatar.src = event.target.result;
 						showNotification(`<i class="fas fa-camera"></i> Avatar preview updated`);
 					};
 					reader.readAsDataURL(file);
@@ -2830,10 +2579,9 @@
 			input.click();
 		}
 
-		// Insights
 		async function showGitHubInsights() {
 			if(!state.currentRepo) {
-				alert('Select a repository first');
+				alert('Please select a repository first');
 				return;
 			}
 
@@ -2841,14 +2589,12 @@
 			try {
 				const repo = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}`);
 				
-				if(document.getElementById('insights-stars')) document.getElementById('insights-stars').innerText = repo.stargazers_count || 0;
-				if(document.getElementById('insights-forks')) document.getElementById('insights-forks').innerText = repo.forks_count || 0;
-				if(document.getElementById('insights-watchers')) document.getElementById('insights-watchers').innerText = repo.watchers_count || 0;
+				document.getElementById('insights-stars').innerText = repo.stargazers_count || 0;
+				document.getElementById('insights-forks').innerText = repo.forks_count || 0;
+				document.getElementById('insights-watchers').innerText = repo.watchers_count || 0;
 				
 				const prs = await fetchGH(`/repos/${state.currentUser}/${state.currentRepo}/pulls?state=open&per_page=1`);
-				if(document.getElementById('insights-prs')) {
-					document.getElementById('insights-prs').innerText = Array.isArray(prs) ? prs.length : 0;
-				}
+				document.getElementById('insights-prs').innerText = Array.isArray(prs) ? prs.length : 0;
 
 				createChartsForInsights();
 
@@ -2861,10 +2607,9 @@
 		}
 
 		function createChartsForInsights() {
-			if(chartsInitialized['stars']) return;
 
 			const starsCtx = document.getElementById('stars-chart');
-			if(starsCtx) {
+			if(starsCtx && starsCtx.dataset.chart !== 'initialized') {
 				new Chart(starsCtx, {
 					type: 'line',
 					data: {
@@ -2874,24 +2619,20 @@
 							data: [10, 15, 12, 20],
 							borderColor: '#FBBF24',
 							backgroundColor: 'rgba(251, 191, 36, 0.1)',
-							tension: 0.4,
-							fill: true
+							tension: 0.4
 						}]
 					},
 					options: {
 						plugins: { legend: { display: false } },
 						responsive: true,
-						maintainAspectRatio: true,
-						scales: {
-							y: { beginAtZero: true }
-						}
+						maintainAspectRatio: true
 					}
 				});
-				chartsInitialized['stars'] = true;
+				starsCtx.dataset.chart = 'initialized';
 			}
 
 			const forksCtx = document.getElementById('forks-chart');
-			if(forksCtx) {
+			if(forksCtx && forksCtx.dataset.chart !== 'initialized') {
 				new Chart(forksCtx, {
 					type: 'bar',
 					data: {
@@ -2908,13 +2649,13 @@
 						maintainAspectRatio: true
 					}
 				});
-				chartsInitialized['forks'] = true;
+				forksCtx.dataset.chart = 'initialized';
 			}
 
 			const activityCtx = document.getElementById('activity-chart');
-			if(activityCtx) {
+			if(activityCtx && activityCtx.dataset.chart !== 'initialized') {
 				new Chart(activityCtx, {
-					type: 'line',
+					type: 'area',
 					data: {
 						labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 						datasets: [{
@@ -2932,11 +2673,10 @@
 						maintainAspectRatio: true
 					}
 				});
-				chartsInitialized['activity'] = true;
+				activityCtx.dataset.chart = 'initialized';
 			}
 		}
 
-		// NexusBot AI
 		async function showNexusBot() {
 			if(window.nexusbot_modal) window.nexusbot_modal.showModal();
 		}
@@ -2944,43 +2684,45 @@
 		function connectCopilot() {
 			const token = document.getElementById('copilot-token').value.trim();
 			if(!token) {
-				alert('Enter Copilot PAT token');
+				alert('Please enter your Copilot PAT token');
 				return;
 			}
 
 			state.copilotConnected = true;
+			document.getElementById('copilot-status').classList.remove('hidden');
+			document.getElementById('copilot-token').style.display = 'none';
+			document.querySelector('button[onclick="connectCopilot()"]').style.display = 'none';
 			showNotification(`<i class="fas fa-robot"></i> NexusBot connected!`);
-			addNotification('NexusBot AI connected');
 		}
 
 		async function askNexusBot() {
 			const prompt = document.getElementById('copilot-prompt').value.trim();
 			if(!prompt) {
-				alert('Enter a question');
+				alert('Please enter a question');
 				return;
 			}
 
 			if(!state.copilotConnected) {
-				alert('Connect NexusBot first');
+				alert('Please connect NexusBot first');
 				return;
 			}
 
 			setLoadingState(true);
 			try {
 				const responses = {
-					'explain': 'This code processes data and returns formatted output. The logic appears sound.',
-					'optimize': 'Consider using async/await instead of callbacks for better readability. Cache computed values.',
-					'fix': 'Check line boundaries, validate inputs, and add error handling for edge cases.',
-					'document': '/** Main function description\n * @param {any} data - Input parameter\n * @returns {any} Output result\n */'
+					'explain': 'This code defines a function that processes user input and returns formatted output.',
+					'optimize': 'Consider using a Set instead of an array for O(1) lookups, and memoize repeated calculations.',
+					'fix': 'The bug is likely in line 42 where the array bounds are not checked before access.',
+					'document': '/**\n * Processes input data and returns formatted result\n * @param {string} data - Input data to process\n * @returns {Object} Formatted result object\n */\n'
 				};
 
 				const response = responses[Object.keys(responses).find(key => prompt.toLowerCase().includes(key))] || 
-					'Code looks good. Add type hints and improve documentation.';
+					'NexusBot analysis: The code appears to be well-structured. Consider adding more error handling and input validation.';
 
 				document.getElementById('copilot-response').classList.remove('hidden');
 				document.getElementById('copilot-output').innerText = response;
-				if(document.getElementById('copilot-prompt')) document.getElementById('copilot-prompt').value = '';
-				showNotification(`<i class="fas fa-lightbulb"></i> Suggestion received!`);
+				document.getElementById('copilot-prompt').value = '';
+				showNotification(`<i class="fas fa-lightbulb"></i> NexusBot suggestion received!`);
 			} catch(err) {
 				alert(`Failed: ${err.message}`);
 			} finally {
@@ -2991,88 +2733,15 @@
 		function quickCommand(command) {
 			const prompts = {
 				'explain': 'Explain this code',
-				'optimize': 'Optimize for performance',
-				'fix': 'Fix bugs',
-				'document': 'Add documentation'
+				'optimize': 'Optimize this code for performance',
+				'fix': 'Fix any bugs in this code',
+				'document': 'Add documentation to this code'
 			};
 
-			if(document.getElementById('copilot-prompt')) {
-				document.getElementById('copilot-prompt').value = prompts[command];
-			}
+			document.getElementById('copilot-prompt').value = prompts[command];
 			askNexusBot();
 		}
 
-		// Terminal
-		function showTerminal() {
-			if(window.terminal_modal) window.terminal_modal.showModal();
-		}
-
-		function runTerminalCommand() {
-			const input = document.getElementById('terminal-input');
-			const output = document.getElementById('terminal-output');
-			const command = input.value.trim();
-
-			if(!command) return;
-
-			if(output) {
-				output.innerHTML += `<div><span style="color: #22c55e;">$</span> ${escapeHtml(command)}</div>`;
-				output.innerHTML += `<div>Command executed (simulated)</div>`;
-				output.scrollTop = output.scrollHeight;
-			}
-
-			if(input) input.value = '';
-		}
-
-		function openInCodespaces() {
-			if(!state.currentRepo) {
-				alert('Select a repository');
-				return;
-			}
-			window.open(
-				`https://github.com/codespaces/new?repo=${state.currentUser}/${state.currentRepo}`,
-				'_blank'
-			);
-			showNotification(`<i class="fas fa-code"></i> Opening Codespaces...`);
-		}
-
-		// Commits Viewer
-		function showCommitsViewer() {
-			if(!state.currentRepo) {
-				alert('Select a repository');
-				return;
-			}
-			if(window.commits_modal) window.commits_modal.showModal();
-			renderCommitsDetails();
-		}
-
-		function renderCommitsDetails() {
-			const container = document.getElementById('commits-list');
-			if(!container || state.commits.length === 0) {
-				if(container) container.innerHTML = '<p style="color: var(--text-secondary); padding: 20px;">No commits available</p>';
-				return;
-			}
-
-			container.innerHTML = state.commits.map(commit => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="flex items-start gap-3">
-						<img src="${escapeHtml(commit.author.avatar_url)}" class="w-8 h-8 rounded-full" alt="">
-						<div class="flex-1">
-							<p class="text-sm font-bold">${escapeHtml(commit.commit.message.split('\n')[0])}</p>
-							<p class="text-xs" style="color: var(--text-secondary);">by ${escapeHtml(commit.commit.author.name)}</p>
-							<div class="mt-2 text-xs space-y-1" style="color: var(--text-secondary);">
-								<div><span class="branch-badge">${escapeHtml(commit.sha.substring(0, 7))}</span></div>
-								<div>${new Date(commit.commit.author.date).toLocaleString()}</div>
-							</div>
-						</div>
-						<a href="${escapeHtml(commit.html_url)}" target="_blank" class="btn btn-xs btn-outline-theme">
-							<i class="fas fa-arrow-up-right-from-square"></i>
-						</a>
-					</div>
-				</div>
-			`).join('');
-		}
-
-		// Notifications & Activity
 		function showNotifications() {
 			populateNotificationsList();
 			if(window.notifications_modal) window.notifications_modal.showModal();
@@ -3080,53 +2749,40 @@
 
 		function populateNotificationsList() {
 			const container = document.getElementById('notifications-list');
-			if(!container) return;
-
 			if(state.notifications.length === 0) {
-				container.innerHTML = '<div class="rounded-lg p-8 text-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary);"><i class="fas fa-bell-slash text-4xl opacity-20 mb-3"></i><p>No notifications</p></div>';
+				container.innerHTML = '<div class="rounded-lg p-4 text-sm text-center mt-10" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary);"><i class="fas fa-bell-slash text-2xl opacity-20 mb-2"></i><p class="text-sm">No notifications</p></div>';
 				return;
 			}
 
 			container.innerHTML = state.notifications.slice(-10).reverse().map(notif => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="text-sm font-bold mb-1"><i class="fas fa-${notif.icon || 'info-circle'} mr-2"></i>${escapeHtml(notif.title)}</div>
+				<div class="rounded-lg p-4" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
+					<div class="text-sm font-bold mb-1"><i class="fas fa-info-circle mr-2 text-blue-400"></i>${escapeHtml(notif.title)}</div>
 					<p class="text-xs" style="color: var(--text-secondary);">${escapeHtml(notif.message)}</p>
-					<p class="text-[10px] mt-1" style="color: var(--text-secondary);">${new Date(notif.timestamp).toLocaleTimeString()}</p>
+					<p class="text-[10px] mt-2 opacity-60">${new Date(notif.timestamp).toLocaleTimeString()}</p>
 				</div>
 			`).join('');
 		}
 
-		function showActivityFeed() {
-			populateActivityFeed();
-			if(window.activity_modal) window.activity_modal.showModal();
+		function addNotification(message, title = 'GitNexus') {
+			state.notifications.push({
+				title,
+				message,
+				timestamp: new Date().toISOString()
+			});
+			const badge = document.getElementById('notification-badge');
+			if(badge) {
+				badge.classList.remove('hidden');
+				badge.innerHTML = state.notifications.length > 9 ? '9+' : state.notifications.length;
+			}
+
+			if(state.notifications.length > 50) {
+				state.notifications = state.notifications.slice(-50);
+			}
 		}
 
-		function populateActivityFeed() {
-			const container = document.getElementById('activity-feed');
-			if(!container) return;
-
-			const activities = [
-				{ type: 'star', repo: state.currentRepo, action: 'Starred' },
-				{ type: 'fork', repo: state.currentRepo, action: 'Forked' },
-				{ type: 'commit', repo: state.currentRepo, action: 'Committed' },
-				{ type: 'follow', user: state.currentUser, action: 'Started following' }
-			];
-
-			container.innerHTML = activities.map(activity => `
-				<div class="rounded-lg p-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);">
-					<div class="text-sm">
-						<i class="fas fa-${activity.type === 'star' ? 'star' : activity.type === 'fork' ? 'code-branch' : activity.type === 'commit' ? 'code-commit' : 'user-plus'} mr-2"></i>
-						<span class="font-bold">${activity.action}</span>
-						<span style="color: var(--text-secondary);">${activity.repo || activity.user}</span>
-					</div>
-					<p class="text-xs mt-1" style="color: var(--text-secondary);">Just now</p>
-				</div>
-			`).join('');
-		}
-
-		// Music Player
 		function showMusicPlayer() {
-			if(document.getElementById('music-results')) document.getElementById('music-results').innerHTML = '';
+			const musicResults = document.getElementById('music-results');
+			if(musicResults) musicResults.innerHTML = '';
 			if(window.music_modal) window.music_modal.showModal();
 			setMusicSource(state.musicSource);
 		}
@@ -3150,7 +2806,7 @@
 
 			const resultsContainer = document.getElementById('music-results');
 			const mockResults = [
-				{ title: 'Focus Mode', artist: 'Lo-Fi Hip Hop', duration: '∞' },
+				{ title: 'Focus Mode', artist: 'Lo-Fi Hip Hop', duration: 'infinite' },
 				{ title: 'Coding Vibes', artist: 'Electronic', duration: '2:45' },
 				{ title: 'Deep Focus', artist: 'Ambient', duration: '3:12' },
 				{ title: 'Night Coding', artist: 'Synthwave', duration: '4:00' }
@@ -3162,13 +2818,13 @@
 			);
 
 			resultsContainer.innerHTML = filtered.map((song) => `
-				<div class="p-3 rounded-lg cursor-pointer transition hover:shadow-lg hover:shadow-blue-500/20" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="selectSong('${escapeHtml(song.title)}', '${escapeHtml(song.artist)}')">
+				<div class="p-3 rounded-lg cursor-pointer transition" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color);" onclick="selectSong('${escapeHtml(song.title)}', '${escapeHtml(song.artist)}')">
 					<div class="flex justify-between items-center">
 						<div>
 							<div class="font-bold text-sm">${escapeHtml(song.title)}</div>
 							<div class="text-xs" style="color: var(--text-secondary);">${escapeHtml(song.artist)}</div>
 						</div>
-						<div class="text-xs" style="color: var(--text-secondary);">${song.duration}</div>
+						<div class="text-xs" style="color: var(--text-secondary);">Duration: ${song.duration}</div>
 					</div>
 				</div>
 			`).join('');
@@ -3176,13 +2832,16 @@
 
 		function selectSong(title, artist) {
 			state.currentlyPlaying = { title, artist };
-			if(document.getElementById('now-playing-title')) document.getElementById('now-playing-title').innerText = title;
-			if(document.getElementById('now-playing-artist')) document.getElementById('now-playing-artist').innerText = artist;
+			const nowPlayingTitle = document.getElementById('now-playing-title');
+			const nowPlayingArtist = document.getElementById('now-playing-artist');
 			const nowPlaying = document.getElementById('now-playing');
+
+			if(nowPlayingTitle) nowPlayingTitle.innerText = title;
+			if(nowPlayingArtist) nowPlayingArtist.innerText = artist;
 			if(nowPlaying) nowPlaying.classList.remove('hidden');
 
 			showNotification(`<i class="fas fa-music"></i> Now playing: ${title}`);
-			addNotification(`Playing: ${title} by ${artist}`);
+			addNotification(`Now playing: ${title} by ${artist}`, 'Music Player');
 		}
 
 		function toggleMusicPlayback() {
@@ -3190,7 +2849,7 @@
 				alert('Select a song first');
 				return;
 			}
-			showNotification('<i class="fas fa-play"></i> Playback toggled');
+			showNotification('<i class="fas fa-play"></i> Music playback toggled');
 		}
 
 		function stopMusic() {
@@ -3200,10 +2859,9 @@
 			showNotification('<i class="fas fa-stop"></i> Music stopped');
 		}
 
-		// Utility
 		function downloadFile() {
 			if(!state.currentPath) {
-				alert('Select a file first');
+				alert('Please select a file first');
 				return;
 			}
 
@@ -3229,10 +2887,6 @@
 		}
 
 		function copyRawUrl() {
-			if(!state.currentPath) {
-				alert('Select a file first');
-				return;
-			}
 			const url = `https://raw.githubusercontent.com/${state.currentUser}/${state.currentRepo}/${state.currentBranch}/${state.currentPath}`;
 			navigator.clipboard.writeText(url);
 			showNotification(`<i class="fas fa-copy"></i> Raw URL copied!`);
@@ -3244,24 +2898,26 @@
 			showNotification(`<i class="fas fa-copy"></i> Code copied!`);
 		}
 
-		function getFileIcon(filename) {
-			const ext = filename.split('.').pop().toLowerCase();
-			const icons = {
-				js: 'fab fa-js text-yellow-400',
-				ts: 'fab fa-js text-blue-400',
-				html: 'fab fa-html5 text-orange-500',
-				css: 'fab fa-css3-alt text-blue-400',
-				json: 'fas fa-code text-yellow-600',
-				md: 'fab fa-markdown text-gray-400',
-				py: 'fab fa-python text-blue-300',
-				java: 'fab fa-java text-orange-600',
-				go: 'fas fa-code text-cyan-400',
-				rb: 'fas fa-gem text-red-500',
-				php: 'fab fa-php text-purple-400',
-				default: 'fas fa-file text-gray-400'
-			};
-			return icons[ext] || icons.default;
-		}
+function getFileIcon(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    const icons = {
+        js: 'fa-brands fa-js text-yellow-400',
+        ts: 'fa-brands fa-square-js text-blue-400',
+        html: 'fa-brands fa-html5 text-orange-500',
+        css: 'fa-brands fa-css3-alt text-blue-500',
+        json: 'fa-solid fa-file-code text-yellow-600',
+        md: 'fa-brands fa-markdown text-gray-400',
+        py: 'fa-brands fa-python text-blue-300',
+        rb: 'fa-solid fa-gem text-red-500',
+        java: 'fa-brands fa-java text-orange-600',
+        cpp: 'fa-solid fa-plus text-blue-600',
+        sh: 'fa-solid fa-terminal text-green-500',
+        yml: 'fa-solid fa-file-code text-red-400',
+        yaml: 'fa-solid fa-file-code text-red-400',
+        default: 'fa-solid fa-file-alt text-gray-400'
+    };
+    return icons[ext] || icons.default;
+}
 
 		function getLanguageByExt(ext) {
 			const langs = {
@@ -3289,15 +2945,18 @@
 		}
 
 		function toggleEditButtons() {
-			const shouldShow = state.isOwner && state.token && state.currentRepo;
-			const buttons = ['save-btn', 'upload-trigger', 'create-file-btn', 'create-folder-btn', 'create-branch-btn', 'create-release-btn'];
-			
-			buttons.forEach(id => {
-				const btn = document.getElementById(id);
-				if(btn) btn.classList.toggle('hidden', !shouldShow);
-			});
-
+			const saveBtn = document.getElementById('save-btn');
+			const uploadBtn = document.getElementById('upload-trigger');
+			const createFileBtn = document.getElementById('create-file-btn');
+			const createFolderBtn = document.getElementById('create-folder-btn');
 			const forkBtn = document.getElementById('fork-btn');
+
+			const shouldShow = state.isOwner && state.token && state.currentRepo;
+
+			if(saveBtn) saveBtn.classList.toggle('hidden', !shouldShow);
+			if(uploadBtn) uploadBtn.classList.toggle('hidden', !shouldShow);
+			if(createFileBtn) createFileBtn.classList.toggle('hidden', !shouldShow);
+			if(createFolderBtn) createFolderBtn.classList.toggle('hidden', !shouldShow);
 			if(forkBtn) forkBtn.classList.toggle('hidden', shouldShow);
 		}
 
@@ -3312,29 +2971,31 @@
 		function toggleSidebarSize() {
 			const sidebar = document.querySelector('aside');
 			if(sidebar) {
-				if(sidebar.classList.contains('w-80')) {
-					sidebar.classList.remove('w-80');
-					sidebar.classList.add('w-96');
-				} else {
-					sidebar.classList.remove('w-96');
-					sidebar.classList.add('w-80');
-				}
+				sidebar.classList.toggle('w-[500px]');
+				sidebar.classList.toggle('w-[320px]');
 			}
 		}
 
 		function toggleMainMenu() {
-			showNotification('<i class="fas fa-bars"></i> Menu');
+			showNotification('<i class="fas fa-bars"></i> Main menu toggled');
 		}
 
-		function showCreateBranchModal() {
-			alert('Create branch feature - select base branch and enter new name');
+		function showNotification(message) {
+			const notification = document.createElement('div');
+			notification.className = 'fixed bottom-20 right-8 text-white p-4 rounded-lg shadow-lg animate-slide-up z-[100] max-w-xs';
+			notification.style.background = 'linear-gradient(135deg, #1f6feb 0%, #8957e5 100%)';
+			notification.innerHTML = message;
+			document.body.appendChild(notification);
+
+			setTimeout(() => {
+				if(notification.parentElement) notification.remove();
+			}, 3000);
 		}
 
-		function showCreateReleaseModal() {
-			alert('Create release feature - select tag and add release notes');
+		function setLoadingState(isLoading) {
+			state.isLoading = isLoading;
 		}
 
-		// Initialization
 		window.addEventListener('load', () => {
 			const savedTheme = localStorage.getItem('gitnexus-theme') || 'dark';
 			setTheme(savedTheme);
@@ -3370,9 +3031,11 @@
 				}
 			});
 
-			console.log('✓ GitNexus v5.0 loaded successfully');
-			showNotification('<i class="fas fa-rocket text-xl"></i> GitNexus v5.0 Ready!');
-			addNotification('GitNexus v5.0 loaded with full AI integration', 'Welcome');
+			console.log('✅ GitNexus vv5.0 beta | Pre-releaseloaded successfully');
+			showNotification('<i class="fas fa-rocket"></i> GitNexus v5.0 beta | Pre-release Ready!');
+			addNotification('GitNexus v5.0 beta | Pre-release loaded with NexusBot AI integration', 'Welcome');
+			addNotification('Welcome to GitNexus!', 'Owner')
+			addNotification('NexusBot AI connected');
 		});
 	</script>
 </body>
